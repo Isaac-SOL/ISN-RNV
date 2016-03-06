@@ -67,6 +67,7 @@
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ouvrir une map"/>
+        <Property name="toolTipText" type="java.lang.String" value="Choisir une map pour effectuer les tests dessus."/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenMap"/>
@@ -75,6 +76,7 @@
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cr&#xe9;er une map (?)"/>
+        <Property name="toolTipText" type="java.lang.String" value="Cr&#xe9;er une map avec l&apos;outil."/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenMapCreator"/>
@@ -83,6 +85,7 @@
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
         <Property name="text" type="java.lang.String" value="G&#xe9;n&#xe9;rer une map al&#xe9;atoirement"/>
+        <Property name="toolTipText" type="java.lang.String" value="Cr&#xe9;e une map g&#xe9;n&#xe9;r&#xe9;e al&#xe9;toirement et l&apos;enregistre."/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenMapGenerator"/>
@@ -91,9 +94,10 @@
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fermer"/>
+        <Property name="toolTipText" type="java.lang.String" value="Quitter le testeur."/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CloseProgram"/>
       </Events>
     </Component>
   </SubComponents>

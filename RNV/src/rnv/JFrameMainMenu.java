@@ -37,6 +37,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         setResizable(false);
 
         jButton1.setText("Ouvrir une map");
+        jButton1.setToolTipText("Choisir une map pour effectuer les tests dessus.");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OpenMap(evt);
@@ -44,6 +45,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         });
 
         jButton2.setText("Créer une map (?)");
+        jButton2.setToolTipText("Créer une map avec l'outil.");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OpenMapCreator(evt);
@@ -51,6 +53,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         });
 
         jButton3.setText("Générer une map aléatoirement");
+        jButton3.setToolTipText("Crée une map générée alétoirement et l'enregistre.");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OpenMapGenerator(evt);
@@ -58,9 +61,10 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         });
 
         jButton4.setText("Fermer");
+        jButton4.setToolTipText("Quitter le testeur.");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                CloseProgram(evt);
             }
         });
 
@@ -101,7 +105,8 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
-        // TODO add your handling code here:
+        this.setVisible(false);
+        new JFrameMapDirectories().setVisible(true);
     }//GEN-LAST:event_OpenMap
 
     private void OpenMapCreator(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMapCreator
@@ -112,9 +117,9 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_OpenMapGenerator
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void CloseProgram(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseProgram
+        this.dispose();
+    }//GEN-LAST:event_CloseProgram
 
     /**
      * @param args the command line arguments
