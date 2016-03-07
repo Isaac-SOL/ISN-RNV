@@ -5,6 +5,11 @@
  */
 package rnv;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author Pierre
@@ -29,7 +34,7 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
 
         jFileChooser1 = new javax.swing.JFileChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Choisir une Map");
         setResizable(false);
 
@@ -40,6 +45,13 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
             jFileChooser1.setDialogTitle("Ouvrir une map");
             jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
             jFileChooser1.setSelectedFile(new java.io.File("C:\\Program Files (x86)\\NetBeans 8.0.2\\TestingMap"));
+            jFileChooser1.setToolTipText("");
+            jFileChooser1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    OpenMap(evt);
+                }
+            });
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
@@ -54,6 +66,23 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
 
             pack();
         }// </editor-fold>//GEN-END:initComponents
+
+    private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
+        int returnVal = jFileChooser1.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = jFileChooser1.getSelectedFile();
+            try {
+              new JFrameChosenMap().setVisible(true);
+              new JFrameMainMenu().dispose();
+              this.dispose();
+              JFrameChosenMap.jTextArea1.read( new FileReader( file.getAbsolutePath() ), null );
+            } catch (IOException ex) {
+              System.out.println("problem accessing file"+file.getAbsolutePath());
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+    }//GEN-LAST:event_OpenMap
 
     /**
      * @param args the command line arguments

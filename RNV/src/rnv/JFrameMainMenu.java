@@ -105,7 +105,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
-        this.setVisible(false);
         new JFrameMapDirectories().setVisible(true);
     }//GEN-LAST:event_OpenMap
 
