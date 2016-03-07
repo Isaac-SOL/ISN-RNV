@@ -1,0 +1,47 @@
+﻿#Tâches:
+Priorité 1 :
+  - Stockage des maps (.txt)
+  - Faire un menu (Simple)
+
+  Code pur :
+  - Traduction de l'algorithme en Java
+  - Génération aléatoire
+  - Déplacement du pion
+  A côté :
+  - Algorithme
+  - Stockage des maps (.txt)
+  - Choix du calcul du score
+  - Choix du stockage des réseaux (.xml?)
+  - Faire un menu (Simple)                                            @Isaac
+  - Choix de l'organisation des réseaux (Arborescence..)
+ (- Afficher dans un graphique lisible chaque individu)
+ 
+- Interface
+
+#Algorithmes en parralèle:
+
+  Environnement ("Jeu"):
+  - Accepte des inputs (Haut/Bas/Gauche/Droite)
+  - Déplace le pion selon l'input reçu et l'environnement, les "règles"
+  - Envoie à l'algorithme de Test les données des cases entourant le pion   ] Ces deux parties sont importantes. Elles rendent l'algorithme
+  - Envoie à l'algorithme de Test son score                                 ] de Test totalement indépendant du "jeu":
+                                                                              L'algorithme de Test peut être utilisé pour des tâches totalement différentes de celle prévue par notre projet
+  Test:
+  - Envoie des contrôles à l'algorithme d'Environnement selon le réseau choisi et l'input reçu depuis le système d'Environnement (Les cases)
+  - Signe chaque réseau testé avec son score reçu depuis l'algorithme d'Environnement
+  
+  Génération:
+  - Trie les fichiers de réseaux et envoie à l'algorithme de Test celui qui doit être testé
+  - Quand une génération entière est testée, en crée une nouvelle selon les scores et les familles
+  
+#Répartition:
+
+Isaac :
+
+- Faire un menu (Simple)
+
+Dironiil :
+
+Viviou :
+
+- Stockage + lecture des map
