@@ -77,10 +77,10 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
               this.dispose();
               JFrameChosenMap.jTextArea1.read( new FileReader( file.getAbsolutePath() ), null );
             } catch (IOException ex) {
-              System.out.println("problem accessing file"+file.getAbsolutePath());
+              System.out.println("Problème lors de l'accès au fichier "+file.getAbsolutePath());
             }
         } else {
-            System.out.println("File access cancelled by user.");
+            System.out.println("Accès annulé par l'utilisateur.");
         }
     }//GEN-LAST:event_OpenMap
 
