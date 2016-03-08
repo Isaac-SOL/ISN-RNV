@@ -1,22 +1,28 @@
 ﻿#Tâches:
+Faites :
+  - Choix du format de stockage des maps (.txt[stockage]/tableau[utilisation])
+  - Choix de l'organisation des réseaux (Arborescence..)
+  
 Priorité 1 :
   - Stockage des maps (.txt)
   - Faire un menu (Simple)
-
-  Code pur :
-  - Traduction de l'algorithme en Java
-  - Génération aléatoire
-  - Déplacement du pion
-  A côté :
-  - Algorithme
-  - Stockage des maps (.txt)
-  - Choix du calcul du score
   - Choix du stockage des réseaux (.xml?)
-  - Faire un menu (Simple)                                            @Isaac
-  - Choix de l'organisation des réseaux (Arborescence..)
- (- Afficher dans un graphique lisible chaque individu)
- 
-- Interface
+  - Reflexion sur l'algorithme de RNV
+  - Mettre un place une base de jeu jouable (déplacement, traduction map -> plateau, règles du jeu)
+  
+Priorité 2 :
+  - Algorithme plus détaillé de RNV
+  - 
+  
+Priorité 3 :
+  - Traduction en Java de la RNV, test pour déterminer les meilleurs variables d'algorithme
+  - Choix du calcul de score
+
+Priorité 4 :
+  - Génération aléatoire de map
+  - Pouvoir voir un graphique lisible de chaque individu d'un RNV
+
+
 
 #Algorithmes en parralèle:
 
