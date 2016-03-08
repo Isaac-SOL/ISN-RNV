@@ -5,6 +5,12 @@
  */
 package rnv;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import static rnv.JFrameMapDirectories.jFileChooser1;
+
 /**
  *
  * @author Pierre
@@ -106,7 +112,21 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
-        new JFrameMapDirectories().setVisible(true);
+//        new JFrameMapDirectories().setVisible(true);
+        int returnVal = new JFrameMapDirectories().jFileChooser1.showOpenDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = jFileChooser1.getSelectedFile();
+            try {
+              new JFrameChosenMap().setVisible(true);
+              new JFrameMainMenu().dispose();
+              this.dispose();
+              JFrameChosenMap.jTextArea1.read( new FileReader( file.getAbsolutePath() ), null );
+            } catch (IOException ex) {
+              System.out.println("Problème lors de l'accès au fichier "+file.getAbsolutePath());
+            }
+        } else {
+            System.out.println("Accès annulé par l'utilisateur.");
+        }
     }//GEN-LAST:event_OpenMap
 
     private void OpenMapCreator(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMapCreator
