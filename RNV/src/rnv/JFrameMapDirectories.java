@@ -5,10 +5,8 @@
  */
 package rnv;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -43,6 +41,7 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
         jFileChooser1.setApproveButtonToolTipText("Utiliser cette map pour les tests");
         jFileChooser1.setCurrentDirectory(new java.io.File("C:\\"));
             jFileChooser1.setDialogTitle("Ouvrir une map");
+            jFileChooser1.setFileFilter(TxtFilter);
             jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
             jFileChooser1.setSelectedFile(new java.io.File("C:\\Program Files (x86)\\NetBeans 8.0.2\\TestingMap"));
             jFileChooser1.setToolTipText("");
@@ -68,20 +67,7 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
         }// </editor-fold>//GEN-END:initComponents
 
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
-//        int returnVal = jFileChooser1.showOpenDialog(this);
-//        if (returnVal == JFileChooser.APPROVE_OPTION) {
-//            File file = jFileChooser1.getSelectedFile();
-//            try {
-//              new JFrameChosenMap().setVisible(true);
-//              new JFrameMainMenu().dispose();
-//              this.dispose();
-//              JFrameChosenMap.jTextArea1.read( new FileReader( file.getAbsolutePath() ), null );
-//            } catch (IOException ex) {
-//              System.out.println("Problème lors de l'accès au fichier "+file.getAbsolutePath());
-//            }
-//        } else {
-//            System.out.println("Accès annulé par l'utilisateur.");
-//        }
+        //Empty space
     }//GEN-LAST:event_OpenMap
 
     /**
@@ -118,6 +104,8 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
             }
         });
     }
+    
+    FileFilter TxtFilter = new FileNameExtensionFilter("Fichier Texte","txt");
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JFileChooser jFileChooser1;

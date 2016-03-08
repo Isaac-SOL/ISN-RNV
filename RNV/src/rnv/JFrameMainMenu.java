@@ -112,7 +112,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
-//        new JFrameMapDirectories().setVisible(true);
         int returnVal = new JFrameMapDirectories().jFileChooser1.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = jFileChooser1.getSelectedFile();
