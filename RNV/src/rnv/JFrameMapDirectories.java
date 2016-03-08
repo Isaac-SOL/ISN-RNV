@@ -68,20 +68,20 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
         }// </editor-fold>//GEN-END:initComponents
 
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
-        int returnVal = jFileChooser1.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser1.getSelectedFile();
-            try {
-              new JFrameChosenMap().setVisible(true);
-              new JFrameMainMenu().dispose();
-              this.dispose();
-              JFrameChosenMap.jTextArea1.read( new FileReader( file.getAbsolutePath() ), null );
-            } catch (IOException ex) {
-              System.out.println("Problème lors de l'accès au fichier "+file.getAbsolutePath());
-            }
-        } else {
-            System.out.println("Accès annulé par l'utilisateur.");
-        }
+//        int returnVal = jFileChooser1.showOpenDialog(this);
+//        if (returnVal == JFileChooser.APPROVE_OPTION) {
+//            File file = jFileChooser1.getSelectedFile();
+//            try {
+//              new JFrameChosenMap().setVisible(true);
+//              new JFrameMainMenu().dispose();
+//              this.dispose();
+//              JFrameChosenMap.jTextArea1.read( new FileReader( file.getAbsolutePath() ), null );
+//            } catch (IOException ex) {
+//              System.out.println("Problème lors de l'accès au fichier "+file.getAbsolutePath());
+//            }
+//        } else {
+//            System.out.println("Accès annulé par l'utilisateur.");
+//        }
     }//GEN-LAST:event_OpenMap
 
     /**
@@ -120,6 +120,6 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFileChooser jFileChooser1;
+    public static javax.swing.JFileChooser jFileChooser1;
     // End of variables declaration//GEN-END:variables
 }
