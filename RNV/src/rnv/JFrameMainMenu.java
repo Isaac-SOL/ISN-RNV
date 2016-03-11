@@ -117,7 +117,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
             File file = jFileChooser1.getSelectedFile();
             try {
               new JFrameChosenMap().setVisible(true);
-              new JFrameMainMenu().dispose();
               this.dispose();
               JFrameChosenMap.jTextArea1.read( new FileReader( file.getAbsolutePath() ), null );
             } catch (IOException ex) {
