@@ -6,7 +6,7 @@ Faites :
 Priorité 1 :
   - Stockage des maps (.txt)
   - Faire un menu (Simple)
-  - Choix du stockage des réseaux (.xml?)
+  - Choix du stockage des réseaux (.xml? Le .json a l'air mieux)
   - Reflexion sur l'algorithme de RNV
   - Mettre un place une base de jeu jouable (déplacement, traduction map -> plateau, règles du jeu)
   
