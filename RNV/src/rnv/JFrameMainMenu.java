@@ -6,10 +6,12 @@
 package rnv;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.swing.JFileChooser;
-import static rnv.JFrameMapDirectories.jFileChooser1;
 
 /**
  *
@@ -114,11 +116,11 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
         int returnVal = new JFrameMapDirectories().jFileChooser1.showOpenDialog(null);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser1.getSelectedFile();
+            File file = JFrameMapDirectories.jFileChooser1.getSelectedFile();
             try {
-              new JFrameChosenMap().setVisible(true);
-              this.dispose();
-              JFrameChosenMap.jTextArea1.read( new FileReader( file.getAbsolutePath() ), null );
+                new JFrameChosenMap().setVisible(true);
+                this.dispose();
+                JFrameChosenMap.jTextArea1.setText(readFile(file.getAbsolutePath(),StandardCharsets.UTF_8));
             } catch (IOException ex) {
               System.out.println("Problème lors de l'accès au fichier "+file.getAbsolutePath());
             }
@@ -172,6 +174,11 @@ public class JFrameMainMenu extends javax.swing.JFrame {
                 new JFrameMainMenu().setVisible(true);
             }
         });
+    }
+    
+    static String readFile(String path, Charset encoding) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return new String(encoded, encoding);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
