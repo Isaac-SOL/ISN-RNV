@@ -35,43 +35,43 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButtonOpenMap = new javax.swing.JButton();
+        jButtonCreateMap = new javax.swing.JButton();
+        jButtonGenerateMap = new javax.swing.JButton();
+        jButtonClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NEAT");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
-        jButton1.setText("Ouvrir une map");
-        jButton1.setToolTipText("Choisir une map pour effectuer les tests dessus.");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonOpenMap.setText("Ouvrir une map");
+        jButtonOpenMap.setToolTipText("Choisir une map pour effectuer les tests dessus.");
+        jButtonOpenMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OpenMap(evt);
             }
         });
 
-        jButton2.setText("Créer une map (?)");
-        jButton2.setToolTipText("Créer une map avec l'outil.");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCreateMap.setText("Créer une map (?)");
+        jButtonCreateMap.setToolTipText("Créer une map avec l'outil.");
+        jButtonCreateMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OpenMapCreator(evt);
             }
         });
 
-        jButton3.setText("Générer une map aléatoirement");
-        jButton3.setToolTipText("Crée une map générée alétoirement et l'enregistre.");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonGenerateMap.setText("Générer une map aléatoirement");
+        jButtonGenerateMap.setToolTipText("Crée une map générée alétoirement et l'enregistre.");
+        jButtonGenerateMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OpenMapGenerator(evt);
             }
         });
 
-        jButton4.setText("Fermer");
-        jButton4.setToolTipText("Quitter le testeur.");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButtonClose.setText("Fermer");
+        jButtonClose.setToolTipText("Quitter le testeur.");
+        jButtonClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CloseProgram(evt);
             }
@@ -85,44 +85,45 @@ public class JFrameMainMenu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButtonGenerateMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)))
+                            .addComponent(jButtonCreateMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonOpenMap, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton4)))
+                        .addComponent(jButtonClose)))
                 .addGap(100, 100, 100))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(67, 67, 67)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonOpenMap, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonCreateMap, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonGenerateMap, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(jButtonClose)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //méthode quand on appuie sur le bouton. Oubre un fichier texte et affiche son contenu.
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
-        int returnVal = new JFrameMapDirectories().jFileChooser1.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = JFrameMapDirectories.jFileChooser1.getSelectedFile();
+        int returnVal = new JFrameMapDirectories().jFileChooserMap.showOpenDialog(null);                            //Ouvre jFileChooserMap et regarde sur quel bouton il a appuyé
+        if (returnVal == JFileChooser.APPROVE_OPTION) {                                                             //Vérifie qe l'utilisateur ait appuyé sur ok
+            File chosenMap = JFrameMapDirectories.jFileChooserMap.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
             try {
                 new JFrameChosenMap().setVisible(true);
                 this.dispose();
-                JFrameChosenMap.jTextArea1.setText(readFile(file.getAbsolutePath(),StandardCharsets.UTF_8));
+                JFrameChosenMap.jTextArea1.setText(readFile(chosenMap.getAbsolutePath(),StandardCharsets.UTF_8));   //Utilise la fonction décrite plus bas pour transformer le fichier (écrit en UTF-8) en String
             } catch (IOException ex) {
-              System.out.println("Problème lors de l'accès au fichier "+file.getAbsolutePath());
+              System.out.println("Problème lors de l'accès au fichier "+chosenMap.getAbsolutePath());
             }
         } else {
             System.out.println("Accès annulé par l'utilisateur.");
@@ -176,15 +177,16 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         });
     }
     
+    //Fonction pour transformer un fichier texte en string avec son chemin et son encodage
     static String readFile(String path, Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonClose;
+    private javax.swing.JButton jButtonCreateMap;
+    private javax.swing.JButton jButtonGenerateMap;
+    private javax.swing.JButton jButtonOpenMap;
     // End of variables declaration//GEN-END:variables
 }

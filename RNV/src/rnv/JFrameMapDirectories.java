@@ -30,23 +30,23 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooser1 = new javax.swing.JFileChooser();
+        jFileChooserMap = new javax.swing.JFileChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Choisir une Map");
         setResizable(false);
 
-        jFileChooser1.setAcceptAllFileFilterUsed(false);
-        jFileChooser1.setApproveButtonText("Ouvrir");
-        jFileChooser1.setApproveButtonToolTipText("Utiliser cette map pour les tests");
-        jFileChooser1.setCurrentDirectory(new java.io.File("C:\\"));
-            jFileChooser1.setDialogTitle("Ouvrir une map");
-            jFileChooser1.setFileFilter(TxtFilter);
-            jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
-            jFileChooser1.setSelectedFile(new java.io.File("C:\\Program Files (x86)\\NetBeans 8.0.2\\TestingMap"));
-            jFileChooser1.setToolTipText("");
-            jFileChooser1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-            jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+        jFileChooserMap.setAcceptAllFileFilterUsed(false);
+        jFileChooserMap.setApproveButtonText("Ouvrir");
+        jFileChooserMap.setApproveButtonToolTipText("Utiliser cette map pour les tests");
+        jFileChooserMap.setCurrentDirectory(new java.io.File("C:\\"));
+            jFileChooserMap.setDialogTitle("Ouvrir une map");
+            jFileChooserMap.setFileFilter(TxtFilter);
+            jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
+            jFileChooserMap.setSelectedFile(new java.io.File("C:\\Program Files (x86)\\NetBeans 8.0.2\\TestingMap"));
+            jFileChooserMap.setToolTipText("");
+            jFileChooserMap.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            jFileChooserMap.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     OpenMap(evt);
                 }
@@ -56,11 +56,11 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jFileChooserMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             );
             layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jFileChooserMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             );
 
             pack();
@@ -105,9 +105,10 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
         });
     }
     
+    //Crée un filtre pour les fichiers .txt.  TODO changer l'extension?
     FileFilter TxtFilter = new FileNameExtensionFilter("Fichier Texte","txt");
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JFileChooser jFileChooser1;
+    public static javax.swing.JFileChooser jFileChooserMap;
     // End of variables declaration//GEN-END:variables
 }

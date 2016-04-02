@@ -32,18 +32,18 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                      <Component id="jButton3" max="32767" attributes="0"/>
+                      <Component id="jButtonGenerateMap" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton2" max="32767" attributes="0"/>
-                          <Component id="jButton1" pref="216" max="32767" attributes="0"/>
+                          <Component id="jButtonCreateMap" max="32767" attributes="0"/>
+                          <Component id="jButtonOpenMap" pref="216" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonClose" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
@@ -54,20 +54,20 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="48" max="-2" attributes="0"/>
+              <Component id="jButtonOpenMap" min="-2" pref="48" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" pref="47" max="-2" attributes="0"/>
+              <Component id="jButtonCreateMap" min="-2" pref="47" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jButton3" min="-2" pref="65" max="-2" attributes="0"/>
+              <Component id="jButtonGenerateMap" min="-2" pref="65" max="-2" attributes="0"/>
               <EmptySpace pref="25" max="32767" attributes="0"/>
-              <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonClose" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="jButtonOpenMap">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ouvrir une map"/>
         <Property name="toolTipText" type="java.lang.String" value="Choisir une map pour effectuer les tests dessus."/>
@@ -76,7 +76,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenMap"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="jButtonCreateMap">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cr&#xe9;er une map (?)"/>
         <Property name="toolTipText" type="java.lang.String" value="Cr&#xe9;er une map avec l&apos;outil."/>
@@ -85,7 +85,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenMapCreator"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="jButtonGenerateMap">
       <Properties>
         <Property name="text" type="java.lang.String" value="G&#xe9;n&#xe9;rer une map al&#xe9;atoirement"/>
         <Property name="toolTipText" type="java.lang.String" value="Cr&#xe9;e une map g&#xe9;n&#xe9;r&#xe9;e al&#xe9;toirement et l&apos;enregistre."/>
@@ -94,7 +94,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenMapGenerator"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="jButtonClose">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fermer"/>
         <Property name="toolTipText" type="java.lang.String" value="Quitter le testeur."/>
