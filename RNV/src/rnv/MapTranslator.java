@@ -3,38 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package rnv;
 
 /**
  *
- * @author Guillaume
+ * @author Ubuntu
  */
-public class Test {
+public class MapTranslator {
 
     /**
      * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        String sTest = "0305012340123401234";
-        int columns = Integer.parseInt(sTest.substring(0,2));
-        int lines = Integer.parseInt(sTest.substring(2,4));
-        
-        System.out.println ("nb l : " + lines + ", nb c : " + columns);
-        System.out.println(sTest.substring(4));
-        
-        int[][] tTest;
-        tTest = textToTable(sTest);
-        
-        sTest = "fatboy";
-        
-        sTest = tableToText(tTest);
-        
-        System.out.println(sTest);
-        
-        
-    }
-    
-    
+     */ 
     //Transformation du String en Tableau
     public static int[][] textToTable(String sMap) {
 
