@@ -122,6 +122,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
                 new JFrameChosenMap().setVisible(true);
                 this.dispose();
                 JFrameChosenMap.jTextArea1.setText(readFile(chosenMap.getAbsolutePath(),StandardCharsets.UTF_8));   //Utilise la fonction décrite plus bas pour transformer le fichier (écrit en UTF-8) en String
+                int[][] map = MapTranslator.textToTable(readFile(chosenMap.getAbsolutePath(),StandardCharsets.UTF_8));
             } catch (IOException ex) {
               System.out.println("Problème lors de l'accès au fichier "+chosenMap.getAbsolutePath());
             }

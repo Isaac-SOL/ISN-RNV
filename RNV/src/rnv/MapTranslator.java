@@ -7,7 +7,7 @@ package rnv;
 
 /**
  *
- * @author Ubuntu
+ * @author Dironiil
  */
 public class MapTranslator {
 
