@@ -15,13 +15,13 @@ public class MapTranslator {
      * @param args the command line arguments
      */ 
     //Transformation du String en Tableau
-    public static int[][] textToTable(String sMap) {
+    public static Integer[][] textToTable(String sMap) {
 
        int nbColumns = Integer.parseInt(sMap.substring(0,2));
        int nbLines = Integer.parseInt(sMap.substring(2,4));
        String tiles = sMap.substring(4);
 
-       int[][] tMap = new int[nbColumns][nbLines];      //Création du tableau avec lignes et colonnes
+       Integer[][] tMap = new Integer[nbColumns][nbLines];      //Création du tableau avec lignes et colonnes
 
         for(int j = 0; j < nbLines; j++) {
             for(int i = 0; i < nbColumns; i++) {
