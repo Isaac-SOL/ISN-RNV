@@ -120,10 +120,9 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {                                                             //Vérifie qe l'utilisateur ait appuyé sur ok
             File chosenMap = JFrameMapDirectories.jFileChooserMap.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
             try {
-                new JFrameChosenMap().setVisible(true);
-                this.dispose();
-                JFrameChosenMap.jTextArea1.setText(readFile(chosenMap.getAbsolutePath(),StandardCharsets.UTF_8));   //Utilise la fonction décrite plus bas pour transformer le fichier (écrit en UTF-8) en String
                 Integer[][] map = MapTranslator.textToTable(readFile(chosenMap.getAbsolutePath(),StandardCharsets.UTF_8));
+                new JFrameChosenMap(map).setVisible(true);
+                this.dispose();
             } catch (IOException ex) {
               System.out.println("Problème lors de l'accès au fichier "+chosenMap.getAbsolutePath());
             }

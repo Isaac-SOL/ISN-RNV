@@ -5,6 +5,8 @@
  */
 package UserInterface;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Pierre
@@ -17,6 +19,12 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     public JFrameChosenMap() {
         initComponents();
     }
+    
+    //Second constructeur qui utilise un tableau de Integer pour créer la Table avec
+    public JFrameChosenMap(Integer[][] map) {
+        initComponents();
+        initTable(map);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,24 +35,17 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         pack();
@@ -86,7 +87,54 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+    
+    //Variables utilisées pour créer la Table.
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableMap;
+    
+    //Appelée par le second constructeur. Uilise un tableau de Integer pour créer et remplir une Table, qui est ensuite affichée.
+    private void initTable(Integer[][] map) {
+        
+        int nbLines = map.length;
+        int nbColumns = map[0].length;
+        
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableMap = new javax.swing.JTable();
+
+        //Initialise la Table avec la map pour la remplir, aisi qu'un String[] qui fait le titre des colonnes. TODO inverser Lignes/Colonnes dans le MapTranslator + voir si on peut enlever le titre
+        jTableMap.setModel(new DefaultTableModelImpl(
+            map,
+            new String [nbColumns]
+        ));
+        
+        //<editor-fold defaultstate="collapsed" desc="Code du Scroller, copié du générateur auto de NetBeans">
+        jScrollPane2.setViewportView(jTableMap);
+        
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+//</editor-fold>
+        
+    }
+
+    private static class DefaultTableModelImpl extends DefaultTableModel {
+
+        public DefaultTableModelImpl(Object[][] data, Object[] columnNames) {
+            super(data, columnNames);
+        }
+    }
 }
