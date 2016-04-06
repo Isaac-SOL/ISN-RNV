@@ -5,7 +5,9 @@
  */
 package UserInterface;
 
-import Tools.MapTranslator;
+
+import Exceptions.*;
+import Tools.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -120,9 +122,14 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {                                                             //Vérifie qe l'utilisateur ait appuyé sur ok
             File chosenMap = JFrameMapDirectories.jFileChooserMap.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
             try {
-                Integer[][] map = MapTranslator.textToTable(readFile(chosenMap.getAbsolutePath(),StandardCharsets.UTF_8));
-                new JFrameChosenMap(map).setVisible(true);
-                this.dispose();
+                try {
+                    Integer[][] map = MapTranslator.textToTable(FileIO.readTextFile(chosenMap.getAbsolutePath() , StandardCharsets.UTF_8)); //Transformation du Fichier en tableau d'Integer[][]
+                    new JFrameChosenMap(map).setVisible(true);  //Ouverture de la map choisie + 
+                    this.dispose();                             //Fermeture de la fenètre de menu
+                } catch (MapFormatException e) {
+                    System.out.println("Format du fichier texte " + chosenMap.getAbsolutePath() + " incorrect.");
+                }
+                
             } catch (IOException ex) {
               System.out.println("Problème lors de l'accès au fichier "+chosenMap.getAbsolutePath());
             }
@@ -140,7 +147,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_OpenMapGenerator
 
     private void CloseProgram(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseProgram
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_CloseProgram
 
     /**
@@ -178,11 +185,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         });
     }
     
-    //Fonction pour transformer un fichier texte en string avec son chemin et son encodage
-    static String readFile(String path, Charset encoding) throws IOException {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
-        return new String(encoded, encoding);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClose;

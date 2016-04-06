@@ -5,52 +5,83 @@
  */
 package Tools;
 
+import Exceptions.*;
+
 /**
  *
  * @author Dironiil
  */
-public class MapTranslator {
 
+
+public class MapTranslator {   
+    
     /**
-     * @param args the command line arguments
-     */ 
-    //Transformation du String en Tableau
-    public static Integer[][] textToTable(String sMap) {
+     * Transformation d'un String en Integer[][]
+     * @param sMap                  String à convertir en Integer[][]
+     * @throws MapFormatException   Exception si le format du string est incorrect
+     * @return tMap                 Integer[][] renvoyé si la conversion a été correct
+     */    
+    public static Integer[][] textToTable(String sMap) throws MapFormatException{
+        
+        // <editor-fold defaultstate="collapsed" desc="Récupération de nbColumns et nbLines + gestion des erreurs de format">
+        int nbColumns, nbLines;
+        String tiles = sMap.substring(4);
+        
+        try { //Bloc try / catch pour éviter les erreurs de conversion de parseInt
+            nbColumns = Integer.parseInt(sMap.substring(0,2));
+            nbLines = Integer.parseInt(sMap.substring(2,4));
+        } catch (NumberFormatException e) {
+            throw new MapFormatException(1);
+        }
+        
+        if (tiles.length() != nbColumns*nbLines) { //Vérification qu'il y a le bon nombre de contenu de tiles
+            throw new MapFormatException(2);
+        }
+        // </editor-fold>
+       
+        Integer[][] tMap = new Integer[nbColumns][nbLines];      //Création du tableau avec lignes et colonnes
 
-       int nbColumns = Integer.parseInt(sMap.substring(0,2));
-       int nbLines = Integer.parseInt(sMap.substring(2,4));
-       String tiles = sMap.substring(4);
-
-       Integer[][] tMap = new Integer[nbColumns][nbLines];      //Création du tableau avec lignes et colonnes
-
+        //<editor-fold defaultstate="collapsed" desc="Remplissage du tableau">
         for(int j = 0; j < nbLines; j++) {
             for(int i = 0; i < nbColumns; i++) {
-                tMap[i][j] = Character.getNumericValue(tiles.charAt((j*nbColumns)+i));        //Remplit le tableau avec les valeurs du string
-                System.out.println("Colonne " + (i+1) + ", ligne " + (j+1) + ": " + tMap[i][j]);
+                int tile = Character.getNumericValue(tiles.charAt((j*nbColumns)+i));
+                if (tile < 0 || tile > 9) { //Vérification que le charactère est un chiffre
+                    throw new MapFormatException(3);
+                } else {
+                    tMap[i][j] = tile;           //Remplit le tableau avec les valeurs du string
+                    System.out.println("Case [" + (i+1) + ";" + (j+1) + "] : " + tMap[i][j]); //Affichage dans la console du résultat pour le debug
+                }
             }
         }
+//</editor-fold>
 
         return tMap;
     }
 
-        //Transformation du tableau en string
-    public static String tableToText(int[][] tMap) {
+    
+    /**
+     * Transformation d'un Integer[][] en String
+     * @param tMap                  Integer[][] à convertir en String
+     * @throws MapFormatException   Exception si le format du tableau est incorrect
+     * @return sMap                 String renvoyé si la conversion est correcte
+     */  
+    public static String tableToText(Integer[][] tMap) throws MapFormatException {
 
         // <editor-fold defaultstate="collapsed" desc="4 premiers nombres du string">
-        int lines = tMap.length;
+        int nbLines = tMap.length;
         String sLines;
-        if (lines < 10) {
-            sLines = "0" + lines;
+        if (nbLines < 10) {
+            sLines = "0" + nbLines;
         } else {
-            sLines = "" + lines;
+            sLines = "" + nbLines;
         }
 
-        int columns = tMap[0].length;
+        int nbColumns = tMap[0].length;
         String sColumns;
-        if (columns < 10) {
-            sColumns = "0" + columns;
+        if (nbColumns < 10) {
+            sColumns = "0" + nbColumns;
         } else {
-            sColumns = "" + columns;
+            sColumns = "" + nbColumns;
         }
 
         String sMap = sLines + sColumns;// </editor-fold>
@@ -59,11 +90,17 @@ public class MapTranslator {
         String sTilesContent = "";
         for (int j = 0; j < tMap[0].length; j++) {
             for (int i = 0; i < tMap.length; i++) {
-                sTilesContent += tMap[i][j] + "";
+                if (tMap[i][j] < 0 || tMap[i][j] > 9) { //Vérification que la tile ne contient qu'un chiffre
+                    throw new MapFormatException(4);
+                } else {
+                    sTilesContent += tMap[i][j] + "";
+                    System.out.println("Case [" + (i+1) + ";" + (j+1) + "] : " + tMap[i][j] + " écrite dans le String.");
+                }
             }
         }
         
-        sMap += sTilesContent; //</editor-fold>
+        sMap += sTilesContent;
+        //</editor-fold>
 
         return sMap;
     }

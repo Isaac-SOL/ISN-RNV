@@ -39,11 +39,11 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
         jFileChooserMap.setAcceptAllFileFilterUsed(false);
         jFileChooserMap.setApproveButtonText("Ouvrir");
         jFileChooserMap.setApproveButtonToolTipText("Utiliser cette map pour les tests");
-        jFileChooserMap.setCurrentDirectory(new java.io.File("C:\\"));
+        jFileChooserMap.setCurrentDirectory(new java.io.File("C:\\Users\\" + System.getProperty("user.name") + "\\"));
             jFileChooserMap.setDialogTitle("Ouvrir une map");
             jFileChooserMap.setFileFilter(TxtFilter);
             jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
-            jFileChooserMap.setSelectedFile(new java.io.File("C:\\Program Files (x86)\\NetBeans 8.0.2\\TestingMap"));
+            jFileChooserMap.setSelectedFile(new java.io.File("D:\\logiciel\\NetBeans\\NetBeans 8.0.2\\TestingMap"));
             jFileChooserMap.setToolTipText("");
             jFileChooserMap.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
             jFileChooserMap.addActionListener(new java.awt.event.ActionListener() {
