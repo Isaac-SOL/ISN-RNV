@@ -92,7 +92,7 @@ public class MapTranslator {
         for (int j = 0; j < tMap[0].length; j++) {
             for (int i = 0; i < tMap.length; i++) {
                 if (tMap[i][j] < 0 || tMap[i][j] > 9) { //Vérification que la tile ne contient qu'un chiffre
-                    //throw new MapException(21);
+                    throw new MapException(21);
                 } else {
                     sTilesContent += tMap[i][j] + "";
                     System.out.println("Case [" + (i+1) + ";" + (j+1) + "] : " + tMap[i][j] + " écrite dans le String.");
