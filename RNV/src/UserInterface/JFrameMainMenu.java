@@ -36,7 +36,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jButtonOpenMap = new javax.swing.JButton();
-        jButtonCreateMap = new javax.swing.JButton();
+        jButtonEditMap = new javax.swing.JButton();
         jButtonGenerateMap = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
 
@@ -53,9 +53,9 @@ public class JFrameMainMenu extends javax.swing.JFrame {
             }
         });
 
-        jButtonCreateMap.setText("Créer une map (?)");
-        jButtonCreateMap.setToolTipText("Créer une map avec l'outil.");
-        jButtonCreateMap.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEditMap.setText("Éditer une map");
+        jButtonEditMap.setToolTipText("Créer une map avec l'outil.");
+        jButtonEditMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OpenMapCreator(evt);
             }
@@ -89,7 +89,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonCreateMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonEditMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonOpenMap, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
@@ -102,7 +102,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
                 .addGap(67, 67, 67)
                 .addComponent(jButtonOpenMap, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonCreateMap, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonEditMap, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonGenerateMap, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
@@ -192,7 +192,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClose;
-    private javax.swing.JButton jButtonCreateMap;
+    private javax.swing.JButton jButtonEditMap;
     private javax.swing.JButton jButtonGenerateMap;
     private javax.swing.JButton jButtonOpenMap;
     // End of variables declaration//GEN-END:variables

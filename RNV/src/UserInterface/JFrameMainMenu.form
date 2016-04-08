@@ -37,7 +37,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonCreateMap" max="32767" attributes="0"/>
+                          <Component id="jButtonEditMap" max="32767" attributes="0"/>
                           <Component id="jButtonOpenMap" pref="216" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -56,7 +56,7 @@
               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
               <Component id="jButtonOpenMap" min="-2" pref="48" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jButtonCreateMap" min="-2" pref="47" max="-2" attributes="0"/>
+              <Component id="jButtonEditMap" min="-2" pref="47" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jButtonGenerateMap" min="-2" pref="65" max="-2" attributes="0"/>
               <EmptySpace pref="25" max="32767" attributes="0"/>
@@ -76,9 +76,9 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenMap"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonCreateMap">
+    <Component class="javax.swing.JButton" name="jButtonEditMap">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cr&#xe9;er une map (?)"/>
+        <Property name="text" type="java.lang.String" value="&#xc9;diter une map"/>
         <Property name="toolTipText" type="java.lang.String" value="Cr&#xe9;er une map avec l&apos;outil."/>
       </Properties>
       <Events>
