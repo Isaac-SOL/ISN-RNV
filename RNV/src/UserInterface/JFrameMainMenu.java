@@ -116,7 +116,10 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //méthode quand on appuie sur le bouton. Oubre un fichier texte et affiche son contenu.
+    /**
+     * méthode quand on appuie sur le bouton. Ouvre une fenêtre pour choisir un fichier texte et affiche son contenu.
+     * @param evt Auto-génération
+     */
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
         int returnVal = new JFrameMapDirectories().jFileChooserMap.showOpenDialog(null);                            //Ouvre jFileChooserMap et regarde sur quel bouton il a appuyé
         if (returnVal == JFileChooser.APPROVE_OPTION) {                                                             //Vérifie qe l'utilisateur ait appuyé sur ok
@@ -126,12 +129,12 @@ public class JFrameMainMenu extends javax.swing.JFrame {
                     Integer[][] map = MapTranslator.textToTable(FileIO.readTextFile(chosenMap.getAbsolutePath() , StandardCharsets.UTF_8)); //Transformation du Fichier en tableau d'Integer[][]
                     new JFrameChosenMap(map).setVisible(true);  //Ouverture de la map choisie + 
                     this.dispose();                             //Fermeture de la fenètre de menu
-                } catch (MapFormatException e) {
-                    System.out.println("Format du fichier texte " + chosenMap.getAbsolutePath() + " incorrect.");
+                } catch (MapException ex) {
+                    System.out.println("Format du fichier texte " + chosenMap.getAbsolutePath() + "incorrect.");
                 }
                 
             } catch (IOException ex) {
-              System.out.println("Problème lors de l'accès au fichier "+chosenMap.getAbsolutePath());
+              System.out.println("Problème lors de l'accès au fichier "+chosenMap.getAbsolutePath() + "Erreur : " + ex.getMessage());
             }
         } else {
             System.out.println("Accès annulé par l'utilisateur.");
@@ -145,7 +148,11 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     private void OpenMapGenerator(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMapGenerator
         // TODO add your handling code here:
     }//GEN-LAST:event_OpenMapGenerator
-
+    
+    /**
+     * Méthode quand on appuie sur le bouton Ferme. Quitte le programme définitivement.
+     * @param evt Auto-génération
+     */
     private void CloseProgram(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseProgram
         System.exit(0);
     }//GEN-LAST:event_CloseProgram
