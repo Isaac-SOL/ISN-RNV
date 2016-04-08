@@ -10,7 +10,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author Pierre
+ * @author Isaac
  */
 public class JFrameMapDirectories extends javax.swing.JFrame {
 

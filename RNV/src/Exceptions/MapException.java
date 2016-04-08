@@ -41,7 +41,7 @@ public class MapException extends Exception{
     }
     
     /**
-     * Message personnalisée d'erreur d'exception
+     * Message personnalisé d'erreur d'exception
      * @param erreur 
      */
     public MapException(String erreur) {

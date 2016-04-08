@@ -10,15 +10,12 @@ import Exceptions.*;
 import Tools.*;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import javax.swing.JFileChooser;
 
 /**
  *
- * @author Pierre
+ * @author Isaac
  */
 public class JFrameMainMenu extends javax.swing.JFrame {
 

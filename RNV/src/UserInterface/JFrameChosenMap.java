@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Pierre
+ * @author Isaac
  */
 public class JFrameChosenMap extends javax.swing.JFrame {
 
@@ -97,7 +97,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     private javax.swing.JTable jTableMap;
     
     /**
-     * Méthode appelée par le second constructeur. Uilise un tableau de Integer pour créer et remplir une Table, qui est ensuite affichée.
+     * Méthode appelée par le second constructeur. Utilise un tableau de Integer pour créer et remplir une Table, qui est ensuite affichée.
      * @param map Integer[][] à afficher à l'écran
      */
     private void initTable(Integer[][] map) {
