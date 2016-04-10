@@ -39,32 +39,32 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
         jFileChooserMap.setAcceptAllFileFilterUsed(false);
         jFileChooserMap.setApproveButtonText("Ouvrir");
         jFileChooserMap.setApproveButtonToolTipText("Utiliser cette map pour les tests");
-        jFileChooserMap.setCurrentDirectory(new java.io.File("C:\\Users\\" + System.getProperty("user.name") + "\\"));
-            jFileChooserMap.setDialogTitle("Ouvrir une map");
-            jFileChooserMap.setFileFilter(TxtFilter);
-            jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
-            jFileChooserMap.setSelectedFile(new java.io.File("D:\\logiciel\\NetBeans\\NetBeans 8.0.2\\TestingMap"));
-            jFileChooserMap.setToolTipText("");
-            jFileChooserMap.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-            jFileChooserMap.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    OpenMap(evt);
-                }
-            });
+        jFileChooserMap.setCurrentDirectory(new java.io.File(System.getProperty("user.home")+"/Documents"));
+        jFileChooserMap.setDialogTitle("Ouvrir une map");
+        jFileChooserMap.setFileFilter(TxtFilter);
+        jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
+        jFileChooserMap.setSelectedFile(new java.io.File("D:\\logiciel\\NetBeans\\NetBeans 8.0.2\\TestingMap"));
+        jFileChooserMap.setToolTipText("");
+        jFileChooserMap.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jFileChooserMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OpenMap(evt);
+            }
+        });
 
-            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-            getContentPane().setLayout(layout);
-            layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jFileChooserMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            );
-            layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jFileChooserMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            );
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jFileChooserMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jFileChooserMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
-            pack();
-        }// </editor-fold>//GEN-END:initComponents
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
         //Empty space

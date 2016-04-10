@@ -1,0 +1,7 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Projet de fin d'année d'ISN
+${licensePrefix}RNV, par Isaac, Dironiil, Viviou1325
+${licenseLast}
+</#if>
