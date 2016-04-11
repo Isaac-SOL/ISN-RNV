@@ -8,6 +8,7 @@ package UserInterface;
 
 import Exceptions.*;
 import Tools.*;
+import static Tools.SystemInfo.getScreenDimension;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -44,6 +45,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         setTitle("NEAT");
         setBackground(new java.awt.Color(153, 153, 153));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setLocation(getScreenDimension.width/2-208, getScreenDimension.height/2-157);
         setResizable(false);
 
         jButtonOpenMap.setText("Ouvrir une map");

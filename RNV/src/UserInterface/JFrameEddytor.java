@@ -11,6 +11,8 @@
 
 package UserInterface;
 
+import static Tools.SystemInfo.getScreenDimension;
+
 /**
  *
  * @author Isaac, Dironiil, Viviou
@@ -108,6 +110,7 @@ public class JFrameEddytor extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(getScreenDimension.width/2-400, getScreenDimension.height/2-300);
 
         jMenuFile.setText("Fichier");
 
