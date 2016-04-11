@@ -20,9 +20,9 @@ public class MapException extends Exception{
     
     
     /**
-     * Procédure surchargée avec gestion plus précise des messages d'erreurs
-     * 1x : erreur String -> Integer[][]
-     * 2x : erreur Integer[][] -> String
+     * Procédure surchargée avec gestion plus précise des messages d'erreurs (
+     * 1x : erreur String -> Integer[][] ;
+     * 2x : erreur Integer[][] -> String )
      * @param erreur Int envoyé en fonction de l'erreur obtenue
      */
     public MapException(int erreur) {

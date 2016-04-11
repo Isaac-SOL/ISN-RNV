@@ -19,7 +19,7 @@ public class MapTranslator {
      * Transformation d'un String en Integer[][]
      * @param sMap            String à convertir en Integer[][]
      * @throws MapException   Exception si le format du string est incorrect
-     * @return tMap           Integer[][] renvoyé si la conversion a été correct
+     * @return Integer[][] si la conversion a été correcte
      */    
     public static Integer[][] textToTable(String sMap) throws MapException{
         

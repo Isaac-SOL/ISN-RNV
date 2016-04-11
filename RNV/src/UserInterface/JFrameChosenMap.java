@@ -140,7 +140,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableMap = new javax.swing.JTable();
 
-        //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes. TODO inverser Lignes/Colonnes dans le MapTranslator + voir si on peut enlever le titre
+        //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
         jTableMap.setModel(new DefaultTableModelImpl(
             map,
             new String [nbColumns]

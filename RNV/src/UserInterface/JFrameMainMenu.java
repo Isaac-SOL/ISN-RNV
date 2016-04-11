@@ -124,7 +124,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
             File chosenMap = JFrameMapDirectories.jFileChooserMap.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
             try {
                 try {
-                    Integer[][] map = MapTranslator.textToTable(FileIO.readTextFile(chosenMap.getAbsolutePath() , StandardCharsets.UTF_8)); //Transformation du Fichier en tableau d'Integer[][]
+                    Integer[][] map = MapTranslator.textToTable(FileIO.readTextFile(chosenMap.getAbsolutePath() , StandardCharsets.UTF_8)); //Transformation du Fichier en tableau d'Integer[][] TODO transformer ça en lecture directe du fichier .map
                     new JFrameChosenMap(map).setVisible(true);  //Ouverture de la map choisie + 
                     this.dispose();                             //Fermeture de la fenètre de menu
                 } catch (MapException ex) {
@@ -140,16 +140,16 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_OpenMap
 
     private void OpenMapCreator(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMapCreator
-        // TODO add your handling code here:
+        // TODO Ouvrir l'éditeur de maps
     }//GEN-LAST:event_OpenMapCreator
 
     private void OpenMapGenerator(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMapGenerator
-        // TODO add your handling code here:
+        // TODO Ouvrir le générateur de maps (éventuellement?)
     }//GEN-LAST:event_OpenMapGenerator
     
     /**
      * Méthode quand on appuie sur le bouton Ferme. Quitte le programme définitivement.
-     * @param evt Auto-génération
+     * @param evt Auto-généré
      */
     private void CloseProgram(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseProgram
         System.exit(0);

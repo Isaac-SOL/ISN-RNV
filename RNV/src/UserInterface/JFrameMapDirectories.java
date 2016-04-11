@@ -3,6 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+//TODO supprimer cette JFrame et la rendre interne à MainMenu
+
 package UserInterface;
 
 import javax.swing.filechooser.FileFilter;

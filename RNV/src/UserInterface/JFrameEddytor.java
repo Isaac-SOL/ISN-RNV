@@ -13,7 +13,7 @@ package UserInterface;
 
 /**
  *
- * @author ubuntu
+ * @author Isaac, Dironiil, Viviou
  */
 public class JFrameEddytor extends javax.swing.JFrame {
 
@@ -55,11 +55,6 @@ public class JFrameEddytor extends javax.swing.JFrame {
         jInternalFrameSize.setVisible(true);
 
         jTextFieldWidth.setText("jTextField1");
-        jTextFieldWidth.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldWidthActionPerformed(evt);
-            }
-        });
 
         jTextFieldHeight.setText("jTextField1");
 
@@ -169,12 +164,8 @@ public class JFrameEddytor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenNewMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenNewMap
-        // TODO add your handling code here:
+        // TODO Ouvreur de nouvelle map dans l'éditeur
     }//GEN-LAST:event_OpenNewMap
-
-    private void jTextFieldWidthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWidthActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldWidthActionPerformed
 
     /**
     * @param args the command line arguments

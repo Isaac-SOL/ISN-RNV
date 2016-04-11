@@ -5,13 +5,7 @@
  */
 package Tools;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -26,7 +20,7 @@ public class FileIO {
      * Fonction pour lire un fichier texte et renvoyer le contenu dans un String
      * @param path          Chemin du fichier texte
      * @param encoding      Charset du fichier texte
-     * @return String       String retourné après conversion
+     * @return String retourné après conversion
      * @throws IOException
      * @throws FileNotFoundException
      */
@@ -37,22 +31,22 @@ public class FileIO {
     
     /**
      * Fonction pour lire un fichier d'Integer[][] sérialisé et en renvoyer le contenu
-     * @param f             Fichier sérialisé à lire
-     * @return Integer[][]  Tableau retourné après lecture
+     * @param file              Fichier sérialisé à lire
+     * @return Integer[][] retourné après lecture
      * @throws IOException
      * @throws FileNotFoundException
      * @throws ClassNotFoundException
      */
-    public static Integer[][] readIntegerArrayFile(File f) throws IOException, FileNotFoundException, ClassNotFoundException {
+    public static Integer[][] readIntegerArrayFile(File file) throws IOException, FileNotFoundException, ClassNotFoundException {
         Integer[][] map;
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             map = (Integer[][]) ois.readObject();
         }
         return map;
     }
     
     /**
-     * Fonction pour lire un fichier d'Integer[][] sérialisé et en renvoyer le contenu
+     * Procédure pour transformer un Integer[][] en fichier
      * @param map   Tableau à sérialiser
      * @param path  Chemin du fichier à créer
      * @throws IOException
