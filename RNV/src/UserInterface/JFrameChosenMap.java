@@ -5,7 +5,7 @@
  */
 package UserInterface;
 
-import static Tools.SystemInfo.getScreenDimension;
+import Tools.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,7 +43,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(getScreenDimension.width/2-400, getScreenDimension.height/2-300);
+        setLocation(SystemInfo.getScreenDimension.width/2-400, SystemInfo.getScreenDimension.height/2-300);
         setResizable(false);
 
         JButtonBack.setText("Retour");

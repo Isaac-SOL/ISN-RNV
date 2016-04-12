@@ -8,7 +8,6 @@ package UserInterface;
 
 import Exceptions.*;
 import Tools.*;
-import static Tools.SystemInfo.getScreenDimension;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -36,16 +35,33 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooserMap = new javax.swing.JFileChooser();
         jButtonOpenMap = new javax.swing.JButton();
         jButtonEditMap = new javax.swing.JButton();
         jButtonGenerateMap = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
 
+        jFileChooserMap.setAcceptAllFileFilterUsed(false);
+        jFileChooserMap.setApproveButtonText("Ouvrir");
+        jFileChooserMap.setApproveButtonToolTipText("Utiliser cette map pour les tests");
+        jFileChooserMap.setCurrentDirectory(new java.io.File(System.getProperty("user.home")+"/Documents"));
+        jFileChooserMap.setDialogTitle("Ouvrir une map");
+        jFileChooserMap.setFileFilter(FileIO.TxtFilter);
+        jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
+        jFileChooserMap.setSelectedFile(new java.io.File("C:\\Program Files (x86)\\NetBeans 8.0.2\\TestingMap"));
+        jFileChooserMap.setToolTipText("");
+        jFileChooserMap.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jFileChooserMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooserMapOpenMap(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NEAT");
         setBackground(new java.awt.Color(153, 153, 153));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setLocation(getScreenDimension.width/2-208, getScreenDimension.height/2-157);
+        setLocation(SystemInfo.getScreenDimension.width/2-208, SystemInfo.getScreenDimension.height/2-157);
         setResizable(false);
 
         jButtonOpenMap.setText("Ouvrir une map");
@@ -157,6 +173,10 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_CloseProgram
 
+    private void jFileChooserMapOpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserMapOpenMap
+        //Empty space
+    }//GEN-LAST:event_jFileChooserMapOpenMap
+
     /**
      * @param args the command line arguments
      */
@@ -198,5 +218,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEditMap;
     private javax.swing.JButton jButtonGenerateMap;
     private javax.swing.JButton jButtonOpenMap;
+    public static javax.swing.JFileChooser jFileChooserMap;
     // End of variables declaration//GEN-END:variables
 }

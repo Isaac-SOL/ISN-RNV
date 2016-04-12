@@ -108,7 +108,7 @@ public class JFrameMapDirectories extends javax.swing.JFrame {
         });
     }
     
-    //Crée un filtre pour les fichiers .txt.  TODO changer l'extension?
+    //Crée un filtre pour les fichiers .txt.
     FileFilter TxtFilter = new FileNameExtensionFilter("Fichier Texte","txt");
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

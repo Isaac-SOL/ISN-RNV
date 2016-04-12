@@ -9,6 +9,8 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileFilter;
 
 /**
  *
@@ -56,5 +58,8 @@ public class FileIO {
             oos.writeObject(map);
         }        
     }
+    
+    //Crée un filtre pour les fichiers .txt. TODO rendre ce commentaire propre (Dironiil)
+    public static FileFilter TxtFilter = new FileNameExtensionFilter("Fichier Texte","txt");
 
 }
