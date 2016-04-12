@@ -133,7 +133,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
 
     /**
      * méthode quand on appuie sur le bouton. Ouvre une fenêtre pour choisir un fichier texte et affiche son contenu.
-     * @param evt Auto-génération
+     * @param evt Auto-généré
      */
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
         int returnVal = jFileChooserMap.showOpenDialog(null);                            //Ouvre jFileChooserMap et regarde sur quel bouton il a appuyé
