@@ -48,7 +48,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         jFileChooserMap.setDialogTitle("Ouvrir une map");
         jFileChooserMap.setFileFilter(FileIO.TxtFilter);
         jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
-        jFileChooserMap.setSelectedFile(new java.io.File("C:\\Program Files (x86)\\NetBeans 8.0.2\\TestingMap"));
         jFileChooserMap.setToolTipText("");
         jFileChooserMap.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jFileChooserMap.addActionListener(new java.awt.event.ActionListener() {
@@ -137,9 +136,9 @@ public class JFrameMainMenu extends javax.swing.JFrame {
      * @param evt Auto-génération
      */
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
-        int returnVal = new JFrameMapDirectories().jFileChooserMap.showOpenDialog(null);                            //Ouvre jFileChooserMap et regarde sur quel bouton il a appuyé
+        int returnVal = jFileChooserMap.showOpenDialog(null);                            //Ouvre jFileChooserMap et regarde sur quel bouton il a appuyé
         if (returnVal == JFileChooser.APPROVE_OPTION) {                                                             //Vérifie qe l'utilisateur ait appuyé sur ok
-            File chosenMap = JFrameMapDirectories.jFileChooserMap.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
+            File chosenMap = jFileChooserMap.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
             try {
                 try {
                     Integer[][] map = MapTranslator.textToTable(FileIO.readTextFile(chosenMap.getAbsolutePath() , StandardCharsets.UTF_8)); //Transformation du Fichier en tableau d'Integer[][] TODO transformer ça en lecture directe du fichier .map
@@ -153,7 +152,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
               System.out.println("Problème lors de l'accès au fichier "+chosenMap.getAbsolutePath() + "Erreur : " + ex.getMessage());
             }
         } else {
-            System.out.println("Accès annulé par l'utilisateur.");
+            System.out.println("Accès au fichier annulé.");
         }
     }//GEN-LAST:event_OpenMap
 
@@ -218,6 +217,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEditMap;
     private javax.swing.JButton jButtonGenerateMap;
     private javax.swing.JButton jButtonOpenMap;
-    public static javax.swing.JFileChooser jFileChooserMap;
+    private javax.swing.JFileChooser jFileChooserMap;
     // End of variables declaration//GEN-END:variables
 }
