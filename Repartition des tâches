@@ -4,11 +4,11 @@ Faites :
   - Choix de l'organisation des réseaux (Arborescence..)
   
 Priorité 1 :
-  - Stockage des maps (.txt)
-  - Faire un menu (Simple)
-  - Choix du stockage des réseaux (.xml?)
+  - Stockage des maps (.txt? Fichier objet?)
+  - Choix du stockage des réseaux (.xml? .json? Ficher objet?)
   - Reflexion sur l'algorithme de RNV
   - Mettre un place une base de jeu jouable (déplacement, traduction map -> plateau, règles du jeu)
+  - Eddytor
   
 Priorité 2 :
   - Algorithme plus détaillé de RNV
@@ -44,10 +44,6 @@ Priorité 4 :
 
 Isaac :
 
-- Faire un menu (Simple)
-
 Dironiil :
 
 Viviou :
-
-- Stockage + lecture des map
