@@ -211,6 +211,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         });
     }
     
+    //TODO Il est possible de positionner la fenêtre automatiquement au centre à l'aide de NetBeans. Il faudra le refaire pour certaines fenêtres.
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClose;
