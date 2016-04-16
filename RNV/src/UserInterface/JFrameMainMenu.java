@@ -40,6 +40,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         jButtonEditMap = new javax.swing.JButton();
         jButtonGenerateMap = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
+        jButtonPlayMapTemp = new javax.swing.JButton();
 
         jFileChooserMap.setAcceptAllFileFilterUsed(false);
         jFileChooserMap.setApproveButtonText("Ouvrir");
@@ -50,11 +51,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
         jFileChooserMap.setToolTipText("");
         jFileChooserMap.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jFileChooserMap.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooserMapOpenMap(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NEAT");
@@ -95,6 +91,13 @@ public class JFrameMainMenu extends javax.swing.JFrame {
             }
         });
 
+        jButtonPlayMapTemp.setText("Jouer");
+        jButtonPlayMapTemp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PlayMap(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,13 +115,17 @@ public class JFrameMainMenu extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButtonClose)))
-                .addGap(100, 100, 100))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonPlayMapTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(67, 67, 67)
-                .addComponent(jButtonOpenMap, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonPlayMapTemp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonOpenMap, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonEditMap, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -172,9 +179,26 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_CloseProgram
 
-    private void jFileChooserMapOpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserMapOpenMap
-        //Empty space
-    }//GEN-LAST:event_jFileChooserMapOpenMap
+    private void PlayMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayMap
+        int returnVal = jFileChooserMap.showOpenDialog(null);                            //Ouvre jFileChooserMap et regarde sur quel bouton il a appuyé
+        if (returnVal == JFileChooser.APPROVE_OPTION) {                                                             //Vérifie qe l'utilisateur ait appuyé sur ok
+            File chosenMap = jFileChooserMap.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
+            try {
+                try {
+                    Integer[][] map = MapTranslator.textToTable(FileIO.readTextFile(chosenMap.getAbsolutePath() , StandardCharsets.UTF_8)); //Transformation du Fichier en tableau d'Integer[][] TODO transformer ça en lecture directe du fichier .map
+                    new JFramePlayableGame(map).setVisible(true);  //Ouverture de la map choisie + 
+                    this.dispose();                             //Fermeture de la fenètre de menu
+                } catch (MapException ex) {
+                    System.out.println("Format du fichier texte " + chosenMap.getAbsolutePath() + "incorrect.");
+                }
+                
+            } catch (IOException ex) {
+              System.out.println("Problème lors de l'accès au fichier "+chosenMap.getAbsolutePath() + "Erreur : " + ex.getMessage());
+            }
+        } else {
+            System.out.println("Accès au fichier annulé.");
+        }
+    }//GEN-LAST:event_PlayMap
 
     /**
      * @param args the command line arguments
@@ -217,6 +241,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEditMap;
     private javax.swing.JButton jButtonGenerateMap;
     private javax.swing.JButton jButtonOpenMap;
+    private javax.swing.JButton jButtonPlayMapTemp;
     private javax.swing.JFileChooser jFileChooserMap;
     // End of variables declaration//GEN-END:variables
 }
