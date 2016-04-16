@@ -33,10 +33,32 @@ public class Tile {
         setYPos(y);
     }
     
+    public Tile(Integer i) {
+        setType(i);
+    }
+    
+    public Tile(Integer i, int x, int y) {
+        setType(i);
+        setXPos(x);
+        setYPos(y);
+    }
+    
     //Méthodes
     
     public void setType(String t) {
         this.type = t;
+    }
+    
+    public void setType(Integer i) {
+        switch (i) {
+            
+            case 0 : this.type = "Token"; break;
+                
+            case 1 : this.type = "Empty"; break;
+                
+            case 2 : this.type = "Obstacle"; break;
+                
+        }
     }
     
     public void setXPos(int x) {
