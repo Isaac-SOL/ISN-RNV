@@ -49,14 +49,15 @@ public class Tile {
         this.type = t;
     }
     
+    //Définit le type et l'icône de la Tile à partir d'un Integer
     public void setType(Integer i) {
         switch (i) {
             
-            case 0 : this.type = "Token"; break;
+            case 0 : this.type = "Token"; setIcon("Token"); break;
                 
-            case 1 : this.type = "Empty"; break;
+            case 1 : this.type = "Empty"; setIcon("Empty"); break;
                 
-            case 2 : this.type = "Obstacle"; break;
+            case 2 : this.type = "Obstacle"; setIcon("Obstacle"); break;
                 
         }
     }
@@ -81,6 +82,21 @@ public class Tile {
     
     public String getType() {
         return this.type;
+    }
+    
+    //Renvoie le type de Tile, sous forme d'un nombre. TODO Rendre ce comentaire propre (Dironiil)
+    public Integer getIntType() {
+        Integer iType = 0;
+        switch (type) {
+            
+            case "Token" : iType = 0; break;
+                
+            case "Empty" : iType = 1; break;
+                
+            case "Obstacle" : iType = 2; break;
+                
+        }
+        return iType;
     }
     
     public BufferedImage getIcon() {

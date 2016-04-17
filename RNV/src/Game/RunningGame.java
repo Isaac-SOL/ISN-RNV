@@ -4,7 +4,11 @@
  */
 package Game;
 
+import static Tools.MapTranslator.intToTiles; //TODO rendre ces imports plus propres, je sais plus comment on fait
+import static Tools.MapTranslator.tilesToIcons;
+import static Tools.MapTranslator.tilesToInt;
 import java.awt.image.BufferedImage;
+
 
 /**
  *
@@ -20,13 +24,7 @@ public class RunningGame {
     
     //TODO Peut-être qu'il faudra caler tout ça dans un Tool? Le MapTranslator peut-être?
     public RunningGame(Integer[][] map) {
-        currentMap = new Tile[map.length][map[0].length];       //Définit les dimensions de la nouvelle table à partir des dimensions de la table d'Integer
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                currentMap[i][j] = new Tile(map[i][j],map.length,map[0].length);        //Définit la Tile à chaque case avec le constructeur
-                currentMap[i][j].setIcon(currentMap[i][j].getType());       //Définit l'icône de cette Tile grâce à son type. TODO on peut pas faire ça automatiquement?
-            }
-        }
+        currentMap = intToTiles(map);
     }
     
     //Méthodes
@@ -58,12 +56,12 @@ public class RunningGame {
         return currentMap;
     }
     
-    public void getIconMap() {   //remplacer "void" par "BufferedImage[][]" TODO renvoyer la carte sous forme d'images. Faisable dans Tools?
-   
+    public BufferedImage[][] getIconMap() {
+        return tilesToIcons(currentMap);
     }
     
-    public void getIntMap() {   //remplacer "void" par "Integer[][]" TODO renvoyer la carte sous forme d'Integers. Faisable dans Tools?
-        
+    public Integer[][] getIntMap() {
+        return tilesToInt(currentMap);
     }
     
     public void getViewRadius() {   //Contiendra une table de 5x5 qui représentera la "vue" du Token. Sera utilisée notamment par le RNV.
