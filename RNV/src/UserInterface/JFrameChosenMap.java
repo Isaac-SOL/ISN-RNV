@@ -134,7 +134,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
      * Méthode appelée par le second constructeur. Utilise un tableau de Integer pour créer et remplir une Table, qui est ensuite affichée.
      * @param map Integer[][] à afficher à l'écran
      */
-    private void initTable(Integer[][] map) {
+    private void initTable(Object[][] map) {
         
         int nbLines = map.length;
         int nbColumns = map[0].length;

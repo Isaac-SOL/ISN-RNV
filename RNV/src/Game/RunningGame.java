@@ -64,8 +64,8 @@ public class RunningGame {
         return tilesToInt(currentMap);
     }
     
-    public void getViewRadius() {   //Contiendra une table de 5x5 qui représentera la "vue" du Token. Sera utilisée notamment par le RNV.
-        
+    public void getViewRadius(int r) {   //Contiendra une table de 5x5 qui représentera la "vue" du Token. Sera utilisée notamment par le RNV. Note: Je peux aussi faire dans l'overkill et mettre un radius variable. Je vais voir ça
+        Tile[][] viewRadius = new Tile[2*r + 1][2*r + 1];
     }
     
     //Variables
