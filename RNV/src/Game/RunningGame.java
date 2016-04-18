@@ -7,7 +7,7 @@ package Game;
 import static Tools.MapTranslator.intToTiles; //TODO rendre ces imports plus propres, je sais plus comment on fait
 import static Tools.MapTranslator.tilesToIcons;
 import static Tools.MapTranslator.tilesToInt;
-import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -68,7 +68,7 @@ public class RunningGame {
         return currentMap;
     }
     
-    public BufferedImage[][] getIconMap() {
+    public ImageIcon[][] getIconMap() {
         return tilesToIcons(currentMap);
     }
     
