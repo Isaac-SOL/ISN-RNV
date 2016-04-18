@@ -6,6 +6,8 @@
 
 package UserInterface;
 
+import static Tools.MapTranslator.intToTiles;   //TODO rendre ces imports plus propres, je sais plus comment on fait
+import static Tools.MapTranslator.tilesToIcons;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,7 +31,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
      */
     public JFramePlayableGame(Integer[][] map) {
         initComponents();
-        initTable(map);
+        initTable(tilesToIcons(intToTiles(map)));
     }
 
     /**
@@ -218,7 +220,13 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         int nbColumns = map[0].length;
         
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableMap = new javax.swing.JTable();
+        jTableMap = new javax.swing.JTable() {
+            @Override       //On override getColumnClass pour pouvoir afficher des ImageIcons
+            public Class getColumnClass(int column)
+            {
+                return getValueAt(0, column).getClass();
+            }
+        };
 
         //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
         jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(

@@ -6,6 +6,8 @@
 package UserInterface;
 
 import Tools.*;
+import static Tools.MapTranslator.intToTiles;
+import static Tools.MapTranslator.tilesToIcons;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,7 +29,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
      */
     public JFrameChosenMap(Integer[][] map) {
         initComponents();
-        initTable(map);
+        initTable(tilesToIcons(intToTiles(map)));
     }
 
     /**
@@ -140,7 +142,13 @@ public class JFrameChosenMap extends javax.swing.JFrame {
         int nbColumns = map[0].length;
         
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableMap = new javax.swing.JTable();
+        jTableMap = new javax.swing.JTable() {
+            @Override       //On override getColumnClass pour pouvoir afficher des ImageIcons
+            public Class getColumnClass(int column)
+            {
+                return getValueAt(0, column).getClass();
+            }
+        };
 
         //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
         jTableMap.setModel(new DefaultTableModelImpl(

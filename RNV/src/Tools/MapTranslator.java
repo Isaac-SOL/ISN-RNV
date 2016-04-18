@@ -7,7 +7,7 @@ package Tools;
 
 import Exceptions.*;
 import Game.Tile;
-import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -132,8 +132,8 @@ public class MapTranslator {
     }
     
     //Transformation d'un Tile[][] en BufferedImage[][] pour l'interface TODO Rajouter des exceptions, rendre ce commentaire propre (Dironiil)
-    public static BufferedImage[][] tilesToIcons(Tile[][] Tiles) {
-        BufferedImage[][] iconMap = new BufferedImage[Tiles.length][Tiles[0].length];       //Définit les dimensions de la nouvelle table à partir des dimensions de la table d'Integer
+    public static ImageIcon[][] tilesToIcons(Tile[][] Tiles) {
+        ImageIcon[][] iconMap = new ImageIcon[Tiles.length][Tiles[0].length];       //Définit les dimensions de la nouvelle table à partir des dimensions de la table d'Integer
         for (int i = 0; i < Tiles.length; i++) {
             for (int j = 0; j < Tiles[0].length; j++) {
                 iconMap[i][j] = Tiles[i][j].getIcon();       //Définit la Tile à chaque case avec le constructeur
