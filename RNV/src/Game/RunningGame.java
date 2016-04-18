@@ -29,20 +29,33 @@ public class RunningGame {
     //Méthodes
         //Input
     
+    //Les méthodes utilisées ici sont limitées au besoin du projet. On pourrait faire un truc plus complexe mais plus simple à étendre.
     public void goLeft() {
-        //TODO flèche gauche
+        if (!"Obstacle".equals(currentMap[getTokenXPos()][getTokenYPos() - 1].type)) {
+            currentMap[getTokenXPos()][getTokenYPos()].setType("Empty");
+            currentMap[getTokenXPos()][getTokenYPos() - 1].setType("Token");
+        }
     }
     
     public void goRight() {
-        //TODO flèche droite
+        if (!"Obstacle".equals(currentMap[getTokenXPos()][getTokenYPos() + 1].type)) {
+            currentMap[getTokenXPos()][getTokenYPos()].setType("Empty");
+            currentMap[getTokenXPos()][getTokenYPos() + 1].setType("Token");
+        }
     }
     
     public void goUp() {
-        //TODO flèche haut
+        if (!"Obstacle".equals(currentMap[getTokenXPos() - 1][getTokenYPos()].type)) {
+            currentMap[getTokenXPos()][getTokenYPos()].setType("Empty");
+            currentMap[getTokenXPos() - 1][getTokenYPos()].setType("Token");
+        }
     }
     
     public void goDown() {
-        //TODO flèche bas
+        if (!"Obstacle".equals(currentMap[getTokenXPos() + 1][getTokenYPos()].type)) {
+            currentMap[getTokenXPos()][getTokenYPos()].setType("Empty");
+            currentMap[getTokenXPos() + 1][getTokenYPos()].setType("Token");
+        }
     }
     
         //Output
@@ -92,12 +105,12 @@ public class RunningGame {
     //Contiendra une table qui représentera la "vue" du Token, dans un certain rayon. Sera utilisée notamment par le RNV. TODO Rendre ce commentaire propre (Dironiil)
     public Tile[][] getViewRadius(int r) {
         Tile[][] viewRadius = new Tile[2*r + 1][2*r + 1];       //Fixe la taille de la table de vision selon le rayon choisi
-        int XPos = getTokenXPos();
-        int YPos = getTokenYPos();
         for (int i = -r; i <= r; i++) {
             for (int j = -r; j <= r; j++) {
-                if (i >= 0 && i <= currentMap.length && j >= 0 && j <= currentMap[0].length) {      //Vérifie que les coordonnées soient bien dans la table
-                    viewRadius[i][j] = currentMap[XPos+i][YPos+j];      //Si elles sont dedans, copie la Tile aux coordonées correspondantes
+                int viewXPos = getTokenXPos()+i;
+                int viewYPos = getTokenYPos()+j;
+                if (viewXPos >= 0 && viewXPos <= currentMap.length && viewYPos >= 0 && viewYPos <= currentMap[0].length) {      //Vérifie que les coordonnées soient bien dans la table
+                    viewRadius[i][j] = currentMap[viewXPos][viewYPos];      //Si elles sont dedans, copie la Tile aux coordonées correspondantes
                 } else {
                     viewRadius[i][j] = new Tile("Obstacle");        //Sinon, remplace le vide par un obstacle
                 }
