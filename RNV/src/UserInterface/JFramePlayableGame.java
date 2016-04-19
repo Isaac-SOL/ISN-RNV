@@ -6,6 +6,7 @@
 
 package UserInterface;
 
+import Game.*;
 import static Tools.MapTranslator.intToTiles;   //TODO rendre ces imports plus propres, je sais plus comment on fait
 import static Tools.MapTranslator.tilesToIcons;
 import javax.swing.table.DefaultTableModel;
@@ -30,8 +31,14 @@ public class JFramePlayableGame extends javax.swing.JFrame {
      * @param map Integer[][] qui sert à créer la map
      */
     public JFramePlayableGame(Integer[][] map) {
+        
+        nbLines = map.length;
+        nbColumns = map[0].length;
+        
         initComponents();
         initTable(tilesToIcons(intToTiles(map)));
+        game = new RunningGame(map);
+        
     }
 
     /**
@@ -138,23 +145,28 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeftActionPerformed
-        // TODO touche de gauche
+        game.goLeft();
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
     }//GEN-LAST:event_jButtonLeftActionPerformed
 
     private void jButtonRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRightActionPerformed
-        // TODO touche de droite
+        game.goRight();
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
     }//GEN-LAST:event_jButtonRightActionPerformed
 
     private void jButtonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpActionPerformed
-        // TODO touche du haut
+        game.goUp();
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
     }//GEN-LAST:event_jButtonUpActionPerformed
 
     private void jButtonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownActionPerformed
-        // TODO touche du bas
+        game.goDown();
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
     }//GEN-LAST:event_jButtonDownActionPerformed
 
+    //Reset le jeu
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
-        // TODO bouton reset du jeu
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.reset()), new String [nbColumns]));
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void WindowBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowBack
@@ -209,6 +221,11 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     //Variables utilisées pour créer la Table.
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableMap;
+    int nbLines;
+    int nbColumns;
+    
+    //Jeu en cours en fond.
+    RunningGame game;
     
     /**
      * Méthode appelée par le second constructeur. Utilise un tableau de Integer pour créer et remplir une Table, qui est ensuite affichée.
@@ -216,8 +233,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
      */
     private void initTable(Object[][] map) {
         
-        int nbLines = map.length;
-        int nbColumns = map[0].length;
+        
         
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMap = new javax.swing.JTable() {

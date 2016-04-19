@@ -72,10 +72,6 @@ public class Tile {
     //TODO préparer des exceptions (Dironiil)
     public void setIcon(String t) {
         icon = new ImageIcon(getClass().getResource(t + ".png"));        //Trouve le fichier PNG avec le même nom que le type de tile
-//        icon = new BufferedImage(i.getIconWidth(), i.getIconHeight(), BufferedImage.TYPE_INT_ARGB);       //Crée une BufferedImage avec la taille de l'icône. ARGB pour avoir la transparence
-//        Graphics g = icon.createGraphics();
-//        i.paintIcon(null, g, 0,0);       //Met l'image de l'icône dans les graphiques g de la BufferedImage
-//        g.dispose();
     }
     
     public String getType() {

@@ -24,12 +24,19 @@ public class RunningGame {
     
     public RunningGame(Integer[][] map) {
         currentMap = intToTiles(map);
+        startingMap = currentMap;
+    }
+    
+    public RunningGame(Tile[][] map) {
+        currentMap = map;
+        startingMap = currentMap;
     }
     
     //Méthodes
         //Input
     
     //Les méthodes utilisées ici sont limitées au besoin du projet. On pourrait faire un truc plus complexe mais plus simple à étendre.
+    //TODO renvoient directement la map après déplacement? (Choix à faire.)
     public void goLeft() {
         if (!"Obstacle".equals(currentMap[getTokenXPos()][getTokenYPos() - 1].type)) {
             currentMap[getTokenXPos()][getTokenYPos()].setType("Empty");
@@ -56,6 +63,12 @@ public class RunningGame {
             currentMap[getTokenXPos()][getTokenYPos()].setType("Empty");
             currentMap[getTokenXPos() + 1][getTokenYPos()].setType("Token");
         }
+    }
+    
+    //Reset la map, et renvoie la map après reset
+    public Tile[][] reset() {
+        currentMap = startingMap;
+        return currentMap;
     }
     
         //Output
@@ -122,5 +135,6 @@ public class RunningGame {
     //Variables
     
     Tile[][] currentMap;
+    Tile[][] startingMap;
     int score;
 }
