@@ -44,7 +44,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         jFileChooserMap.setApproveButtonToolTipText("Utiliser cette map pour les tests");
         jFileChooserMap.setCurrentDirectory(new java.io.File(System.getProperty("user.home")+"/Documents"));
         jFileChooserMap.setDialogTitle("Ouvrir une map");
-        jFileChooserMap.setFileFilter(FileIO.TxtFilter);
+        jFileChooserMap.setFileFilter(FileIO.MapFilter);
         jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
         jFileChooserMap.setToolTipText("");
         jFileChooserMap.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -138,7 +138,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {                                                             //Vérifie qe l'utilisateur ait appuyé sur ok
             File chosenMap = jFileChooserMap.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
             try {
-                Integer[][] map = FileIO.readIntegerArrayFile(chosenMap); //Transformation du Fichier en tableau d'Integer[][] TODO transformer ça en lecture directe du fichier .map
+                Integer[][] map = FileIO.readIntegerArrayFile(chosenMap); //Transformation du Fichier en tableau d'Integer[][]
                 new JFrameChosenMap(map).setVisible(true);  //Ouverture de la map choisie + 
                 this.dispose();                             //Fermeture de la fenètre de menu               
             } catch (IOException ex) {
@@ -152,7 +152,8 @@ public class JFrameMainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_OpenMap
 
     private void OpenMapCreator(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMapCreator
-        // TODO Ouvrir l'éditeur de maps
+        new JFrameEddytor().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_OpenMapCreator
 
     private void OpenMapGenerator(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMapGenerator
