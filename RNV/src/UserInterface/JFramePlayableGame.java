@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
  * @author Isaac
  */
 
-
 public class JFramePlayableGame extends javax.swing.JFrame {
 
     /**
@@ -39,6 +38,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         initTable(tilesToIcons(intToTiles(map)));
         game = new RunningGame(map);
         
+        initViewRadius(tilesToIcons(game.getViewRadius(3)),3);
     }
 
     /**
@@ -50,12 +50,28 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrameViewRadius = new javax.swing.JFrame();
         jButtonBack = new javax.swing.JButton();
         jButtonLeft = new javax.swing.JButton();
         jButtonRight = new javax.swing.JButton();
         jButtonUp = new javax.swing.JButton();
         jButtonDown = new javax.swing.JButton();
         jButtonReset = new javax.swing.JButton();
+
+        jFrameViewRadius.setAlwaysOnTop(true);
+        jFrameViewRadius.setResizable(false);
+        jFrameViewRadius.setSize(new java.awt.Dimension(200, 200));
+
+        javax.swing.GroupLayout jFrameViewRadiusLayout = new javax.swing.GroupLayout(jFrameViewRadius.getContentPane());
+        jFrameViewRadius.getContentPane().setLayout(jFrameViewRadiusLayout);
+        jFrameViewRadiusLayout.setHorizontalGroup(
+            jFrameViewRadiusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        jFrameViewRadiusLayout.setVerticalGroup(
+            jFrameViewRadiusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,6 +188,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     private void WindowBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowBack
         new JFrameMainMenu().setVisible(true);
         this.dispose();
+        jFrameViewRadius.dispose();
     }//GEN-LAST:event_WindowBack
 
     /**
@@ -216,6 +233,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonRight;
     private javax.swing.JButton jButtonUp;
+    private javax.swing.JFrame jFrameViewRadius;
     // End of variables declaration//GEN-END:variables
 
     //Variables utilisées pour créer la Table.
@@ -227,17 +245,19 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     //Jeu en cours en fond.
     RunningGame game;
     
+    //Variables utilisées pour créer le ViewRadius.
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableViewRadius;
+    
     /**
      * Méthode appelée par le second constructeur. Utilise un tableau de Integer pour créer et remplir une Table, qui est ensuite affichée.
      * @param map Integer[][] à afficher à l'écran
      */
     private void initTable(Object[][] map) {
         
-        
-        
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMap = new javax.swing.JTable() {
-            @Override       //On override getColumnClass pour pouvoir afficher des ImageIcons
+            @Override       //Override getColumnClass pour pouvoir afficher des ImageIcons
             public Class getColumnClass(int column)
             {
                 return getValueAt(0, column).getClass();
@@ -300,11 +320,51 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         
     }
     
+    private void initViewRadius(Object[][] view, int radius) {
+        
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableViewRadius = new javax.swing.JTable() {
+            @Override       //Override getColumnClass pour pouvoir afficher des ImageIcons
+            public Class getColumnClass(int column)
+            {
+                return getValueAt(0, column).getClass();
+            }
+        };
+
+        //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
+        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(
+            view,
+            new String [2*radius + 1]
+        ));
+        
+        //<editor-fold defaultstate="collapsed" desc="Code du Scroller, copié du générateur auto de NetBeans">
+        jScrollPane2.setViewportView(jTableViewRadius);
+        
+        javax.swing.GroupLayout jFrameViewRadiusLayout = new javax.swing.GroupLayout(jFrameViewRadius.getContentPane());
+        jFrameViewRadius.getContentPane().setLayout(jFrameViewRadiusLayout);
+        jFrameViewRadiusLayout.setHorizontalGroup(
+                jFrameViewRadiusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jFrameViewRadiusLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+        jFrameViewRadiusLayout.setVerticalGroup(
+                jFrameViewRadiusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jFrameViewRadiusLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+        //</editor-fold>
+        
+        jFrameViewRadius.setVisible(true);
+    }
+    
     private static class DefaultTableModelImpl extends DefaultTableModel {
 
         public DefaultTableModelImpl(Object[][] data, Object[] columnNames) {
             super(data, columnNames);
         }
     }
-
 }

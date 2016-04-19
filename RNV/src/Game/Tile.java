@@ -45,6 +45,7 @@ public class Tile {
     
     public void setType(String t) {
         this.type = t;
+        setIcon(t);
     }
     
     //Définit le type et l'icône de la Tile à partir d'un Integer
