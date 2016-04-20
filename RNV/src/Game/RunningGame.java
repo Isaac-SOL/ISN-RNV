@@ -41,33 +41,41 @@ public class RunningGame {
     //Les méthodes utilisées ici sont limitées au besoin du projet. On pourrait faire un truc plus complexe mais plus simple à étendre.
     //TODO renvoient directement la map après déplacement? (Choix à faire.)
     public void goLeft() {
-        if ("Obstacle" != currentMap[getTokenXPos()][getTokenYPos() - 1].type) {
-            currentMap[getTokenXPos()][getTokenYPos()].setType("Empty");
-            currentMap[getTokenXPos()][getTokenYPos() - 1].setType("Token");
+        int txpos = getTokenXPos();
+        int typos = getTokenYPos();
+        if (!"Obstacle".equals(getViewRadius(1)[1][0].type)) {
+            currentMap[txpos][typos].setType("Empty");
+            currentMap[txpos][typos - 1].setType("Token");
         }
         System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
     }
     
     public void goRight() {
-        if ("Obstacle" != currentMap[getTokenXPos()][getTokenYPos() + 1].type) {
-            currentMap[getTokenXPos()][getTokenYPos()].setType("Empty");
-            currentMap[getTokenXPos()][getTokenYPos() + 1].setType("Token");
+        int txpos = getTokenXPos();
+        int typos = getTokenYPos();
+        if (!"Obstacle".equals(getViewRadius(1)[1][2].type)) {
+            currentMap[txpos][typos].setType("Empty");
+            currentMap[txpos][typos + 1].setType("Token");
         }
         System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
     }
     
     public void goUp() {
-        if ("Obstacle" != currentMap[getTokenXPos() - 1][getTokenYPos()].type) {
-            currentMap[getTokenXPos()][getTokenYPos()].setType("Empty");
-            currentMap[getTokenXPos() - 1][getTokenYPos()].setType("Token");
+        int txpos = getTokenXPos();
+        int typos = getTokenYPos();
+        if (!"Obstacle".equals(getViewRadius(1)[0][1].type)) {
+            currentMap[txpos][typos].setType("Empty");
+            currentMap[txpos - 1][typos].setType("Token");
         }
         System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
     }
     
     public void goDown() {
-        if ("Obstacle" != currentMap[getTokenXPos() + 1][getTokenYPos()].type) {
-            currentMap[getTokenXPos()][getTokenYPos()].setType("Empty");
-            currentMap[getTokenXPos() + 1][getTokenYPos()].setType("Token");
+        int txpos = getTokenXPos();
+        int typos = getTokenYPos();
+        if (!"Obstacle".equals(getViewRadius(1)[2][1].type)) {
+            currentMap[txpos][typos].setType("Empty");
+            currentMap[txpos + 1][typos].setType("Token");
         }
         System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
     }
@@ -75,7 +83,7 @@ public class RunningGame {
     //Reset la map, et renvoie la map après reset
     public Tile[][] reset() {
         currentMap = startingMap;
-        return currentMap;
+        return startingMap;
     }
     
         //Output
@@ -99,8 +107,8 @@ public class RunningGame {
     //Choper la coordonnée X du Token. TODO Rajouter des exceptions, rendre ce commentaire propre (Dironiil)
     public int getTokenXPos() {
         int txpos = 0;
-        for (int i = 0; i <= 4; i++) {
-            for (int j = 0; j <= 4; j++) {
+        for (int i = 0; i < currentMap.length; i++) {
+            for (int j = 0; j < currentMap[0].length; j++) {
                 if ("Token".equals(currentMap[i][j].type)) {
                     txpos = i;
                 }
@@ -112,8 +120,8 @@ public class RunningGame {
     //Choper la coordonnée Y du Token. TODO Rajouter des exceptions, rendre ce commentaire propre (Dironiil)
     public int getTokenYPos() {
         int typos = 0;
-        for (int i = 0; i <= 4; i++) {
-            for (int j = 0; j <= 4; j++) {
+        for (int i = 0; i < currentMap.length; i++) {
+            for (int j = 0; j < currentMap[0].length; j++) {
                 if ("Token".equals(currentMap[i][j].type)) {
                     typos = j;
                 }
