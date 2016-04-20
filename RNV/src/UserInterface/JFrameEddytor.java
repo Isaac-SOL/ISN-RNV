@@ -19,7 +19,7 @@ public class JFrameEddytor extends javax.swing.JFrame {
      /** Crée un nouveau JFrameEddytor */
     public JFrameEddytor() {
         initComponents();
-        blockValue = 2;
+        tileValue = 2;
         path = null;
     }
     /**
@@ -30,7 +30,7 @@ public class JFrameEddytor extends javax.swing.JFrame {
     public JFrameEddytor(Integer[][] map, String mapPath) {
         initComponents();
         editTable(map);
-        blockValue = 1; //Initialise le block actuel à "vide"
+        tileValue = 1; //Initialise le block actuel à "vide"
         path = mapPath; //initialise le chemin de fichier de la map donnée
     }
 
@@ -52,6 +52,10 @@ public class JFrameEddytor extends javax.swing.JFrame {
         jLabelWidth = new javax.swing.JLabel();
         jLabelHeight = new javax.swing.JLabel();
         jButtonOk = new javax.swing.JButton();
+        jFrameErrorSize = new javax.swing.JFrame();
+        jButtonErrorOk = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemNew = new javax.swing.JMenuItem();
@@ -75,11 +79,6 @@ public class JFrameEddytor extends javax.swing.JFrame {
         jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
         jFileChooserMap.setToolTipText("");
         jFileChooserMap.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jFileChooserMap.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooserMapOpenMap(evt);
-            }
-        });
 
         jFileSaverMap.setAcceptAllFileFilterUsed(false);
         jFileSaverMap.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
@@ -90,12 +89,8 @@ public class JFrameEddytor extends javax.swing.JFrame {
         jFileSaverMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
         jFileSaverMap.setToolTipText("");
         jFileSaverMap.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jFileSaverMap.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileSaverMapOpenMap(evt);
-            }
-        });
 
+        jFrameSize.setTitle("Nouvelle map");
         jFrameSize.setLocation(SystemInfo.getScreenDimension.width/2-100, SystemInfo.getScreenDimension.height/2-60);
         jFrameSize.setResizable(false);
         jFrameSize.setSize(new java.awt.Dimension(236, 144));
@@ -159,6 +154,53 @@ public class JFrameEddytor extends javax.swing.JFrame {
                     .addComponent(jButtonBack)
                     .addComponent(jButtonOk))
                 .addGap(16, 16, 16))
+        );
+
+        jFrameErrorSize.setTitle("Erreur");
+        jFrameErrorSize.setAlwaysOnTop(true);
+        jFrameErrorSize.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jFrameErrorSize.setLocation(SystemInfo.getScreenDimension.width/2-100, SystemInfo.getScreenDimension.height/2-60);
+        jFrameErrorSize.setResizable(false);
+        jFrameErrorSize.setSize(new java.awt.Dimension(207, 125));
+
+        jButtonErrorOk.setLabel("OK");
+        jButtonErrorOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ErrorOk(evt);
+            }
+        });
+
+        jLabel1.setText("Les valeurs de hauteurs et de");
+
+        jLabel2.setText("largeurs doivent être numériques !");
+
+        javax.swing.GroupLayout jFrameErrorSizeLayout = new javax.swing.GroupLayout(jFrameErrorSize.getContentPane());
+        jFrameErrorSize.getContentPane().setLayout(jFrameErrorSizeLayout);
+        jFrameErrorSizeLayout.setHorizontalGroup(
+            jFrameErrorSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrameErrorSizeLayout.createSequentialGroup()
+                .addGroup(jFrameErrorSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrameErrorSizeLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1))
+                    .addGroup(jFrameErrorSizeLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2))
+                    .addGroup(jFrameErrorSizeLayout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addComponent(jButtonErrorOk)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jFrameErrorSizeLayout.setVerticalGroup(
+            jFrameErrorSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrameErrorSizeLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonErrorOk)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -261,15 +303,15 @@ public class JFrameEddytor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BeginTile(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BeginTile
-        blockValue = 0;
+        tileValue = 0;
     }//GEN-LAST:event_BeginTile
 
     private void EmtpyTile(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmtpyTile
-        blockValue = 1;
+        tileValue = 1;
     }//GEN-LAST:event_EmtpyTile
 
     private void BlockTile(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlockTile
-        blockValue = 2;
+        tileValue = 2;
     }//GEN-LAST:event_BlockTile
 
     private void NewMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewMap
@@ -340,14 +382,6 @@ public class JFrameEddytor extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BackMenu
 
-    private void jFileChooserMapOpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserMapOpenMap
-        //Empty space
-    }//GEN-LAST:event_jFileChooserMapOpenMap
-
-    private void jFileSaverMapOpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileSaverMapOpenMap
-        //Empty space
-    }//GEN-LAST:event_jFileSaverMapOpenMap
-
     private void BackToEddytor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackToEddytor
         jFrameSize.setVisible(false);
         System.out.println("Nouvelle map annulée par l'utilisateur.");
@@ -381,10 +415,14 @@ public class JFrameEddytor extends javax.swing.JFrame {
             }
             
         }catch (NumberFormatException e) {
-            System.out.println("Erreur dans la création de map : " + e.getMessage());
-            //TODO afficher ça graphiquement, en demandant de réentrer.
+            System.out.println("Erreur dans la création de map, valeurs non numériques : " + e.getMessage());
+            jFrameErrorSize.setVisible(true);
         }
     }//GEN-LAST:event_SizeOk
+
+    private void ErrorOk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ErrorOk
+        jFrameErrorSize.setVisible(false);
+    }//GEN-LAST:event_ErrorOk
 
     /**
      * @param args the command line arguments
@@ -424,10 +462,14 @@ public class JFrameEddytor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBack;
+    private javax.swing.JButton jButtonErrorOk;
     private javax.swing.JButton jButtonOk;
     private javax.swing.JFileChooser jFileChooserMap;
     private javax.swing.JFileChooser jFileSaverMap;
+    private javax.swing.JFrame jFrameErrorSize;
     private javax.swing.JFrame jFrameSize;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelHeight;
     private javax.swing.JLabel jLabelWidth;
     private javax.swing.JMenuBar jMenuBar1;
@@ -455,7 +497,7 @@ public class JFrameEddytor extends javax.swing.JFrame {
     private String path;
     
     //Variable utilisée pour éditer les blocs
-    private int blockValue;
+    private int tileValue;
     
     //Variables utilisées pour créer la Table.
     private javax.swing.JScrollPane jScrollPane2;
@@ -470,12 +512,7 @@ public class JFrameEddytor extends javax.swing.JFrame {
         gMap = map;
         
         int nbLines = map.length;
-        int nbColumns = map[0].length;
-        
-        boolean[] canEdit = new boolean [nbColumns];
-        for(int i = 0; i < canEdit.length; i++) {
-            canEdit[i] = false;
-        }
+        int nbColumns = map[0].length;        
         
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableEditedMap = new javax.swing.JTable();
@@ -485,8 +522,9 @@ public class JFrameEddytor extends javax.swing.JFrame {
             map,
             new String [nbColumns]
         ){
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return false;
             }
         });
         
@@ -514,19 +552,20 @@ public class JFrameEddytor extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc="Code de modification lors d'un clic sur une cellule du tableau">
         jTableEditedMap.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                int line = jTableEditedMap.rowAtPoint(evt.getPoint());
-                int column = jTableEditedMap.columnAtPoint(evt.getPoint());
-                if (line >= 0 && column >= 0) {
-                    map[line][column] = blockValue;
-                    gMap = map;
+            public void mousePressed(java.awt.event.MouseEvent evt) { //Action quand il y a un clic sur le tableau
+                int line = jTableEditedMap.rowAtPoint(evt.getPoint()); //récupère la ligne correspondant au point du clic
+                int column = jTableEditedMap.columnAtPoint(evt.getPoint()); //récupère la colonne correspondant au point du clic
+                if (line >= 0 && column >= 0) { //Vérifie qu'il n'y a pas d'erreur
+                    map[line][column] = tileValue; //Donne à cette case la valeur actuelle de tile
+                    gMap = map; //enregistre la map "globale" comme la map actuelle
                     System.out.println("Click : " + map[line][column] + " en " + (line+1) + ", " + (column+1));
-                    jTableEditedMap.setModel(new JFrameEddytor.DefaultTableModelImpl(
+                    jTableEditedMap.setModel(new JFrameEddytor.DefaultTableModelImpl( //Actualise le modèle du tableau
                         map,
                         new String [nbColumns]
                     ){
+                        @Override
                         public boolean isCellEditable(int rowIndex, int columnIndex) {
-                            return canEdit[columnIndex];
+                            return false;
                         }
                     });
                 }
