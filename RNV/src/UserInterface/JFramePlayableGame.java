@@ -57,6 +57,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         jButtonUp = new javax.swing.JButton();
         jButtonDown = new javax.swing.JButton();
         jButtonReset = new javax.swing.JButton();
+        jLabelScore = new javax.swing.JLabel();
 
         jFrameViewRadius.setAlwaysOnTop(true);
         jFrameViewRadius.setResizable(false);
@@ -117,6 +118,8 @@ public class JFramePlayableGame extends javax.swing.JFrame {
             }
         });
 
+        jLabelScore.setText("Score = 0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,7 +132,9 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                         .addComponent(jButtonUp, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonBack)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 374, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
+                        .addComponent(jLabelScore, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
                         .addComponent(jButtonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(jButtonLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -143,16 +148,19 @@ public class JFramePlayableGame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(469, Short.MAX_VALUE)
-                .addComponent(jButtonUp, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButtonBack, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonRight, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonDown, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonUp, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonBack, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButtonLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonRight, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonDown, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelScore)))
                 .addContainerGap())
         );
 
@@ -164,29 +172,35 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         game.goLeft();
         jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
         jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
+        jLabelScore.setText("Score = " + game.getScore());
     }//GEN-LAST:event_jButtonLeftActionPerformed
 
     private void jButtonRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRightActionPerformed
         game.goRight();
         jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
         jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
+        jLabelScore.setText("Score = " + game.getScore());
     }//GEN-LAST:event_jButtonRightActionPerformed
 
     private void jButtonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpActionPerformed
         game.goUp();
         jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
         jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
+        jLabelScore.setText("Score = " + game.getScore());
     }//GEN-LAST:event_jButtonUpActionPerformed
 
     private void jButtonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownActionPerformed
         game.goDown();
         jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
         jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
+        jLabelScore.setText("Score = " + game.getScore());
     }//GEN-LAST:event_jButtonDownActionPerformed
 
     //Reset le jeu
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
-        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.reset()), new String [nbColumns]));
+        game.reset();
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
+        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void WindowBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowBack
@@ -238,6 +252,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonRight;
     private javax.swing.JButton jButtonUp;
     private javax.swing.JFrame jFrameViewRadius;
+    private javax.swing.JLabel jLabelScore;
     // End of variables declaration//GEN-END:variables
 
     //Variables utilisées pour créer la Table.

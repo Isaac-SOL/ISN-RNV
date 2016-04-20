@@ -56,7 +56,9 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jButtonBack" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="374" max="32767" attributes="0"/>
+                      <EmptySpace pref="243" max="32767" attributes="0"/>
+                      <Component id="jLabelScore" min="-2" pref="86" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="jButtonReset" min="-2" pref="114" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="jButtonLeft" min="-2" pref="64" max="-2" attributes="0"/>
@@ -72,19 +74,24 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace pref="469" max="32767" attributes="0"/>
-              <Component id="jButtonUp" min="-2" pref="60" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jButtonReset" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButtonBack" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                          <Component id="jButtonLeft" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
-                          <Component id="jButtonRight" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
-                          <Component id="jButtonDown" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jButtonUp" min="-2" pref="60" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jButtonBack" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                              <Component id="jButtonLeft" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                              <Component id="jButtonRight" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                              <Component id="jButtonDown" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
+                  </Group>
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="jButtonReset" alignment="3" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="jLabelScore" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -140,6 +147,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonResetActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelScore">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Score = 0"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

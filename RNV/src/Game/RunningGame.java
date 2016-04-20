@@ -25,13 +25,13 @@ public class RunningGame {
     
     public RunningGame(Integer[][] map) {
         currentMap = intToTiles(map);
-        startingMap = currentMap;
+        intStartingMap = map;
         System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
     }
     
     public RunningGame(Tile[][] map) {
         currentMap = map;
-        startingMap = currentMap;
+        intStartingMap = tilesToInt(map);
         System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
     }
     
@@ -39,7 +39,6 @@ public class RunningGame {
         //Input
     
     //Les méthodes utilisées ici sont limitées au besoin du projet. On pourrait faire un truc plus complexe mais plus simple à étendre.
-    //TODO renvoient directement la map après déplacement? (Choix à faire.)
     public void goLeft() {
         int txpos = getTokenXPos();
         int typos = getTokenYPos();
@@ -47,7 +46,7 @@ public class RunningGame {
             currentMap[txpos][typos].setType("Empty");
             currentMap[txpos][typos - 1].setType("Token");
         }
-        System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
+        update();
     }
     
     public void goRight() {
@@ -57,7 +56,7 @@ public class RunningGame {
             currentMap[txpos][typos].setType("Empty");
             currentMap[txpos][typos + 1].setType("Token");
         }
-        System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
+        update();
     }
     
     public void goUp() {
@@ -67,7 +66,7 @@ public class RunningGame {
             currentMap[txpos][typos].setType("Empty");
             currentMap[txpos - 1][typos].setType("Token");
         }
-        System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
+        update();
     }
     
     public void goDown() {
@@ -77,13 +76,21 @@ public class RunningGame {
             currentMap[txpos][typos].setType("Empty");
             currentMap[txpos + 1][typos].setType("Token");
         }
-        System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
+        update();
     }
     
-    //Reset la map, et renvoie la map après reset
+    //Reset la map, et renvoie la map après reset TODO Rendre ce commentaire propre (Dironiil)
     public Tile[][] reset() {
-        currentMap = startingMap;
-        return startingMap;
+        currentMap = intToTiles(intStartingMap);
+        score = getTokenYPos();
+        update();
+        return currentMap;
+    }
+    
+    //A chaque modif du RunningGame, fait cette mise à jour. TODO Rendre ce commentaire propre (Dironiil)
+    private void update() {
+        System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
+        if (getTokenYPos() > score) { score = getTokenYPos(); }
     }
     
         //Output
@@ -137,7 +144,7 @@ public class RunningGame {
             for (int j = 0; j <= 2*r; j++) {
                 int viewXPos = getTokenXPos()+i-r;
                 int viewYPos = getTokenYPos()+j-r;
-                if (viewXPos >= 0 && viewXPos <= currentMap.length && viewYPos >= 0 && viewYPos <= currentMap[0].length) {      //Vérifie que les coordonnées soient bien dans la table
+                if (viewXPos >= 0 && viewXPos < currentMap.length && viewYPos >= 0 && viewYPos < currentMap[0].length) {      //Vérifie que les coordonnées soient bien dans la table
                     viewRadius[i][j] = currentMap[viewXPos][viewYPos];      //Si elles sont dedans, copie la Tile aux coordonées correspondantes
                 } else {
                     viewRadius[i][j] = new Tile("Obstacle");        //Sinon, remplace le vide par un obstacle
@@ -150,6 +157,6 @@ public class RunningGame {
     //Variables
     
     Tile[][] currentMap;
-    Tile[][] startingMap;
-    int score;
+    Integer[][] intStartingMap;
+    int score = 0;
 }
