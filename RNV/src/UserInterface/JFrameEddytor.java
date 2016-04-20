@@ -23,7 +23,7 @@ public class JFrameEddytor extends javax.swing.JFrame {
         path = null;
     }
     /**
-     * Créé un nouveau JFrameEddytor avec une map pré-entrée
+     * Crée un nouveau JFrameEddytor avec une map pré-entrée
      * @param map La map à éditer
      * @param mapPath Le chemin de la map actuelle
      */
@@ -614,6 +614,11 @@ public class JFrameEddytor extends javax.swing.JFrame {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
+            }
+            @Override
+            public Class getColumnClass(int column)
+            {
+                return getValueAt(0, column).getClass();
             }
         });
         
