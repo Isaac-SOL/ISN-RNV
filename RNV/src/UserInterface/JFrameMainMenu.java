@@ -180,16 +180,13 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {                                                             //Vérifie qe l'utilisateur ait appuyé sur ok
             File chosenMap = jFileChooserMap.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
             try {
-                try {
-                    Integer[][] map = MapTranslator.textToTable(FileIO.readTextFile(chosenMap.getAbsolutePath() , StandardCharsets.UTF_8)); //Transformation du Fichier en tableau d'Integer[][] TODO transformer ça en lecture directe du fichier .map
-                    new JFramePlayableGame(map).setVisible(true);  //Ouverture de la map choisie + 
-                    this.dispose();                             //Fermeture de la fenètre de menu
-                } catch (MapException ex) {
-                    System.out.println("Format du fichier texte " + chosenMap.getAbsolutePath() + "incorrect.");
-                }
-                
+                Integer[][] map = FileIO.readIntegerArrayFile(chosenMap); //Transformation du Fichier en tableau d'Integer[][]
+                new JFramePlayableGame(map).setVisible(true);  //Ouverture de la map choisie + 
+                this.dispose();                             //Fermeture de la fenètre de menu
             } catch (IOException ex) {
-              System.out.println("Problème lors de l'accès au fichier "+chosenMap.getAbsolutePath() + "Erreur : " + ex.getMessage());
+                System.out.println("Problème lors de l'accès au fichier "+chosenMap.getAbsolutePath() + "Erreur : " + ex.getMessage());
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Erreur de classe du fichier : " + ex.getMessage());
             }
         } else {
             System.out.println("Accès au fichier annulé.");
