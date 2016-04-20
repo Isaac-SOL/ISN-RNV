@@ -1,18 +1,16 @@
 ﻿#Tâches:
 Faites :
-  - Choix du format de stockage des maps (.txt[stockage]/tableau[utilisation])
+  - Choix du format de stockage des maps (.map, fichier sérialisé)
   - Choix de l'organisation des réseaux (Arborescence..)
+  - Eddytor
   
 Priorité 1 :
-  - Stockage des maps (.txt? Fichier objet?)
   - Choix du stockage des réseaux (.xml? .json? Ficher objet?)
   - Reflexion sur l'algorithme de RNV
   - Mettre un place une base de jeu jouable (déplacement, traduction map -> plateau, règles du jeu)
-  - Eddytor
   
 Priorité 2 :
   - Algorithme plus détaillé de RNV
-  - 
   
 Priorité 3 :
   - Traduction en Java de la RNV, test pour déterminer les meilleurs variables d'algorithme
