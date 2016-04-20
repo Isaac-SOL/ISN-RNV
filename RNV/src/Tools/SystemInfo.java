@@ -15,6 +15,6 @@ import java.awt.Toolkit;
 
 
 public class SystemInfo {
-    //Renvoie les dimensions de l'écran sous forme de variable. TODO rendre ce commentaire propre (Dironiil)
+    //Variable statique donnant la dimension de l'écran de l'utilisateur
         public static Dimension getScreenDimension = Toolkit.getDefaultToolkit().getScreenSize();
 }

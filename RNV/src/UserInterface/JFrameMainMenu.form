@@ -12,7 +12,7 @@
         </Property>
         <Property name="dialogTitle" type="java.lang.String" value="Ouvrir une map"/>
         <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="FileIO.TxtFilter" type="code"/>
+          <Connection code="FileIO.MapFilter" type="code"/>
         </Property>
         <Property name="fileSelectionMode" type="int" value="2"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
