@@ -20,9 +20,6 @@
           <Color id="Curseur par d&#xe9;faut"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFileChooserMapOpenMap"/>
-      </Events>
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -76,7 +73,9 @@
                       <Component id="jButtonClose" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jButtonPlayMapTemp" min="-2" pref="88" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -84,7 +83,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-              <Component id="jButtonOpenMap" min="-2" pref="48" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jButtonPlayMapTemp" max="32767" attributes="0"/>
+                  <Component id="jButtonOpenMap" pref="48" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jButtonEditMap" min="-2" pref="47" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -131,6 +133,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CloseProgram"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonPlayMapTemp">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jouer"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PlayMap"/>
       </Events>
     </Component>
   </SubComponents>
