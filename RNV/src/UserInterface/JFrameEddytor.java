@@ -56,6 +56,10 @@ public class JFrameEddytor extends javax.swing.JFrame {
         jButtonErrorOk = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jFrameErrorBeginning = new javax.swing.JFrame();
+        jButtonErrorOk1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemNew = new javax.swing.JMenuItem();
@@ -203,6 +207,52 @@ public class JFrameEddytor extends javax.swing.JFrame {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
+        jFrameErrorBeginning.setTitle("Erreur");
+        jFrameErrorBeginning.setAlwaysOnTop(true);
+        jFrameErrorBeginning.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jFrameErrorBeginning.setLocation(SystemInfo.getScreenDimension.width/2-100, SystemInfo.getScreenDimension.height/2-60);
+        jFrameErrorBeginning.setResizable(false);
+        jFrameErrorBeginning.setSize(new java.awt.Dimension(207, 125));
+
+        jButtonErrorOk1.setLabel("OK");
+        jButtonErrorOk1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ErrorOkBeginning(evt);
+            }
+        });
+
+        jLabel3.setText("Cette map ne contient pas de");
+
+        jLabel4.setText("tile de départ.");
+
+        javax.swing.GroupLayout jFrameErrorBeginningLayout = new javax.swing.GroupLayout(jFrameErrorBeginning.getContentPane());
+        jFrameErrorBeginning.getContentPane().setLayout(jFrameErrorBeginningLayout);
+        jFrameErrorBeginningLayout.setHorizontalGroup(
+            jFrameErrorBeginningLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameErrorBeginningLayout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addGroup(jFrameErrorBeginningLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(jFrameErrorBeginningLayout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jButtonErrorOk1))
+                    .addGroup(jFrameErrorBeginningLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel4)))
+                .addGap(17, 17, 17))
+        );
+        jFrameErrorBeginningLayout.setVerticalGroup(
+            jFrameErrorBeginningLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrameErrorBeginningLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonErrorOk1)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(SystemInfo.getScreenDimension.width/2-400, SystemInfo.getScreenDimension.height/2-400);
         setMinimumSize(new java.awt.Dimension(600, 600));
@@ -347,10 +397,26 @@ public class JFrameEddytor extends javax.swing.JFrame {
     private void SaveMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveMap
          if (path != null && gMap != null) {
             try {
-                FileIO.writeIntegerArrayFile(gMap, path);
+                boolean beginning = false;
+                for (int i = 0; i < gMap.length; i++) { //vérifie qu'il y a bien un départ
+                    for (int j = 0; j < gMap[0].length; j++) {
+                        if (gMap[i][j] == 0) {
+                            beginning = true;
+                        }
+                    }
+                }
+                if (beginning) {
+                    FileIO.writeIntegerArrayFile(gMap, path);
+                } else { //Sinon affiche une erreur
+                        System.out.println("Il n'y a pas de tile de départ !");
+                        jFrameErrorBeginning.setVisible(true);
+                }
+                
             } catch (IOException ex) {
                 System.out.println("Erreur lors de l'écriture : " + ex.getMessage());
             }
+        } else {
+            System.out.println("La map est inexistante ou nouvelle !");
         }
     }//GEN-LAST:event_SaveMap
 
@@ -360,11 +426,26 @@ public class JFrameEddytor extends javax.swing.JFrame {
             File chosenMap = jFileSaverMap.getSelectedFile(); //Récupère le fichier choisi par l'utilisateur
             if (gMap != null) {
                 try {
-                    path = chosenMap.getAbsolutePath();
-                    if (!".map".equals(path.substring(path.length()-4))) {
-                        path += ".map";
+                    boolean beginning = false;
+                    for (int i = 0; i < gMap.length; i++) { //vérifie qu'il y a bien un départ
+                        for (int j = 0; j < gMap[0].length; j++) {
+                            if (gMap[i][j] == 0) {
+                                beginning = true;
+                            }
+                        }
                     }
-                    FileIO.writeIntegerArrayFile(gMap, path);
+                    
+                    if (beginning) { //Sauve s'il y a un départ
+                        path = chosenMap.getAbsolutePath();
+                        if (!".map".equals(path.substring(path.length()-4))) {
+                            path += ".map";
+                        }
+                        FileIO.writeIntegerArrayFile(gMap, path);
+                    } else { //Sinon affiche une erreur
+                        System.out.println("Il n'y a pas de tile de départ !");
+                        jFrameErrorBeginning.setVisible(true);
+                    }
+                    
                 } catch (IOException ex) {
                     System.out.println("Erreur lors de l'écriture : " + ex.getMessage());
                 }
@@ -424,6 +505,10 @@ public class JFrameEddytor extends javax.swing.JFrame {
         jFrameErrorSize.setVisible(false);
     }//GEN-LAST:event_ErrorOk
 
+    private void ErrorOkBeginning(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ErrorOkBeginning
+        jFrameErrorBeginning.setVisible(false);
+    }//GEN-LAST:event_ErrorOkBeginning
+
     /**
      * @param args the command line arguments
      */
@@ -463,13 +548,17 @@ public class JFrameEddytor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBack;
     private javax.swing.JButton jButtonErrorOk;
+    private javax.swing.JButton jButtonErrorOk1;
     private javax.swing.JButton jButtonOk;
     private javax.swing.JFileChooser jFileChooserMap;
     private javax.swing.JFileChooser jFileSaverMap;
+    private javax.swing.JFrame jFrameErrorBeginning;
     private javax.swing.JFrame jFrameErrorSize;
     private javax.swing.JFrame jFrameSize;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelHeight;
     private javax.swing.JLabel jLabelWidth;
     private javax.swing.JMenuBar jMenuBar1;
@@ -555,7 +644,18 @@ public class JFrameEddytor extends javax.swing.JFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) { //Action quand il y a un clic sur le tableau
                 int line = jTableEditedMap.rowAtPoint(evt.getPoint()); //récupère la ligne correspondant au point du clic
                 int column = jTableEditedMap.columnAtPoint(evt.getPoint()); //récupère la colonne correspondant au point du clic
-                if (line >= 0 && column >= 0) { //Vérifie qu'il n'y a pas d'erreur
+                
+                if (line >= 0 && column >= 0) { //Vérifie qu'il n'y a pas d'erreur (coordonnées négatives)
+                    
+                    if (tileValue == 0) { //Empèche d'avoir plus d'un départ (0 = case de départ)
+                        for (int i = 0; i < gMap.length; i++) { 
+                            for (int j = 0; j < gMap[0].length; j++) {
+                                if (gMap[i][j] == 0) {
+                                    gMap[i][j] = 1;
+                                }
+                            }
+                        }
+                    }
                     map[line][column] = tileValue; //Donne à cette case la valeur actuelle de tile
                     gMap = map; //enregistre la map "globale" comme la map actuelle
                     System.out.println("Click : " + map[line][column] + " en " + (line+1) + ", " + (column+1));
@@ -581,4 +681,5 @@ public class JFrameEddytor extends javax.swing.JFrame {
             super(data, columnNames);
         }
     }
+    
 }
