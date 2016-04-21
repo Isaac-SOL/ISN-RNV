@@ -110,6 +110,10 @@ public class RunningGame {
         return tilesToIcons(currentMap);
     }
     
+    public ImageIcon[][] getScaledIconMap(int size) {
+        return tilesToScaledIcons(currentMap, size);
+    }
+    
     public Integer[][] getIntMap() {
         return tilesToInt(currentMap);
     }

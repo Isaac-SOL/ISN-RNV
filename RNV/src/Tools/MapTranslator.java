@@ -6,6 +6,7 @@
 package Tools;
 
 import Game.Tile;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
@@ -33,7 +34,7 @@ public class MapTranslator {
     
     /**
      * Convertit un Tile[][] en Integer[][]
-     * @param Tiles Tiles[][] à convertir en Integer[][]
+     * @param Tiles Tile[][] à convertir en Integer[][]
      * @return Integer[][] créé à partir de Tiles
      */
     public static Integer[][] tilesToInt(Tile[][] Tiles) {
@@ -47,7 +48,23 @@ public class MapTranslator {
     }
     
     /**
-     * Transformation d'un Tile[][] en BufferedImage[][]
+     * Transformation d'un Tile[][] en ImageIcon[][], en redimensionnant les images pour une certaine taille
+     * @param Tiles Tile[][] transformé
+     * @param size Nombre de pixels de côté des ImageIcons
+     * @return ImageIcon[][] créé à partir de Tiles
+     */
+    public static ImageIcon[][] tilesToScaledIcons(Tile[][] Tiles, int size) {
+        ImageIcon[][] iconMap = new ImageIcon[Tiles.length][Tiles[0].length];       //Définit les dimensions de la nouvelle table à partir des dimensions de la table d'Integer
+        for (int i = 0; i < Tiles.length; i++) {
+            for (int j = 0; j < Tiles[0].length; j++) {
+                iconMap[i][j] = Tiles[i][j].getScaledIcon(size);       //Définit la Tile à chaque case avec le constructeur, en la redimensionnant
+            }
+        }
+        return iconMap;
+    }
+    
+    /**
+     * Transformation d'un Tile[][] en ImageIcon[][]
      * @param Tiles Tile[][] transformé
      * @return ImageIcon[][] créé à partir de Tiles
      */

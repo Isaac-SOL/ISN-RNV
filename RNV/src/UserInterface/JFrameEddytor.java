@@ -673,19 +673,20 @@ public class JFrameEddytor extends javax.swing.JFrame {
     
     private void printMap () {
         jTableEditedMap.setModel(new JFrameEddytor.DefaultTableModelImpl( //Actualise le modèle du tableau
-                        tilesToIcons(map),
-                        new String [map[0].length]
-                    ){
-                        @Override
-                        public boolean isCellEditable(int rowIndex, int columnIndex) {
-                            return false;
-                        }
-                        @Override
-                        public Class getColumnClass(int column)
-                        {
-                            return getValueAt(0, column).getClass();
-                        }
-                    });
+            tilesToScaledIcons(map, 788 / map[0].length),
+            new String [map[0].length]
+        ){
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+            @Override
+            public Class getColumnClass(int column)
+            {
+                return getValueAt(0, column).getClass();
+            }
+        });
+        jTableEditedMap.setRowHeight(788 / map[0].length);
     }
     
 }

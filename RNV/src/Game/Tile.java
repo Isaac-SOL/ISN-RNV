@@ -5,6 +5,7 @@
 
 package Game;
 
+import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
@@ -125,10 +126,18 @@ public class Tile {
     }
     
     /**
-     * @return l'icon de la tile
+     * @return L'icône de la tile
      */
     public ImageIcon getIcon() {
         return this.icon;
+    }
+    
+    /**
+     * @param size Le nombre de pixels de côté de la nouvelle icône
+     * @return l'icon de la tile redimensionnée
+     */
+    public ImageIcon getScaledIcon(int size) {
+        return new ImageIcon(icon.getImage().getScaledInstance(size, size, Image.SCALE_DEFAULT));
     }
     
     //Variables

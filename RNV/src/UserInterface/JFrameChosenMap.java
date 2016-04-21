@@ -5,6 +5,7 @@
  */
 package UserInterface;
 
+import Game.Tile;
 import Tools.*;
 import static Tools.MapTranslator.*;
 import javax.swing.table.DefaultTableModel;
@@ -28,7 +29,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
      */
     public JFrameChosenMap(Integer[][] map) {
         initComponents();
-        initTable(tilesToIcons(intToTiles(map)));
+        initTable(intToTiles(map));
     }
 
     /**
@@ -135,7 +136,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
      * Méthode appelée par le second constructeur. Utilise un tableau de Integer pour créer et remplir une Table, qui est ensuite affichée.
      * @param map Integer[][] à afficher à l'écran
      */
-    private void initTable(Object[][] map) {
+    private void initTable(Tile[][] map) {
         
         int nbLines = map.length;
         int nbColumns = map[0].length;
@@ -151,7 +152,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
 
         //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
         jTableMap.setModel(new DefaultTableModelImpl(
-            map,
+            tilesToScaledIcons(map, 788 / nbColumns),
             new String [nbColumns]
         ));
         
@@ -175,6 +176,8 @@ public class JFrameChosenMap extends javax.swing.JFrame {
                 .addContainerGap(82, Short.MAX_VALUE))
         );
 //</editor-fold>
+        
+        jTableMap.setRowHeight(788 / nbColumns);
         
     }
 
