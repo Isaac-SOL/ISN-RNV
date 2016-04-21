@@ -7,8 +7,7 @@
 package UserInterface;
 
 import Game.*;
-import static Tools.MapTranslator.intToTiles;   //TODO rendre ces imports plus propres, je sais plus comment on fait
-import static Tools.MapTranslator.tilesToIcons;
+import static Tools.MapTranslator.*;
 import javax.swing.table.DefaultTableModel;
 
 /**

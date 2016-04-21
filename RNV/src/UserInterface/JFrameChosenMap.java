@@ -6,8 +6,7 @@
 package UserInterface;
 
 import Tools.*;
-import static Tools.MapTranslator.intToTiles;
-import static Tools.MapTranslator.tilesToIcons;
+import static Tools.MapTranslator.*;
 import javax.swing.table.DefaultTableModel;
 
 /**

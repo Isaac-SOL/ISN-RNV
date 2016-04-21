@@ -43,12 +43,19 @@ public class Tile {
     
     //Méthodes
     
+    /**
+     * Définit le type et l'icon de la tile
+     * @param t type à définir
+     */
     public void setType(String t) {
         this.type = t;
         setIcon(t);
     }
     
-    //Définit le type et l'icône de la Tile à partir d'un Integer
+    /**
+     * Définit le type et l'icône de la Tile à partir d'un Integer
+     * @param i type à définir
+     */
     public void setType(Integer i) {
         switch (i) {
             
@@ -61,25 +68,45 @@ public class Tile {
         }
     }
     
+    /**
+     * Définit la position x de la tile
+     * @param x 
+     */
     public void setXPos(int x) {
         this.xPos = x;
     }
     
+    /**
+     * Définit la position y de la tile
+     * @param y 
+     */
     public void setYPos(int y) {
         this.yPos = y;
     }
     
-    //TODO voir si y'a pas une meilleure manière de faire ça
-    //TODO préparer des exceptions (Dironiil)
+    /**
+     * Définit l'icone de la tile à partir d'un type (String)
+     * @param t 
+     */
     public void setIcon(String t) {
         icon = new ImageIcon(getClass().getResource(t + ".png"));        //Trouve le fichier PNG avec le même nom que le type de tile
+        if (icon == null) {
+            System.out.println("Aucun icone n'a été trouvé avec ce nom : " + t);
+            icon = new ImageIcon(getClass().getResource("Error.png"));
+        }
     }
     
+    /**
+     * @return Le type de la tile
+     */
     public String getType() {
         return this.type;
     }
     
-    //Renvoie le type de Tile, sous forme d'un nombre. TODO Rendre ce comentaire propre (Dironiil)
+    /** 
+     * @return Le type de la tile sous forme d'Integer (null si il y a un problème de type)
+     */
+    // TODO Faire une meilleure gestion d'exception
     public Integer getIntType() {
         Integer iType = 0;
         switch (type) {
@@ -90,10 +117,16 @@ public class Tile {
                 
             case "Obstacle" : iType = 2; break;
                 
+            default : System.out.println("Le type actuel n'est pas lisible.");
+                      iType = null;
+                
         }
         return iType;
     }
     
+    /**
+     * @return l'icon de la tile
+     */
     public ImageIcon getIcon() {
         return this.icon;
     }

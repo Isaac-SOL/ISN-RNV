@@ -18,7 +18,7 @@ public class FileIO {
     
     /**
      * Fonction pour lire un fichier d'Integer[][] sérialisé et en renvoyer le contenu
-     * @param file              Fichier sérialisé à lire
+     * @param file Fichier sérialisé à lire
      * @return Integer[][] retourné après lecture
      * @throws IOException
      * @throws FileNotFoundException
