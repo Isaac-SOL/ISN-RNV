@@ -378,7 +378,7 @@ public class JFrameEddytor extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {         //Vérifie que l'utilisateur ait appuyé sur ok
             File chosenMap = jFileChooserMap.getSelectedFile(); //Récupère le fichier choisi par l'utilisateur
             try {
-                Tile[][] map = intToTiles(FileIO.readIntegerArrayFile(chosenMap)); //Lecture du fichier .map
+                map = intToTiles(FileIO.readIntegerArrayFile(chosenMap)); //Lecture du fichier .map
                 path = chosenMap.getAbsolutePath(); //Mise en mémoire du path du fichier
                 
                 if (newMap == false) { //Si il y a déjà une map ouverte, ouvre une nouvelle instance pour afficher la nouvelle et ferme l'actuelle
