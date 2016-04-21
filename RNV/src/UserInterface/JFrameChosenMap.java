@@ -155,29 +155,76 @@ public class JFrameChosenMap extends javax.swing.JFrame {
             tilesToScaledIcons(map, 788 / nbColumns),
             new String [nbColumns]
         ));
+        jTableMap.setTableHeader(null);
         
-        //<editor-fold defaultstate="collapsed" desc="Code du Scroller, copié du générateur auto de NetBeans">
-        jScrollPane2.setViewportView(jTableMap);
+        if (nbLines < 30) {
+            //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
+            jTableMap.setModel(new DefaultTableModelImpl(
+                tilesToIcons(map),
+                new String [nbColumns]
+            ){
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) { //Rend les cellules non modifiables par double clic dessus
+                    return false;
+                }
+            });
+
+            //<editor-fold defaultstate="collapsed" desc="Code du Scroller, copié du générateur auto de NetBeans">
+            jScrollPane2.setViewportView(jTableMap);
         
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
-        );
-//</editor-fold>
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, nbColumns*16+6, nbColumns*16+6, nbColumns*16+6)
+                    .addContainerGap())
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, nbLines*16, nbLines*16, nbLines*16+6)
+                    .addContainerGap(82, Short.MAX_VALUE))
+            );
+            //</editor-fold>
+            
+        } else {
+            //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
+            jTableMap.setModel(new DefaultTableModelImpl(
+                tilesToScaledIcons(map, 788 / nbColumns),
+                new String [nbColumns]
+            ){
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) { //Rend les cellules non modifiables par double clic dessus
+                    return false;
+                }
+            });
+
+            //<editor-fold defaultstate="collapsed" desc="Code du Scroller, copié du générateur auto de NetBeans">
+            jScrollPane2.setViewportView(jTableMap);
         
-        jTableMap.setRowHeight(788 / nbColumns);
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(82, Short.MAX_VALUE))
+            );
+            //</editor-fold>
+
+            jTableMap.setRowHeight(788 / nbColumns);
+        }
         
     }
 

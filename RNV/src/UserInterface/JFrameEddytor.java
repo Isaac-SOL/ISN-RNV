@@ -23,7 +23,7 @@ public class JFrameEddytor extends javax.swing.JFrame {
         initComponents();
         chosenTileType = "Obstacle";
         path = null;
-        newMap = true;
+        newMap = true; 
     }
     /**
      * Crée un nouveau JFrameEddytor avec une map pré-entrée
@@ -259,10 +259,11 @@ public class JFrameEddytor extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(SystemInfo.getScreenDimension.width/2-400, SystemInfo.getScreenDimension.height/2-400);
-        setMinimumSize(new java.awt.Dimension(600, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
-        setSize(new java.awt.Dimension(800, 800));
+        setTitle("Eddytor de map");
+        setLocation(SystemInfo.getScreenDimension.width/2-400, SystemInfo.getScreenDimension.height/2-450);
+        setMinimumSize(new java.awt.Dimension(800, 700));
+        setPreferredSize(new java.awt.Dimension(800, 700));
+        setSize(new java.awt.Dimension(800, 700));
 
         jMenuFile.setText("Fichier");
         jMenuFile.setMinimumSize(new java.awt.Dimension(40, 21));
@@ -610,12 +611,20 @@ public class JFrameEddytor extends javax.swing.JFrame {
         
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableEditedMap = new javax.swing.JTable();
+        jTableEditedMap.setTableHeader(null); //retire les titres du tableau
 
-        //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
+        //Procédure initialisant la table avec le tableau
         printMap();
         
         //<editor-fold defaultstate="collapsed" desc="Code du Scroller, copié du générateur auto de NetBeans">
         jScrollPane2.setViewportView(jTableEditedMap);
+        
+        int nbColumns = map[0].length;
+        int nbLines = map.length;
+        
+        if (nbColumns >= 40 || nbLines >= 35) {
+            setExtendedState(JFrameEddytor.MAXIMIZED_BOTH); //affiche en plein écran si la map est trop grande
+        }
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -623,16 +632,17 @@ public class JFrameEddytor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, nbColumns*16, nbColumns*16, nbColumns*16)
                 .addContainerGap())
         );
+        
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
-        );
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, nbLines*16, nbLines*16, nbLines*16+6)
+                    .addContainerGap())
+            );
         //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Code de modification lors d'un clic sur une cellule du tableau">
@@ -644,15 +654,18 @@ public class JFrameEddytor extends javax.swing.JFrame {
                 
                 if (line >= 0 && column >= 0) { //Vérifie qu'il n'y a pas d'erreur (coordonnées négatives)
                     
-                    if ("Token".equals(chosenTileType)) { //Empèche d'avoir plus d'un départ (0 = case de départ)
-                        for (int i = 0; i < map.length; i++) { 
-                            for (int j = 0; j < map[0].length; j++) {
+                    if ("Token".equals(chosenTileType)) { //Empèche d'avoir plus d'un départ (Token = case de départ)
+                        boolean found = false;
+                        for (int i = 0; i < map.length && !found; i++) { 
+                            for (int j = 0; j < map[0].length && !found; j++) {
                                 if ("Token".equals(map[i][j].getType())) {
                                     map[i][j].setType("Empty");
+                                    found = true;
                                 }
                             }
                         }
                     }
+                    
                     map[line][column].setType(chosenTileType); //Donne à cette case la valeur actuelle de tile
                     System.out.println("Click : " + map[line][column].getType() + " en " + (line+1) + ", " + (column+1));
                     
@@ -671,9 +684,13 @@ public class JFrameEddytor extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Procédure qui, à partir de la variable de classe map, initialise le tableau affiché avec map.
+     */
     private void printMap () {
+        //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
         jTableEditedMap.setModel(new JFrameEddytor.DefaultTableModelImpl( //Actualise le modèle du tableau
-            tilesToScaledIcons(map, 788 / map[0].length),
+            tilesToIcons(map),
             new String [map[0].length]
         ){
             @Override
@@ -686,7 +703,6 @@ public class JFrameEddytor extends javax.swing.JFrame {
                 return getValueAt(0, column).getClass();
             }
         });
-        jTableEditedMap.setRowHeight(788 / map[0].length);
     }
     
 }
