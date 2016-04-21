@@ -1,7 +1,9 @@
 
 package UserInterface;
 
+import Game.Tile;
 import Tools.FileIO;
+import static Tools.MapTranslator.*;
 import Tools.SystemInfo;
 import java.io.File;
 import java.io.IOException;
@@ -19,19 +21,22 @@ public class JFrameEddytor extends javax.swing.JFrame {
      /** Crée un nouveau JFrameEddytor */
     public JFrameEddytor() {
         initComponents();
-        tileValue = 2;
+        chosenTileType = "Obstacle";
         path = null;
+        newMap = true;
     }
     /**
      * Crée un nouveau JFrameEddytor avec une map pré-entrée
      * @param map La map à éditer
      * @param mapPath Le chemin de la map actuelle
      */
-    public JFrameEddytor(Integer[][] map, String mapPath) {
+    public JFrameEddytor(Tile[][] map, String mapPath) {
+        this.map = map;
         initComponents();
-        editTable(map);
-        tileValue = 1; //Initialise le block actuel à "vide"
+        editTable();
+        chosenTileType = "Obstacle"; //Initialise le block actuel à "plein"
         path = mapPath; //initialise le chemin de fichier de la map donnée
+        newMap = false;
     }
 
     /**
@@ -353,15 +358,15 @@ public class JFrameEddytor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BeginTile(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BeginTile
-        tileValue = 0;
+        chosenTileType = "Token";
     }//GEN-LAST:event_BeginTile
 
     private void EmtpyTile(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmtpyTile
-        tileValue = 1;
+        chosenTileType = "Empty";
     }//GEN-LAST:event_EmtpyTile
 
     private void BlockTile(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlockTile
-        tileValue = 2;
+        chosenTileType = "Obstacle";
     }//GEN-LAST:event_BlockTile
 
     private void NewMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewMap
@@ -370,17 +375,18 @@ public class JFrameEddytor extends javax.swing.JFrame {
 
     private void OpenMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMap
         int returnVal = jFileChooserMap.showOpenDialog(null);   //Ouvre jFileChooserMap et regarde sur quel bouton il a appuyé
-        if (returnVal == JFileChooser.APPROVE_OPTION) {         //Vérifie qe l'utilisateur ait appuyé sur ok
+        if (returnVal == JFileChooser.APPROVE_OPTION) {         //Vérifie que l'utilisateur ait appuyé sur ok
             File chosenMap = jFileChooserMap.getSelectedFile(); //Récupère le fichier choisi par l'utilisateur
             try {
-                Integer[][] map = FileIO.readIntegerArrayFile(chosenMap); //Lecture du fichier .map
+                Tile[][] map = intToTiles(FileIO.readIntegerArrayFile(chosenMap)); //Lecture du fichier .map
                 path = chosenMap.getAbsolutePath(); //Mise en mémoire du path du fichier
                 
-                if (gMap != null) { //Si il y a déjà une map ouverte, ouvre une nouvelle instance pour afficher la nouvelle et ferme l'actuelle
+                if (newMap == false) { //Si il y a déjà une map ouverte, ouvre une nouvelle instance pour afficher la nouvelle et ferme l'actuelle
                     new JFrameEddytor(map, path).setVisible(true);
                 this.dispose();
                 } else { //Sinon affiche la nouvelle map dans la fenètre actuelle 
-                    editTable(map);
+                    editTable();
+                    newMap = false;
                 }
                 
             } catch (IOException ex) {
@@ -395,18 +401,18 @@ public class JFrameEddytor extends javax.swing.JFrame {
     }//GEN-LAST:event_OpenMap
 
     private void SaveMap(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveMap
-         if (path != null && gMap != null) {
+         if (path != null && map != null) {
             try {
                 boolean beginning = false;
-                for (int i = 0; i < gMap.length; i++) { //vérifie qu'il y a bien un départ
-                    for (int j = 0; j < gMap[0].length; j++) {
-                        if (gMap[i][j] == 0) {
+                for (int i = 0; i < map.length; i++) { //vérifie qu'il y a bien un départ
+                    for (int j = 0; j < map[0].length; j++) {
+                        if ("Token".equals(map[i][j].getType())) {
                             beginning = true;
                         }
                     }
                 }
                 if (beginning) {
-                    FileIO.writeIntegerArrayFile(gMap, path);
+                    FileIO.writeIntegerArrayFile(tilesToInt(map), path);
                 } else { //Sinon affiche une erreur
                         System.out.println("Il n'y a pas de tile de départ !");
                         jFrameErrorBeginning.setVisible(true);
@@ -424,12 +430,12 @@ public class JFrameEddytor extends javax.swing.JFrame {
         int returnVal = jFileSaverMap.showSaveDialog(null);   //Ouvre jFileSaverMap et regarde sur quel bouton il a appuyé
         if (returnVal == JFileChooser.APPROVE_OPTION) {         //Vérifie qe l'utilisateur ait appuyé sur ok
             File chosenMap = jFileSaverMap.getSelectedFile(); //Récupère le fichier choisi par l'utilisateur
-            if (gMap != null) {
+            if (map != null) {
                 try {
                     boolean beginning = false;
-                    for (int i = 0; i < gMap.length; i++) { //vérifie qu'il y a bien un départ
-                        for (int j = 0; j < gMap[0].length; j++) {
-                            if (gMap[i][j] == 0) {
+                    for (int i = 0; i < map.length; i++) { //vérifie qu'il y a bien un départ
+                        for (int j = 0; j < map[0].length; j++) {
+                            if ("Token".equals(map[i][j].getType())) {
                                 beginning = true;
                             }
                         }
@@ -440,7 +446,7 @@ public class JFrameEddytor extends javax.swing.JFrame {
                         if (!".map".equals(path.substring(path.length()-4))) {
                             path += ".map";
                         }
-                        FileIO.writeIntegerArrayFile(gMap, path);
+                        FileIO.writeIntegerArrayFile(tilesToInt(map), path);
                     } else { //Sinon affiche une erreur
                         System.out.println("Il n'y a pas de tile de départ !");
                         jFrameErrorBeginning.setVisible(true);
@@ -478,18 +484,19 @@ public class JFrameEddytor extends javax.swing.JFrame {
                 System.out.println("Taille trop importante : le maximum est de 50");
             } else {
                 //crée et initialise une map avec des "cases vides" avec ces valeurs
-                Integer[][] map = new Integer[height][width];
+                map = new Tile[height][width];
                 for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
-                        map[i][j] = 1;
+                        map[i][j] = new Tile("Empty",i,j);
                     }
                 }
 
-                if (gMap != null) { //Si il y a déjà une map ouverte, ouvre une nouvelle instance pour afficher la nouvelle et ferme l'actuelle
+                if (newMap == false) { //Si il y a déjà une map ouverte, ouvre une nouvelle instance pour afficher la nouvelle et ferme l'actuelle
                     new JFrameEddytor(map, null).setVisible(true);
                     this.dispose();
                 } else { //Sinon affiche la nouvelle map dans la fenètre actuelle 
-                    editTable(map);
+                    editTable();
+                    newMap = false;
                 }     
 
                 jFrameSize.setVisible(false); //referme la fenètre
@@ -580,13 +587,16 @@ public class JFrameEddytor extends javax.swing.JFrame {
 
     
     //Map utilisée
-    private Integer[][] gMap;
+    private Tile[][] map;
+    
+    //Booléen signifiant si la map est nouvelle
+    private boolean newMap;
 
     //Path du fichier édité
     private String path;
     
     //Variable utilisée pour éditer les blocs
-    private int tileValue;
+    private String chosenTileType;
     
     //Variables utilisées pour créer la Table.
     private javax.swing.JScrollPane jScrollPane2;
@@ -596,31 +606,13 @@ public class JFrameEddytor extends javax.swing.JFrame {
      * Méthode qui utilise un tableau de Integer pour créer et remplir une Table, qui est ensuite affichée pour être modifiée.
      * @param map Integer[][] à afficher à l'écran
      */
-    private void editTable(Integer[][] map) {
-        
-        gMap = map;
-        
-        int nbLines = map.length;
-        int nbColumns = map[0].length;        
+    private void editTable() {       
         
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableEditedMap = new javax.swing.JTable();
 
         //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
-        jTableEditedMap.setModel(new JFrameEddytor.DefaultTableModelImpl(
-            map,
-            new String [nbColumns]
-        ){
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return false;
-            }
-            @Override
-            public Class getColumnClass(int column)
-            {
-                return getValueAt(0, column).getClass();
-            }
-        });
+        printMap();
         
         //<editor-fold defaultstate="collapsed" desc="Code du Scroller, copié du générateur auto de NetBeans">
         jScrollPane2.setViewportView(jTableEditedMap);
@@ -652,27 +644,19 @@ public class JFrameEddytor extends javax.swing.JFrame {
                 
                 if (line >= 0 && column >= 0) { //Vérifie qu'il n'y a pas d'erreur (coordonnées négatives)
                     
-                    if (tileValue == 0) { //Empèche d'avoir plus d'un départ (0 = case de départ)
-                        for (int i = 0; i < gMap.length; i++) { 
-                            for (int j = 0; j < gMap[0].length; j++) {
-                                if (gMap[i][j] == 0) {
-                                    gMap[i][j] = 1;
+                    if ("Token".equals(chosenTileType)) { //Empèche d'avoir plus d'un départ (0 = case de départ)
+                        for (int i = 0; i < map.length; i++) { 
+                            for (int j = 0; j < map[0].length; j++) {
+                                if ("Token".equals(map[i][j].getType())) {
+                                    map[i][j].setType("Empty");
                                 }
                             }
                         }
                     }
-                    map[line][column] = tileValue; //Donne à cette case la valeur actuelle de tile
-                    gMap = map; //enregistre la map "globale" comme la map actuelle
-                    System.out.println("Click : " + map[line][column] + " en " + (line+1) + ", " + (column+1));
-                    jTableEditedMap.setModel(new JFrameEddytor.DefaultTableModelImpl( //Actualise le modèle du tableau
-                        map,
-                        new String [nbColumns]
-                    ){
-                        @Override
-                        public boolean isCellEditable(int rowIndex, int columnIndex) {
-                            return false;
-                        }
-                    });
+                    map[line][column].setType(chosenTileType); //Donne à cette case la valeur actuelle de tile
+                    System.out.println("Click : " + map[line][column].getType() + " en " + (line+1) + ", " + (column+1));
+                    
+                    printMap();
                 }
             }
         });
@@ -685,6 +669,23 @@ public class JFrameEddytor extends javax.swing.JFrame {
         public DefaultTableModelImpl(Object[][] data, Object[] columnNames) {
             super(data, columnNames);
         }
+    }
+    
+    private void printMap () {
+        jTableEditedMap.setModel(new JFrameEddytor.DefaultTableModelImpl( //Actualise le modèle du tableau
+                        tilesToIcons(map),
+                        new String [map[0].length]
+                    ){
+                        @Override
+                        public boolean isCellEditable(int rowIndex, int columnIndex) {
+                            return false;
+                        }
+                        @Override
+                        public Class getColumnClass(int column)
+                        {
+                            return getValueAt(0, column).getClass();
+                        }
+                    });
     }
     
 }

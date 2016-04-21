@@ -5,9 +5,7 @@
 
 package Game;
 
-import static Tools.MapTranslator.intToTiles; //TODO rendre ces imports plus propres, je sais plus comment on fait
-import static Tools.MapTranslator.tilesToIcons;
-import static Tools.MapTranslator.tilesToInt;
+import static Tools.MapTranslator.*;
 import javax.swing.ImageIcon;
 
 /**
@@ -79,7 +77,10 @@ public class RunningGame {
         update();
     }
     
-    //Reset la map, et renvoie la map après reset TODO Rendre ce commentaire propre (Dironiil)
+    /**
+     * Reset la map, et renvoie la map après reset
+     * @return map renvoyé après le reset
+     */
     public Tile[][] reset() {
         currentMap = intToTiles(intStartingMap);
         score = getTokenYPos();
@@ -87,7 +88,9 @@ public class RunningGame {
         return currentMap;
     }
     
-    //A chaque modif du RunningGame, fait cette mise à jour. TODO Rendre ce commentaire propre (Dironiil)
+    /**
+     * Affiche en console la position actuelle du token et met à jour le score.
+     */
     private void update() {
         System.out.println("Token en [" + (getTokenXPos()+1) + ";" + (getTokenYPos()+1) + "]");
         if (getTokenYPos() > score) { score = getTokenYPos(); }
@@ -111,33 +114,45 @@ public class RunningGame {
         return tilesToInt(currentMap);
     }
     
-    //Choper la coordonnée X du Token. TODO Rajouter des exceptions, rendre ce commentaire propre (Dironiil)
+    /**
+     * @return La coordonnée actuelle X du token
+     */
     public int getTokenXPos() {
         int txpos = 0;
-        for (int i = 0; i < currentMap.length; i++) {
-            for (int j = 0; j < currentMap[0].length; j++) {
+        boolean found = false;
+        for (int i = 0; i < currentMap.length && !found; i++) {
+            for (int j = 0; j < currentMap[0].length && !found; j++) {
                 if ("Token".equals(currentMap[i][j].type)) {
                     txpos = i;
+                    found = true;
                 }
             }
         }
         return txpos;
     }
     
-    //Choper la coordonnée Y du Token. TODO Rajouter des exceptions, rendre ce commentaire propre (Dironiil)
+    /**
+     * @return @return La coordonnée actuelle Y du token
+     */
     public int getTokenYPos() {
         int typos = 0;
-        for (int i = 0; i < currentMap.length; i++) {
-            for (int j = 0; j < currentMap[0].length; j++) {
+        boolean found = false;
+        for (int i = 0; i < currentMap.length && !found; i++) {
+            for (int j = 0; j < currentMap[0].length && !found; j++) {
                 if ("Token".equals(currentMap[i][j].type)) {
                     typos = j;
+                    found = true;
                 }
             }
         }
         return typos;
     }
     
-    //Contiendra une table qui représentera la "vue" du Token, dans un certain rayon. Sera utilisée notamment par le RNV. TODO Rendre ce commentaire propre (Dironiil)
+    /**
+     * renvoit une table qui représente la "vue" du Token, dans un certain rayon. Sera utilisée notamment par le RNV. 
+     * @param r Le rayon de vue du token
+     * @return Tile[][] représentant la zone vue par le Token
+     */
     public Tile[][] getViewRadius(int r) {
         Tile[][] viewRadius = new Tile[2*r + 1][2*r + 1];       //Fixe la taille de la table de vision selon le rayon choisi
         for (int i = 0; i <= 2*r; i++) {

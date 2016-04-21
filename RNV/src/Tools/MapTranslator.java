@@ -16,7 +16,11 @@ import javax.swing.ImageIcon;
 
 public class MapTranslator {   
     
-    //Transformation d'un Integer[][] en Tile[][] TODO Rajouter des exceptions, rendre ce commentaire propre (Dironiil)
+    /**
+     * Convertit un Integer[][] en Tile[][]
+     * @param tMap Integer[][] à convertir Tile[][]
+     * @return Integer[][] créé à partir de tMap
+     */
     public static Tile[][] intToTiles(Integer[][] tMap) {
         Tile[][] Tiles = new Tile[tMap.length][tMap[0].length];       //Définit les dimensions de la nouvelle table à partir des dimensions de la table d'Integer
         for (int i = 0; i < tMap.length; i++) {
@@ -27,7 +31,11 @@ public class MapTranslator {
         return Tiles;
     }
     
-    //Transformation d'un Tile[][] en Integer[][] TODO Rajouter des exceptions, rendre ce commentaire propre (Dironiil)
+    /**
+     * Convertit un Tile[][] en Integer[][]
+     * @param Tiles Tiles[][] à convertir en Integer[][]
+     * @return Integer[][] créé à partir de Tiles
+     */
     public static Integer[][] tilesToInt(Tile[][] Tiles) {
         Integer[][] tMap = new Integer[Tiles.length][Tiles[0].length];       //Définit les dimensions de la nouvelle table à partir des dimensions de la table d'Integer
         for (int i = 0; i < Tiles.length; i++) {
@@ -38,7 +46,11 @@ public class MapTranslator {
         return tMap;
     }
     
-    //Transformation d'un Tile[][] en BufferedImage[][] pour l'interface TODO Rajouter des exceptions, rendre ce commentaire propre (Dironiil)
+    /**
+     * Transformation d'un Tile[][] en BufferedImage[][]
+     * @param Tiles Tile[][] transformé
+     * @return ImageIcon[][] créé à partir de Tiles
+     */
     public static ImageIcon[][] tilesToIcons(Tile[][] Tiles) {
         ImageIcon[][] iconMap = new ImageIcon[Tiles.length][Tiles[0].length];       //Définit les dimensions de la nouvelle table à partir des dimensions de la table d'Integer
         for (int i = 0; i < Tiles.length; i++) {
