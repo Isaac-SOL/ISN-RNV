@@ -3,33 +3,32 @@ Faites :
   - Choix du format de stockage des maps (.map, fichier sérialisé)
   - Choix de l'organisation des réseaux (Arborescence..)
   - Eddytor
+  - Choix du stockage des réseaux (.rnv, fichier sérialisé)
+  - Mettre un place une base de jeu jouable (déplacement, traduction map -> plateau, règles du jeu)
+  -   Environnement ("Jeu"):
+      * Accepte des inputs (Haut/Bas/Gauche/Droite)
+      * Déplace le pion selon l'input reçu et l'environnement, les "règles"
+      
   
 Priorité 1 :
-  - Choix du stockage des réseaux (.xml? .json? Ficher objet?)
   - Reflexion sur l'algorithme de RNV
-  - Mettre un place une base de jeu jouable (déplacement, traduction map -> plateau, règles du jeu)
+  - Generation (cf ci-dessous)
   
 Priorité 2 :
-  - Algorithme plus détaillé de RNV
   
 Priorité 3 :
-  - Traduction en Java de la RNV, test pour déterminer les meilleurs variables d'algorithme
-  - Choix du calcul de score
+
 
 Priorité 4 :
   - Génération aléatoire de map
   - Pouvoir voir un graphique lisible de chaque individu d'un RNV
+  - Choix du calcul de score
 
 
 
 #Algorithmes en parralèle:
 
-  Environnement ("Jeu"):
-  - Accepte des inputs (Haut/Bas/Gauche/Droite)
-  - Déplace le pion selon l'input reçu et l'environnement, les "règles"
-  - Envoie à l'algorithme de Test les données des cases entourant le pion   ] Ces deux parties sont importantes. Elles rendent l'algorithme
-  - Envoie à l'algorithme de Test son score                                 ] de Test totalement indépendant du "jeu":
-                                                                              L'algorithme de Test peut être utilisé pour des tâches totalement différentes de celle prévue par notre projet
+
   Test:
   - Envoie des contrôles à l'algorithme d'Environnement selon le réseau choisi et l'input reçu depuis le système d'Environnement (Les cases)
   - Signe chaque réseau testé avec son score reçu depuis l'algorithme d'Environnement
@@ -41,7 +40,17 @@ Priorité 4 :
 #Répartition:
 
 Isaac :
+  - Objet neurone
 
 Dironiil :
 
 Viviou :
+ - Créer l'interface de gestion des RNV :
+    * Une première fenètre à finaliser (JFrameChosenMap) pour voir la map choisie + créer nouvelle espèce / voir carac individu et pouvoir lancer une map avec un individu
+      -> Une sous fenètre de sélection de fichier
+    * Une deuxième fenètre d'affichage d'une espèce en cours.
+      -> Map
+      -> Nom de la espèce / génération / famille / individu
+      -> Score maximum atteint sur le score maximum possible
+      (-> Taux d'avancement dans la génération)
+    (* Une troisième fenètre d'affichage d'individu : le voir jouer + avoir ses caractéristiques.)
