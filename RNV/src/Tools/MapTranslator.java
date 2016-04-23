@@ -6,7 +6,6 @@
 package Tools;
 
 import Game.Tile;
-import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
