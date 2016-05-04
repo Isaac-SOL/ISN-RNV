@@ -46,9 +46,9 @@ public class FileIO {
     }
     
     /**
-     * Fonction pour lire un fichier d'Integer[][] sérialisé et en renvoyer le contenu
+     * Fonction pour lire un fichier Network sérialisé et en renvoyer le contenu
      * @param file Fichier sérialisé à lire
-     * @return Integer[][] retourné après lecture
+     * @return Network retourné après lecture
      * @throws IOException
      * @throws FileNotFoundException
      * @throws ClassNotFoundException
@@ -62,8 +62,8 @@ public class FileIO {
     }
     
     /**
-     * Procédure pour transformer un Integer[][] en fichier
-     * @param map   Tableau à sérialiser
+     * Procédure pour transformer un Network en fichier
+     * @param network   Réseau à sérialiser
      * @param path  Chemin du fichier à créer
      * @throws IOException
      */
