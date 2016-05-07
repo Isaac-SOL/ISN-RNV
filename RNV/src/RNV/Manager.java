@@ -8,11 +8,11 @@ package RNV;
  *
  * @author Guillaume
  */
-public class RnvManager {
+public class Manager {
     
     //Constructeurs avec et sans réseau de base
     
-    public RnvManager(Integer[][] mapUsed) { 
+    public Manager(Integer[][] mapUsed) { 
         
         //Créé la première génération du manager.
         netArray = new Network[10][15];
@@ -26,7 +26,7 @@ public class RnvManager {
         map = mapUsed;
     }
     
-    public RnvManager(Network network, Integer[][] mapUsed) { 
+    public Manager(Network network, Integer[][] mapUsed) { 
         
         //Créé la première génération du manager à partir d'un réseau.
         netArray = new Network[10][15];
