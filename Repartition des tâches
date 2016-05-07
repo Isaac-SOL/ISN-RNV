@@ -1,3 +1,5 @@
+DEADLINE ACTUELLE : Mercredi 11/05
+
 ﻿#Tâches:
 Faites :
   - Choix du format de stockage des maps (.map, fichier sérialisé)
@@ -8,6 +10,7 @@ Faites :
   -   Environnement ("Jeu"):
       * Accepte des inputs (Haut/Bas/Gauche/Droite)
       * Déplace le pion selon l'input reçu et l'environnement, les "règles"
+  - Objet neurone
       
   
 Priorité 1 :
@@ -18,7 +21,6 @@ Priorité 2 :
   
 Priorité 3 :
 
-
 Priorité 4 :
   - Génération aléatoire de map
   - Pouvoir voir un graphique lisible de chaque individu d'un RNV
@@ -27,30 +29,23 @@ Priorité 4 :
 
 
 #Algorithmes en parralèle:
-
-
-  Test:
-  - Envoie des contrôles à l'algorithme d'Environnement selon le réseau choisi et l'input reçu depuis le système d'Environnement (Les cases)
-  - Signe chaque réseau testé avec son score reçu depuis l'algorithme d'Environnement
-  
-  Génération:
-  - Trie les fichiers de réseaux et envoie à l'algorithme de Test celui qui doit être testé
-  - Quand une génération entière est testée, en crée une nouvelle selon les scores et les familles
   
 #Répartition:
 
 Isaac :
-  - Objet neurone
+  - Interpréteur
 
 Dironiil :
+  - Gestion
+  - Génération
 
 Viviou :
- - Créer l'interface de gestion des RNV :
-    * Une première fenètre à finaliser (JFrameChosenMap) pour voir la map choisie + créer nouvelle espèce / voir carac individu et pouvoir lancer une map avec un individu
-      -> Une sous fenètre de sélection de fichier
-    * Une deuxième fenètre d'affichage d'une espèce en cours.
+  - interface de gestion des RNV :
+    * Une fenètre d'affichage d'une espèce en cours à finir.
       -> Map
-      -> Nom de la espèce / génération / famille / individu
+      -> Nom de l'espèce / génération / famille / individu
       -> Score maximum atteint sur le score maximum possible
       (-> Taux d'avancement dans la génération)
     (* Une troisième fenètre d'affichage d'individu : le voir jouer + avoir ses caractéristiques.)
+    
+  - Génération
