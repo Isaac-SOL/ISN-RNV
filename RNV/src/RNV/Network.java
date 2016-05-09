@@ -58,8 +58,35 @@ public class Network {
         Neuron[] newNetwork = new Neuron[network.length + 1];
         System.arraycopy(network, 0, newNetwork, 0, network.length);
         newNetwork[network.length] = new Neuron(nextId, dest);
-        newNetwork[getNeuronIndex(sourceId)].newSynapse(nextId);
+        newNetwork[getNeuronIndexFromId(sourceId)].newSynapse(nextId);
         nextId++;
+        network = newNetwork;
+    }
+    
+    /**
+     * Supprime un neurone du réseau. TODO /!\ Pas testé
+     * @param id Identifiant du neurone à supprimer
+     */
+    public void deleteNeuron(int id) {
+        Neuron[] newNetwork = new Neuron[network.length - 1];
+        //TODO Sûrement simplifiable avec deux arraycopy()
+        int i;
+        //On supprimme le neurone cherché
+        for (i = 0; i < network.length; i++) {
+            if (network[i].id != id) {
+                newNetwork[i] = network[i];
+            } else { break; }
+        }
+        if (i != network.length) {
+            for (i++; i < network.length; i++) {
+                newNetwork[i-1] = network[i];
+            }
+        }
+        //On supprime les synapses liées
+        for (i = 0; i < newNetwork.length; i++) {
+            newNetwork[i].removeSynapse(id);
+        }
+        
         network = newNetwork;
     }
     
@@ -69,7 +96,7 @@ public class Network {
      * @param destId Identifiant du neurone activé
      */
     public void newSynapse(int sourceId, int destId) {
-        network[getNeuronIndex(sourceId)].newSynapse(destId);
+        network[getNeuronIndexFromId(sourceId)].newSynapse(destId);
     }
     
     /**
@@ -86,7 +113,7 @@ public class Network {
      * @return Les données du neurone trouvé
      */
     public Neuron getNeuron(int id) {
-        return network[getNeuronIndex(id)];
+        return network[getNeuronIndexFromId(id)];
     }
     
     /**
@@ -94,7 +121,7 @@ public class Network {
      * @param id Identifiant du neurone à trouver
      * @return L'index du neurone trouvé dans la liste de neurones
      */
-    public int getNeuronIndex(int id) {
+    public int getNeuronIndexFromId(int id) {
         int index = 0;
         for (int i = 0; i < network.length; i++) {
             if (network[i].id == id) {
@@ -103,6 +130,20 @@ public class Network {
             }
         }
         return index;
+    }
+    
+    /**
+     * Renvoie la liste des identifiants des neurones contenus dans le réseau.
+     * @return Indentifiants des neurones contenus dans le réseau
+     */
+    public int[] getIdList() {
+        int[] idList = new int[network.length];
+        int i = 0;
+        for(Neuron neuron : network) {
+            idList[i] = neuron.id;
+            i++;
+        }
+        return idList;
     }
     
     public int getScore() {
@@ -122,6 +163,6 @@ public class Network {
     Neuron[] network;
     int score;
     String name;
-    int nextId = 1;     //Utilisé pour définir l'ID assigné au prochain neurone créé
+    int nextId = 5;     //Utilisé pour définir l'ID assigné au prochain neurone créé
     
 }
