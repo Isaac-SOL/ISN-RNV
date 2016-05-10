@@ -14,7 +14,7 @@ import Game.*;
 
 public class Interpreter {
     
-    public void interpreteWith(Network net, RunningGame game) {
+    public int interpreteWith(Network net, RunningGame game) {
         //Pour calculer le nombre de cycles pendant lesquels le token n'a pas avancé
         int cyclesStopped = 0;
         while (game.getScore() != game.getMaxScore() && cyclesStopped < 10) {
@@ -41,6 +41,7 @@ public class Interpreter {
             }
             
         }
+        return game.getScore();
     }
     
     private void interpreteNextLevel(Network net, RunningGame game, int[] activatedNeurons) {
@@ -58,7 +59,9 @@ public class Interpreter {
                 
                 default :
                     int[] nextActivatedNeurons = net.getNetwork()[net.getNeuronIndexFromId(id)].activate();
-                    interpreteNextLevel(net,game,nextActivatedNeurons);
+                    if (nextActivatedNeurons.length != 0) {
+                        interpreteNextLevel(net,game,nextActivatedNeurons);
+                    }
                     break;
                     
             }
