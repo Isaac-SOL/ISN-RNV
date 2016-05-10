@@ -35,6 +35,15 @@ public class Neuron {
     //Méthodes
     
     /**
+     * @return le neurone, mais avec un id égal à -1 (équivalent à un null)
+     */
+    public Neuron getNeuronWithoutId() {
+        Neuron idNull = this;
+        idNull.id = -1; //-1 étant l'équivalent d'une valeur null
+        return idNull;
+    }
+    
+    /**
      * Crée une nouvelle synapse, pointant vers un nouveau neurone à activer.
      * @param dest Identifiant du neurone à activer
      */
