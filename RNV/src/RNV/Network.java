@@ -64,6 +64,19 @@ public class Network {
     }
     
     /**
+     * Rajoute un neurone préexistant avec un id correspondant au réseau
+     * @param neuron Neurone à rajouter
+     */
+    public void addNeuronFromTileWithNewId(Neuron neuron) {
+        Neuron[] newNetwork = new Neuron[network.length + 1];
+        System.arraycopy(network, 0, newNetwork, 0, network.length);
+        neuron.id = nextId;
+        newNetwork[network.length] = neuron;
+        nextId++;
+        network = newNetwork;
+    }
+    
+    /**
      * Supprime un neurone du réseau. TODO /!\ Pas testé
      * @param id Identifiant du neurone à supprimer
      */
@@ -143,6 +156,26 @@ public class Network {
             idList[i] = neuron.id;
             i++;
         }
+        return idList;
+    }
+    
+    /**
+     * Renvoie la liste des neurones activés par une certaine Tile
+     * @param tileId Identifiant de la Tile activatrice
+     * @return Liste des neurones activés par tileId.
+     */
+    public int[] getNeuronsActivatedBy(int tileId) { //TODO Je sais pas si c'est efficace, c'est une fonction appelée très souvent
+        int[] idList = new int[0];
+        
+        for (Neuron n : network) {      //On regarde chaque neurone de network
+            if (n.isSensor && n.synIn == tileId) {      //On vérifie que le neurone soit activé par cette case
+                int[] newIdList = new int[idList.length + 1];
+                System.arraycopy(idList, 0, newIdList, 0, idList.length);
+                newIdList[idList.length] = n.id;        //Rajoute le nouvel identifiant
+                idList = newIdList;
+            }
+        }
+        
         return idList;
     }
     
