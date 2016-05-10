@@ -6,7 +6,6 @@
 package RNV;
 
 import Game.*;
-import javax.swing.SwingWorker;
 
 /**
  *
@@ -18,20 +17,18 @@ public class Interpreter {
     public void interpreteWith(Network net, RunningGame game) {
         
         Tile[][] input = game.getViewRadius(2);
+        Tile[] view = new Tile[25];
         
-        SwingWorker worker = new SwingWorker<Void, String>() {
-            
-            @Override
-            protected Void doInBackground() throws Exception {
-                return null;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                view[i+j*5] = input[i][j];
             }
-            
-//            @Override
-            protected void process() {
-
-            }
-        };
-        worker.execute();
+        }
+        
+        for (int i = 1; i <= 25; i++) {
+            int type = view[i].getIntType();
+        }
+        
         
     }
     
