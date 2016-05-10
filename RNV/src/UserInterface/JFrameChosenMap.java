@@ -42,7 +42,8 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     private void initComponents() {
 
         JButtonBack = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jButtonSavedNetwork = new javax.swing.JButton();
+        jButtonNewNetwork = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(SystemInfo.getScreenDimension.width/2-400, SystemInfo.getScreenDimension.height/2-300);
@@ -55,7 +56,19 @@ public class JFrameChosenMap extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Lancer avec un nouveau réseau");
+        jButtonSavedNetwork.setText("Lancer avec un réseau préexistant");
+        jButtonSavedNetwork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSavedNetworkActionPerformed(evt);
+            }
+        });
+
+        jButtonNewNetwork.setText("Lancer avec un nouveau réseau");
+        jButtonNewNetwork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNewNetworkActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,20 +77,31 @@ public class JFrameChosenMap extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(JButtonBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 509, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
+                .addComponent(jButtonSavedNetwork)
+                .addGap(242, 242, 242))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(582, Short.MAX_VALUE)
+                    .addComponent(jButtonNewNetwork)
+                    .addGap(22, 22, 22)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(524, 524, 524)
+                .addContainerGap(514, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(JButtonBack))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(JButtonBack)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonSavedNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(514, Short.MAX_VALUE)
+                    .addComponent(jButtonNewNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(23, 23, 23)))
         );
 
         pack();
@@ -87,6 +111,15 @@ public class JFrameChosenMap extends javax.swing.JFrame {
         new JFrameMainMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_WindowBack
+
+    private void jButtonSavedNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSavedNetworkActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSavedNetworkActionPerformed
+
+    private void jButtonNewNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewNetworkActionPerformed
+        new JFrameRNV().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonNewNetworkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,7 +158,8 @@ public class JFrameChosenMap extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JButtonBack;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonNewNetwork;
+    private javax.swing.JButton jButtonSavedNetwork;
     // End of variables declaration//GEN-END:variables
     
     //Variables utilisées pour créer la Table.
