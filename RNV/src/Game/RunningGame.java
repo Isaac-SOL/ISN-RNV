@@ -102,6 +102,10 @@ public class RunningGame {
         return score;
     }
     
+    public int getMaxScore() {
+        return currentMap.length;
+    }
+    
     public Tile[][] getRawMap() {
         return currentMap;
     }
