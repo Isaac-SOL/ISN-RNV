@@ -10,7 +10,11 @@ package RNV;
  * @author ubuntu
  */
 public class Generator {
-
+    
+    /**
+     * Génére un réseau avec deux neurones aléatoire
+     * @return Réseau généré
+     */
     public static Network create() {
         Network network = new Network();
 
@@ -28,7 +32,12 @@ public class Generator {
 
         return network;
     }
-
+    
+    /**
+     * Mute un réseau existant en ajoutant ou supprimant des neurones
+     * @param firstNet Réseau à muter
+     * @return Réseau muté
+     */
     public static Network mutate(Network firstNet) {
         int[] idList = firstNet.getIdList();
         int indexId = (int) (Math.random()*idList.length) ;
@@ -42,10 +51,67 @@ public class Generator {
 
         return firstNet;
     }
-
-    public static Network assemble(Network net1, Network net2) {
+    
+    /**
+     * Fonction qui synthétise deux réseaux en un, en conservant tous les neurones.
+     * @param net1 Premier réseau à combiner
+     * @param net2 Deuxième réseau à combiner
+     * @return Le réseau combiné
+     */
+    public static Network synthesis(Network net1, Network net2) {
+				
+	//Compte le nombre de neurone nécessaire dans le nouveau réseau pour éviter les doublons, précise lesquels doivent être ajoutés. TODO rajouter la méthode getNeuronWithoutId à la classe Neuron (Je peux le faire - Dironiil) 
+	boolean[] isAdded1 = new boolean[net1.getNetwork().length];
+	for (int i = 0; i < isAdded1.length; i++) {
+            isAdded1[i] = false;
+	}
+	boolean[] isAdded2 = new boolean[net2.getNetwork().length];
+	for (int i = 0; i < isAdded1.length; i++) {
+            isAdded1[i] = false;
+	}
+		
+	//Well. Ce qui suit sert à ne voir comme "à ajouter" seulement les neurones qui n'ont pas déjà été vu.
+	for (int i = 0; i < net1.getNetwork().length; i++) {
+            boolean alreadySeen = false;
+            boolean differentFromAll = true;
+            for (int j = 0; j < net2.getNetwork().length; j++) {
+                if (net1.getNetwork()[i].getNeuronWithoutId != net2.getNetwork()[j].getNeuronWithoutId && i == 0) {
+                    if (alreadySeen) {
+			isAdded2[j] = true;
+                    } else {
+                        alreadySeen = true;
+			isAdded1[i] = true;
+			isAdded2[j] = true;
+                    }
+		} else if(net1.getNetwork()[i].getNeuronWithoutId == net2.getNetwork()[j].getNeuronWithoutId && i ==0) {
+                    if (!alreadySeen) {
+			alreadySeen = true;
+			isAdded1[i] = true;
+                    }
+                } else if(net1.getNetwork()[i].getNeuronWithoutId == net2.getNetwork()[j].getNeuronWithoutId && i !=0) {
+                    differentFromAll = false;
+		}
+            }
+            if (differentFromAll && i != 0) {
+		isAdded1[i] = true;
+            }
+	}
+		
+	//Initialise le nouveau network
         Network combinedNetwork = new Network();
-        //TODO Faire la méthode
+		
+	//Et rajoute tous les neurones qui ont été vu comme non doublon
+	for (int i = 0; i < net1.getNetwork().length; i++) {
+            if (isAdded1[i]) {
+		combinedNetwork.addNeuronWithNewId(net1.getNetwork()[i]); //TODO Rajouter cette méthode dans la classe network (je peux le faire aussi - Dironiil)
+            }
+	}
+	for (int i = 0; i < net2.getNetwork().length; i++) {
+            if (isAdded2[i]) {
+		combinedNetwork.addNeuronWithNewId(net2.getNetwork()[i]);
+            }
+	}
+		
         return combinedNetwork;
     }
 
