@@ -43,11 +43,21 @@ public class Generator {
         int indexId = (int) (Math.random()*idList.length) ;
         int id = idList[indexId];
 
-        int choice = (int) (Math.random()*2);
+        int choice = (int) (Math.random()*3);
         switch  (choice){
             case 0 : firstNet.deleteNeuron(id); break;
-            case 1 : //TODO Rajouter le case
-        }
+            case 2 : // permet d'avoir 2 chance sur 3 "ajoute un neurone" 
+            case 1 :
+                int inputId; 
+                do {
+                     inputId = (int) (Math.random()*25);
+                 } while(inputId == 13);
+                
+                int type = (int) (Math.random()*2+1);
+                int[] dest = {(int) (Math.random()*4)};
+                
+                firstNet.newNeuronFromTile(inputId, type, dest); break ; // créer un nouveau neurone avec des caractéristiques tirées au hasard et le rajoute dans firstNet
+        }   
 
         return firstNet;
     }
