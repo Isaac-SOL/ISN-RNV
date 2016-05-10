@@ -64,6 +64,19 @@ public class Network {
     }
     
     /**
+     * Rajoute un neurone préexistant avec un id correspondant au réseau
+     * @param neuron Neurone à rajouter
+     */
+    public void addNeuronFromTileWithNewId(Neuron neuron) {
+        Neuron[] newNetwork = new Neuron[network.length + 1];
+        System.arraycopy(network, 0, newNetwork, 0, network.length);
+        neuron.id = nextId;
+        newNetwork[network.length] = neuron;
+        nextId++;
+        network = newNetwork;
+    }
+    
+    /**
      * Supprime un neurone du réseau. TODO /!\ Pas testé
      * @param id Identifiant du neurone à supprimer
      */
