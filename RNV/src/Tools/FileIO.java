@@ -5,6 +5,7 @@
  */
 package Tools;
 
+import RNV.Network;
 import java.io.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
@@ -41,6 +42,34 @@ public class FileIO {
     public static void writeIntegerArrayFile(Integer[][] map, String path) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(path)))) {
             oos.writeObject(map);
+        }        
+    }
+    
+    /**
+     * Fonction pour lire un fichier Network sérialisé et en renvoyer le contenu
+     * @param file Fichier sérialisé à lire
+     * @return Network retourné après lecture
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws ClassNotFoundException
+     */
+    public static Network readNetworkFile(File file) throws IOException, FileNotFoundException, ClassNotFoundException {
+        Network network;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            network = (Network) ois.readObject();
+        }
+        return network;
+    }
+    
+    /**
+     * Procédure pour transformer un Network en fichier
+     * @param network   Réseau à sérialiser
+     * @param path  Chemin du fichier à créer
+     * @throws IOException
+     */
+    public static void writeNetworkFile(Network network, String path) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(path)))) {
+            oos.writeObject(network);
         }        
     }
     
