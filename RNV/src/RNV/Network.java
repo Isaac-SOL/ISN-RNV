@@ -146,6 +146,26 @@ public class Network {
         return idList;
     }
     
+    /**
+     * Renvoie la liste des neurones activés par une certaine Tile
+     * @param tileId Identifiant de la Tile activatrice
+     * @return Liste des neurones activés par tileId.
+     */
+    public int[] getNeuronsActivatedBy(int tileId) { //TODO Je sais pas si c'est efficace, c'est une fonction appelée très souvent
+        int[] idList = new int[0];
+        
+        for (Neuron n : network) {      //On regarde chaque neurone de network
+            if (n.isSensor && n.synIn == tileId) {      //On vérifie que le neurone soit activé par cette case
+                int[] newIdList = new int[idList.length + 1];
+                System.arraycopy(idList, 0, newIdList, 0, idList.length);
+                newIdList[idList.length] = n.id;        //Rajoute le nouvel identifiant
+                idList = newIdList;
+            }
+        }
+        
+        return idList;
+    }
+    
     public int getScore() {
         return score;
     }
