@@ -1,15 +1,20 @@
 /*
- * Projet de fin d'ann�e d'ISN
+ * Projet de fin d'année d'ISN
  * RNV, par Isaac, Dironiil, Viviou1325
  */
 package UserInterface;
 
+import Game.*;
+import RNV.*;
+import static Tools.MapTranslator.*;
 import Tools.SystemInfo;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Xavier
+ * @author Viviou
  */
+
 public class JFrameRNV extends javax.swing.JFrame {
 
     /**
@@ -17,6 +22,18 @@ public class JFrameRNV extends javax.swing.JFrame {
      */
     public JFrameRNV() {
         initComponents();
+    }
+    
+    public JFrameRNV(Tile[][] map) {
+        initComponents();
+        initTable(map);
+        this.map = map;
+    }
+    
+    public JFrameRNV(Tile[][] map, Network net) {
+        initComponents();
+        initTable(map);
+        this.map = map;
     }
 
     /**
@@ -28,38 +45,25 @@ public class JFrameRNV extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabelGeneration = new javax.swing.JLabel();
-        jLabelScoreMax = new javax.swing.JLabel();
+        jButtonRun = new javax.swing.JButton();
         jButtonBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(SystemInfo.getScreenDimension.width/2-400,SystemInfo.getScreenDimension.height/2-300);
         setResizable(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jButtonRun.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        jButtonRun.setText("Lancer réseau");
+        jButtonRun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RunRNV(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
 
-        jLabelGeneration.setText("Nom de la génération :");
-
-        jLabelScoreMax.setText("Score Max ");
-
-        jButtonBack.setText("retour");
-        jButtonBack.setToolTipText("");
+        jButtonBack.setText("Retour");
         jButtonBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBackActionPerformed(evt);
+                Back(evt);
             }
         });
 
@@ -67,42 +71,34 @@ public class JFrameRNV extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelScoreMax, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButtonBack))
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addComponent(jButtonBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 502, Short.MAX_VALUE)
+                .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jLabelGeneration, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(66, 66, 66)
-                        .addComponent(jLabelScoreMax, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
-                .addComponent(jButtonBack)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(499, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonBack)
+                    .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
-        new JFrameChosenMap().setVisible(true);
+    private void Back(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back
+        new JFrameChosenMap(tilesToInt(map)).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButtonBackActionPerformed
+    }//GEN-LAST:event_Back
+
+    private void RunRNV(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RunRNV
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RunRNV
 
     /**
      * @param args the command line arguments
@@ -138,12 +134,70 @@ public class JFrameRNV extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBack;
-    private javax.swing.JLabel jLabelGeneration;
-    private javax.swing.JLabel jLabelScoreMax;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton jButtonRun;
     // End of variables declaration//GEN-END:variables
+
+    //Variables utilisées pour créer la Table.
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableMap;
+    
+    private Tile[][] map;
+    
+    
+    private void initTable(Tile[][] map) {
+        
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableMap = new javax.swing.JTable() {
+            @Override       //Override getColumnClass pour pouvoir afficher des ImageIcons
+            public Class getColumnClass(int column)
+            {
+                return getValueAt(0, column).getClass();
+            }
+        };
+        jTableMap.setTableHeader(null);
+        
+        jTableMap.setModel(new JFrameRNV.DefaultTableModelImpl(
+                tilesToIcons(map),
+                new String [map.length]
+            ){
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) { //Rend les cellules non modifiables par double clic dessus
+                    return false;
+                }
+            });
+        
+        //<editor-fold defaultstate="collapsed" desc="Code du scroller, copié du générateur auto de Netbeans">
+        jScrollPane1.setViewportView(jTableMap);
+        
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(221, Short.MAX_VALUE))
+        );
+        //</editor-fold>
+        
+        
+    }
+    
+    private static class DefaultTableModelImpl extends DefaultTableModel {
+
+        public DefaultTableModelImpl(Object[][] data, Object[] columnNames) {
+            super(data, columnNames);
+        }
+    }
+    
 }
