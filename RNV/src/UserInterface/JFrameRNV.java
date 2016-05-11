@@ -47,6 +47,9 @@ public class JFrameRNV extends javax.swing.JFrame {
 
         jButtonRun = new javax.swing.JButton();
         jButtonBack = new javax.swing.JButton();
+        jLabelScoreMax = new javax.swing.JLabel();
+        jLabelScoreMaxGen = new javax.swing.JLabel();
+        jLabelNumGen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(SystemInfo.getScreenDimension.width/2-400,SystemInfo.getScreenDimension.height/2-300);
@@ -67,6 +70,12 @@ public class JFrameRNV extends javax.swing.JFrame {
             }
         });
 
+        jLabelScoreMax.setText("Score Max ");
+
+        jLabelScoreMaxGen.setText("Score Max génération");
+
+        jLabelNumGen.setText("Numéro de génération");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -74,7 +83,14 @@ public class JFrameRNV extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 502, Short.MAX_VALUE)
+                .addGap(82, 82, 82)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelScoreMax, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelScoreMaxGen, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabelNumGen, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -83,8 +99,13 @@ public class JFrameRNV extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(499, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonBack)
-                    .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonBack)
+                        .addComponent(jLabelScoreMaxGen)
+                        .addComponent(jLabelNumGen))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelScoreMax)))
                 .addContainerGap())
         );
 
@@ -138,6 +159,9 @@ public class JFrameRNV extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBack;
     private javax.swing.JButton jButtonRun;
+    private javax.swing.JLabel jLabelNumGen;
+    private javax.swing.JLabel jLabelScoreMax;
+    private javax.swing.JLabel jLabelScoreMaxGen;
     // End of variables declaration//GEN-END:variables
 
     //Variables utilisées pour créer la Table.

@@ -30,7 +30,16 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonBack" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="502" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabelScoreMax" min="-2" pref="107" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jLabelScoreMaxGen" min="-2" pref="159" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="jLabelNumGen" min="-2" pref="172" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="55" max="32767" attributes="0"/>
               <Component id="jButtonRun" min="-2" pref="218" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -41,8 +50,15 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="499" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jButtonBack" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonRun" min="-2" pref="95" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonBack" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelScoreMaxGen" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelNumGen" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonRun" alignment="3" min="-2" pref="95" max="-2" attributes="0"/>
+                      <Component id="jLabelScoreMax" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -68,6 +84,21 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Back"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelScoreMax">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Score Max "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelScoreMaxGen">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Score Max g&#xe9;n&#xe9;ration"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelNumGen">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Num&#xe9;ro de g&#xe9;n&#xe9;ration"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
