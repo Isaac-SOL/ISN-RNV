@@ -14,7 +14,7 @@ import Game.*;
 
 public class Interpreter {
     
-    public static int interpreteWith(Network net, RunningGame game) {
+    public static int interpreteWith(Network net, RunningGame game, int sleep) throws InterruptedException {
         //Pour calculer le nombre de cycles pendant lesquels le token n'a pas avancé
         int cyclesStopped = 0;
         while (game.getScore() != game.getMaxScore() && cyclesStopped < 10) {
@@ -22,23 +22,40 @@ public class Interpreter {
             Tile[] view = new Tile[25];
             int oldScore = game.getScore();
 
+            //Transforme la table de Tiles en une liste
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
                     view[i+j*5] = input[i][j];
                 }
             }
 
+            //Vérifie les actions de toutes les cases
             for (int i = 1; i < 25; i++) {
                 int type = view[i].getIntType();
                 int[] activatedNeurons = net.getNeuronsActivatedBy(i,type);
                 interpreteNextLevel(net,game,activatedNeurons);
             }
             
+            //Exécute les actions bufferées
+            if (up) {game.goUp();}
+            if (down) {game.goDown();}
+            if (left) {game.goLeft();}
+            if (right) {game.goRight();}
+            
+            //Réinitialise les booléens
+            up = false;
+            down = false;
+            left = false;
+            right = false;
+            
+            //Vérifie que le score ait bien avancé. Si ce n'est pas le cas, compte le nombre de cycles passés sans avancer
             if (game.getScore() == oldScore) {
                 cyclesStopped++;
             } else {
                 cyclesStopped = 0;
             }
+            
+            Thread.sleep(sleep);
             
         }
         return game.getScore();
@@ -51,13 +68,13 @@ public class Interpreter {
             
             switch (id) {
                 
-                case 1 : game.goUp(); break;
+                case 1 : up = true; break;
                 
-                case 2 : game.goDown(); break;
+                case 2 : down = true; break;
                 
-                case 3 : game.goLeft(); break;
+                case 3 : left = true; break;
                 
-                case 4 : game.goRight(); break;
+                case 4 : right = true; break;
                 
                 default :
                     int[] nextActivatedNeurons = net.getNetwork()[net.getNeuronIndexFromId(id)].activate();
@@ -69,4 +86,11 @@ public class Interpreter {
             }
         }
     }
+    
+    //Booléens pour bufferer les actions avant de toutes les exécuter à la fin
+    private static boolean up;
+    private static boolean down;
+    private static boolean left;
+    private static boolean right;
+    
 }

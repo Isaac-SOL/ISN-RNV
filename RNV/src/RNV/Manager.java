@@ -64,7 +64,7 @@ public class Manager {
     /**
      * Procédure qui lance les tests de RNV (se termine au bout de 150 générations ou lorsqu'un réseau a atteint le score max)
      */
-    public void launch() {
+    public void launch() throws InterruptedException {
         
         System.out.println("\n\n\n\n\n\nGénération " + numeroGen);
        
@@ -81,7 +81,7 @@ public class Manager {
             //Chaque itération de cette boucle est un individu de la famille
             for (int j = 0; j < netArray[0].length; j++) {
                 //Fait jouer cet individu
-                netArray[i][j].setScore(Interpreter.interpreteWith(netArray[i][j], game));
+                netArray[i][j].setScore(Interpreter.interpreteWith(netArray[i][j], game, 10));
                  
                 //Actualise les scores si nécessaire
                 if (netArray[i][j].getScore() > scoreMaxFamily[i]) {
@@ -90,6 +90,9 @@ public class Manager {
                 }
                 if (scoreMaxFamily[i] > scoreMaxRnv) {
                     scoreMaxRnv = scoreMaxFamily[i];
+                    bestNetwork[0] = numeroGen;
+                    bestNetwork[1] = i;
+                    bestNetwork[2] = j;
                 }
                 if (scoreMaxRnv >= scoreMax) {
                     endingNetwork = netArray[i][j];
@@ -200,9 +203,10 @@ public class Manager {
     public static String name;
     public Network endingNetwork;
     
-    //Le meilleur score possible / le meilleur score atteint, toutes générations confondues / Le nombre de génération testée
+    //Le meilleur score possible / le meilleur score atteint, toutes générations confondues / Le nombre de génération testée / Le meilleur network, toutes générations confondues
     public int scoreMax;
     public int scoreMaxRnv;
     public int numeroGen;
+    public int[] bestNetwork = new int[3];
     
 }

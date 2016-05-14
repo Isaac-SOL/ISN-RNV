@@ -57,6 +57,7 @@ public class JFrameRNV extends javax.swing.JFrame {
         jLabelScoreMax = new javax.swing.JLabel();
         jLabelScoreMaxGen = new javax.swing.JLabel();
         jLabelNumGen = new javax.swing.JLabel();
+        jLabelBestNet = new javax.swing.JLabel();
 
         jFrameName.setTitle("Nouvelle map");
         jFrameName.setLocation(SystemInfo.getScreenDimension.width/2-100, SystemInfo.getScreenDimension.height/2-60);
@@ -138,6 +139,8 @@ public class JFrameRNV extends javax.swing.JFrame {
 
         jLabelNumGen.setText("Numéro de génération");
 
+        jLabelBestNet.setText("Meilleur réseau");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,10 +151,11 @@ public class JFrameRNV extends javax.swing.JFrame {
                 .addGap(82, 82, 82)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelScoreMax, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelScoreMaxGen, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabelNumGen, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabelBestNet, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelNumGen, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelScoreMaxGen, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -161,10 +165,13 @@ public class JFrameRNV extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(499, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonBack)
-                        .addComponent(jLabelScoreMaxGen)
-                        .addComponent(jLabelNumGen))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelNumGen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonBack)
+                            .addComponent(jLabelBestNet)
+                            .addComponent(jLabelScoreMaxGen)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabelScoreMax)))
@@ -189,19 +196,18 @@ public class JFrameRNV extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBackToRNV
 
     private void jButtonOkSizeOk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkSizeOk
-        jLabelNumGen.setText("lolololololololol");
         jFrameName.setVisible(false);
         
         SwingWorker worker = new SwingWorker<Void, Integer[]>() {
             
             @Override
-            protected Void doInBackground() throws Exception {
+            protected Void doInBackground() throws InterruptedException {
                 
                 System.out.println("RNV lancé !\n\n\n\n\n");
                 Manager manageRNV = new Manager(jTextFieldName.getText(), map);
                 
                 while (manageRNV.scoreMaxRnv < manageRNV.scoreMax && manageRNV.numeroGen < 150) { //Lance les tests tant que les meilleur score atteint n'est pas le meilleurs score possible
-                    Integer[] data = {manageRNV.numeroGen,manageRNV.scoreMaxRnv};
+                    Integer[] data = {manageRNV.numeroGen,manageRNV.scoreMaxRnv,manageRNV.bestNetwork[0],manageRNV.bestNetwork[1],manageRNV.bestNetwork[2]};
                     publish(data);
                     manageRNV.launch();
                 }
@@ -213,7 +219,15 @@ public class JFrameRNV extends javax.swing.JFrame {
             protected void process(List<Integer[]> dataChunk) {
                 for(Integer[] data : dataChunk) {
                         jLabelNumGen.setText("Numéro de génération : " + Integer.toString(data[0]));
-                        jLabelScoreMaxGen.setText("Score max génération : " + Integer.toString(data[1]));
+                        jLabelScoreMaxGen.setText("Score Max génération : " + Integer.toString(data[1]));
+                        
+                        //Assigne une lettre de l'alphabet à la famille du Network
+                        char familyChar = 'a';
+                        for (int i = 0; i < data[3]; i++) {
+                           familyChar++;        
+                        }
+                        
+                        jLabelBestNet.setText("Meilleur réseau : " + data[2] + "/" + familyChar + "/" + data[4]);
                 }
             }
         };
@@ -261,6 +275,7 @@ public class JFrameRNV extends javax.swing.JFrame {
     private javax.swing.JButton jButtonOk;
     private javax.swing.JButton jButtonRun;
     private javax.swing.JFrame jFrameName;
+    private javax.swing.JLabel jLabelBestNet;
     private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelNumGen;
     private javax.swing.JLabel jLabelScoreMax;
