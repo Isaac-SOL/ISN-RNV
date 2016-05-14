@@ -8,6 +8,8 @@ import Game.*;
 import RNV.*;
 import static Tools.MapTranslator.*;
 import Tools.SystemInfo;
+import java.util.List;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -187,15 +189,35 @@ public class JFrameRNV extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBackToRNV
 
     private void jButtonOkSizeOk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkSizeOk
-        System.out.println("RNV lanncé !\n\n\n\n\n");
         jLabelNumGen.setText("lolololololololol");
-        Manager manageRNV = new Manager(jTextFieldName.getText(), map);
         jFrameName.setVisible(false);
-        while (manageRNV.scoreMaxRnv < manageRNV.scoreMax && manageRNV.numeroGen < 150) { //Lance les tests tant que les meilleur score atteint n'est pas le meilleurs score possible
-            jLabelNumGen.setText("Numéro de génération : " + Integer.toString(manageRNV.numeroGen));
-            manageRNV.launch();
-            jLabelScoreMax.setText("Score max génération : " + Integer.toString(manageRNV.scoreMaxRnv));
-        }
+        
+        SwingWorker worker = new SwingWorker<Void, Integer[]>() {
+            
+            @Override
+            protected Void doInBackground() throws Exception {
+                
+                System.out.println("RNV lancé !\n\n\n\n\n");
+                Manager manageRNV = new Manager(jTextFieldName.getText(), map);
+                
+                while (manageRNV.scoreMaxRnv < manageRNV.scoreMax && manageRNV.numeroGen < 150) { //Lance les tests tant que les meilleur score atteint n'est pas le meilleurs score possible
+                    Integer[] data = {manageRNV.numeroGen,manageRNV.scoreMaxRnv};
+                    publish(data);
+                    manageRNV.launch();
+                }
+                
+            return null;
+            }
+            
+            @Override
+            protected void process(List<Integer[]> dataChunk) {
+                for(Integer[] data : dataChunk) {
+                        jLabelNumGen.setText("Numéro de génération : " + Integer.toString(data[0]));
+                        jLabelScoreMaxGen.setText("Score max génération : " + Integer.toString(data[1]));
+                }
+            }
+        };
+        worker.execute();
     }//GEN-LAST:event_jButtonOkSizeOk
 
     /**
