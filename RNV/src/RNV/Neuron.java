@@ -60,19 +60,21 @@ public class Neuron {
      * @param rm Identifiant du neurone qui ne sera plus activé
      */
     public void removeSynapse(int rm) {
-        int[] newSynOut = new int[synOut.length - 1];
-        int i;
-        for (i = 0; i < synOut.length; i++) {
-            if (synOut[i] != rm) {
-                newSynOut[i] = synOut[i];
-            } else { break; }
-        }
-        if (i != synOut.length) {
-            for (i++; i < synOut.length; i++) {
-                newSynOut[i-1] = synOut[i];
+        if (synOut.length > 0) {
+            int[] newSynOut = new int[synOut.length - 1];
+            int i;
+            for (i = 0; i < newSynOut.length; i++) {
+                if (synOut[i] != rm) {
+                    newSynOut[i] = synOut[i];
+                } else { break; }
             }
+            if (i != synOut.length-1) {
+                for (i++; i < synOut.length; i++) {
+                    newSynOut[i-1] = synOut[i];
+                }
+            }
+            synOut = newSynOut;
         }
-        synOut = newSynOut;
     }
     
     /**

@@ -5,7 +5,9 @@
 package RNV;
 
 import Game.RunningGame;
+import Game.Tile;
 import Tools.FileIO;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.filechooser.FileSystemView;
 
@@ -17,24 +19,27 @@ public class Manager {
     
     //Constructeurs avec et sans réseau de base
     
-    public Manager(String name, Integer[][] mapUsed) { 
+    public Manager(String name, Tile[][] mapUsed) { 
         
         //Créé la première génération du manager.
         netArray = new Network[10][15];
         for (int i = 0; i < netArray.length; i++) {
-            Network net = Generator.create();
             for (int j = 0; j < netArray[0].length; j++) {
-                netArray[i][j] = Generator.mutate(net);
+                netArray[i][j] = Generator.create();
             }
         }
         
         //Initialise la map
         game = new RunningGame(mapUsed);
-        this.name = name;
+        Manager.name = name;
         endingNetwork = null;
+        scoreMax = game.getMaxScore();
+        System.out.println("Score max possible : " + game.getMaxScore());
+        numeroGen = 0;
+        scoreMaxRnv = 0;
     }
     
-    public Manager(String name, Network network, Integer[][] mapUsed) { 
+    public Manager(String name, Network network, Tile[][] mapUsed) { 
         
         //Créé la première génération du manager à partir d'un réseau.
         netArray = new Network[10][15];
@@ -46,8 +51,11 @@ public class Manager {
         
         //Initialise la map
         game = new RunningGame(mapUsed);
-        this.name = name;
+        Manager.name = name;
         endingNetwork = null;
+        scoreMax = game.getMaxScore();
+        numeroGen = 0;
+        scoreMaxRnv = 0;
     }
  
     
@@ -58,105 +66,120 @@ public class Manager {
      */
     public void launch() {
         
-        //Le meilleur score possible / le meilleur score atteint, toutes générations confondues
-        int scoreMax = game.getMaxScore();
-        int scoreMaxRnv = 0;
-        int numberGen = 0;
+        System.out.println("\n\n\n\n\n\nGénération " + numeroGen);
+       
+        //Les meilleurs score par famille et de meilleur individu par famille : rappel, une famille = une colonne de netArray
+        int[] scoreMaxFamily = new int[netArray.length];
+        int[] bestNetworkFamily= new int[netArray.length];
         
-        while (scoreMaxRnv < scoreMax && numberGen < 150) { //Lance les tests tant que les meilleur score atteint n'est pas le meilleurs score possible
-            
-            //Les meilleurs score par famille et de meilleur individu par famille : rappel, une famille = une colonne de netArray
-            int[] scoreMaxFamily = new int[netArray.length];
-            int[] bestNetworkFamily= new int[netArray.length];
-            
-            //Chaque itération de cette boucle est une famille de la génération
-            for (int i = 0; i < netArray.length; i++) {
+        //Chaque itération de cette boucle est une famille de la génération
+        for (int i = 0; i < netArray.length; i++) {
                 
-                scoreMaxFamily[i] = 0;
-                bestNetworkFamily[i] = 0;
+            scoreMaxFamily[i] = 0;
+            bestNetworkFamily[i] = 0;
                 
-                //Chaque itération de cette boucle est un individu de la famille
-                for (int j = 0; j < netArray[0].length; j++) {
-                    //Fait jouer cet individu
-                    netArray[i][j].setScore(Interpreter.interpreteWith(netArray[i][j], game));
-                    
-                    //Actualise les scores si nécessaire
-                    if (netArray[i][j].getScore() > scoreMaxFamily[i]) {
-                        scoreMaxFamily[i] = netArray[i][j].getScore();
-                        bestNetworkFamily[i] = j;
-                    }
-                    if (scoreMaxFamily[i] > scoreMaxRnv) {
-                        scoreMaxRnv = scoreMaxFamily[i];
-                    }
-                    if (scoreMaxRnv >= scoreMax) {
-                        endingNetwork = netArray[i][j];
-                        System.out.println("Le network " + numberGen + "/" + i + "/" + j + " a terminé la map");
-                    } 
-                    
-                    //Sauvegarde le réseau actuel avant de passer au suivant
-                    save(netArray[i][j], numberGen, i, j);
+            //Chaque itération de cette boucle est un individu de la famille
+            for (int j = 0; j < netArray[0].length; j++) {
+                //Fait jouer cet individu
+                netArray[i][j].setScore(Interpreter.interpreteWith(netArray[i][j], game));
+                 
+                //Actualise les scores si nécessaire
+                if (netArray[i][j].getScore() > scoreMaxFamily[i]) {
+                    scoreMaxFamily[i] = netArray[i][j].getScore();
+                    bestNetworkFamily[i] = j;
                 }
-            }
-            
-            //Met une famille hors jeu si elle est est trop mauvaise
-            boolean[] excludedFamily = new boolean[netArray.length];
-            int numberExcluded = 0;
-            for (int i = 0; i < scoreMaxFamily.length; i++) {
-                if (scoreMaxFamily[i] < scoreMaxRnv - (scoreMax/4)) {
-                    excludedFamily[i] = true;
-                    numberExcluded++;
-                } else {
-                    excludedFamily[i] = false;
+                if (scoreMaxFamily[i] > scoreMaxRnv) {
+                    scoreMaxRnv = scoreMaxFamily[i];
                 }
+                if (scoreMaxRnv >= scoreMax) {
+                    endingNetwork = netArray[i][j];
+                    System.out.println("Le network " + numeroGen + "/" + i + "/" + j + " a terminé la map");
+                } 
+                
+                //Sauvegarde le réseau actuel avant de passer au suivant
+                save(netArray[i][j], numeroGen, i, j);
             }
-            
-            //Network[][] buffer pour la prochaine génération
-            Network[][] newNetArray = new Network[netArray.length][netArray[0].length];
-            int[] numberTimeTaken = new int[netArray.length];
-            for (int i = 0; i < numberTimeTaken.length; i++) {
-                numberTimeTaken[i] = 0;
-            }
-            
-            for (int i = 0; i < numberExcluded; i++) {
-                int random;
-                
-                do {
-                    random = (int)(Math.random()*10);
-                } while (excludedFamily[random]);
-                numberTimeTaken[random]--;
-                
-                do {
-                    random = (int)(Math.random()*10);
-                } while (excludedFamily[random]);
-                numberTimeTaken[random]--;
-            }
-            
-            //Créé la nouvelle génération en combinant les meilleures individus de deux familles au hasard (chaque famille est combiné deux fois grace au tableau numberTimeTaken)
-            for (int i = 0; i < newNetArray.length; i++) {
-                
-                int choosenFamily1, choosenFamily2;
-                do {
-                    choosenFamily1 = (int)(Math.random()*10);
-                    do {
-                        choosenFamily2 = (int) (Math.random()*10);
-                    } while (choosenFamily2 == choosenFamily1);
-                } while((numberTimeTaken[choosenFamily1] >= 2) || (numberTimeTaken[choosenFamily2] >= 2));
-                
-                numberTimeTaken[choosenFamily1]++; numberTimeTaken[choosenFamily2]++;
-                
-                for (int j = 0; j < newNetArray[0].length; j++) {
-                    newNetArray[i][j] = Generator.mutate(Generator.synthesis(netArray[choosenFamily1][bestNetworkFamily[choosenFamily1]], netArray[choosenFamily2][bestNetworkFamily[choosenFamily2]]));
-                }
-            }
-            
-            System.arraycopy(newNetArray, 0, netArray, 0, newNetArray.length);
-            
-            numberGen++;
         }
+        
+        /* TODO Trouver une solution pour exclure les familles (ça fait pour l'instant bugger, je ne sais pas pourquoi)
+        System.out.println("Excluded family");
+        //Met une famille hors jeu si elle est est trop mauvaise
+        boolean[] excludedFamily = new boolean[netArray.length];
+        int numberExcluded = 0;
+        for (int i = 0; i < scoreMaxFamily.length; i++) {
+            if (scoreMaxFamily[i] < scoreMaxRnv - (scoreMax/4)) {
+                excludedFamily[i] = true;
+                numberExcluded++;
+            } else {
+                excludedFamily[i] = false;
+            }
+        }
+        */
+        
+        System.out.println("numberTimeTaken");
+        //Network[][] buffer pour la prochaine génération
+        Network[][] newNetArray = new Network[netArray.length][netArray[0].length];
+        int[] numberTimeTaken = new int[netArray.length];
+        for (int i = 0; i < numberTimeTaken.length; i++) {
+            numberTimeTaken[i] = 0;
+        }
+        
+        /* TODO Voir ligne 103
+        System.out.println("excludedFamily -> numberTimeTaken");
+        for (int i = 0; i < numberExcluded; i++) {
+            int random;
+            
+            do {
+                random = (int)(Math.random()*10);
+            } while (excludedFamily[random]);
+            numberTimeTaken[random]--;
+            
+            do {
+                random = (int)(Math.random()*10);
+            } while (excludedFamily[random]);
+            numberTimeTaken[random]--;
+        }
+        */
+        
+        System.out.println("Combinaison");
+        //Créé la nouvelle génération en combinant les meilleures individus de deux familles au hasard (chaque famille est combiné deux fois grace au tableau numberTimeTaken)
+        for (int i = 0; i < newNetArray.length; i++) {
+            
+            int choosenFamily1, choosenFamily2;
+            do {
+                choosenFamily1 = (int)(Math.random()*10);
+                choosenFamily2 = (int) (Math.random()*10);
+            } while((numberTimeTaken[choosenFamily1] >= 2) || (numberTimeTaken[choosenFamily2] >= 2));
+            
+            numberTimeTaken[choosenFamily1]++; numberTimeTaken[choosenFamily2]++;
+            
+            for (int j = 0; j < newNetArray[0].length; j++) {
+                System.out.println("Mutate + Synthesis depuis le manager : Familles combiné " + choosenFamily1 + " et " + choosenFamily2 + ". Individu " + i + "/" + j);
+                newNetArray[i][j] = Generator.mutate(Generator.synthesis(netArray[choosenFamily1][bestNetworkFamily[choosenFamily1]], netArray[choosenFamily2][bestNetworkFamily[choosenFamily2]]));
+            }
+        }
+        
+        System.out.println("Copie");
+        System.arraycopy(newNetArray, 0, netArray, 0, newNetArray.length);
+        
+        numeroGen++;
+    
     }
     
     private static void save(Network net, int gen, int family, int numero) {
-        String path = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/RNV/Networks/" + name + "/" + gen + "/" + family + "/" + numero + ".ntw";
+        
+        char familyChar = 'a';
+        for (int i = 0; i < family; i++) {
+           familyChar++;        
+        }
+        
+        System.out.println("Sauvegarde du réseau " + gen + "/" + familyChar + "/" + numero);
+        
+        String path = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/RNV/Networks/" + name + "/" + gen + "/" + familyChar;
+        File file = new File(path);
+        file.mkdirs();
+        path +=  "/" + numero + ".ntw";
+        
         try {
             FileIO.writeNetworkFile(net, path);
         } catch (IOException e) {
@@ -174,7 +197,12 @@ public class Manager {
      */
     private Network[][] netArray;
     private RunningGame game;
-    private static String name;
-    private Network endingNetwork;
+    public static String name;
+    public Network endingNetwork;
+    
+    //Le meilleur score possible / le meilleur score atteint, toutes générations confondues / Le nombre de génération testée
+    public int scoreMax;
+    public int scoreMaxRnv;
+    public int numeroGen;
     
 }

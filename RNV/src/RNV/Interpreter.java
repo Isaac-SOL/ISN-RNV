@@ -28,7 +28,7 @@ public class Interpreter {
                 }
             }
 
-            for (int i = 1; i <= 25; i++) {
+            for (int i = 1; i < 25; i++) {
                 int type = view[i].getIntType();
                 int[] activatedNeurons = net.getNeuronsActivatedBy(i,type);
                 interpreteNextLevel(net,game,activatedNeurons);
@@ -45,7 +45,9 @@ public class Interpreter {
     }
     
     private static void interpreteNextLevel(Network net, RunningGame game, int[] activatedNeurons) {
-        for (int id : activatedNeurons) {
+        for (int i = 0; i < activatedNeurons.length; i++) {
+            
+            int id = activatedNeurons[i];
             
             switch (id) {
                 

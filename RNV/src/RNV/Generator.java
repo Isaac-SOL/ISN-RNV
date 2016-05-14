@@ -25,9 +25,9 @@ public class Generator {
             } while(inputId == 13);
 
             int type = (int) (Math.random()*2+1);
-            int[] dest = {(int) (Math.random()*4)};
+            int[] dest = {(int) (Math.random()*4)+1};
 
-            network.newNeuronFromTile(inputId, type, dest);
+            network.newNeuronFromTile(inputId, type, dest);                     
         }
 
         return network;
@@ -39,8 +39,12 @@ public class Generator {
      * @return Réseau muté
      */
     public static Network mutate(Network firstNet) {
+        System.out.println("Mutate lancé.");
         int[] idList = firstNet.getIdList();
-        int indexId = (int) (Math.random()*idList.length) ;
+        for (int i = 0; i < idList.length; i++) {
+            System.out.println(idList[i]);
+        }
+        int indexId = (int) (Math.random()*idList.length);
         int id = idList[indexId];
 
         int choice = (int) (Math.random()*3);
@@ -69,7 +73,9 @@ public class Generator {
      * @return Le réseau combiné
      */
     public static Network synthesis(Network net1, Network net2) {
-				
+	
+        System.out.println("Synthesis lancé");
+        
 	//Compte le nombre de neurone nécessaire dans le nouveau réseau pour éviter les doublons, précise lesquels doivent être ajoutés. TODO rajouter la méthode getNeuronWithoutId à la classe Neuron (Je peux le faire - Dironiil) 
 	boolean[] isAdded1 = new boolean[net1.getNetwork().length];
 	for (int i = 0; i < isAdded1.length; i++) {

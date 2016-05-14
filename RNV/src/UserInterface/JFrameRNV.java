@@ -45,11 +45,71 @@ public class JFrameRNV extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrameName = new javax.swing.JFrame();
+        jButtonBack1 = new javax.swing.JButton();
+        jTextFieldName = new javax.swing.JTextField();
+        jLabelName = new javax.swing.JLabel();
+        jButtonOk = new javax.swing.JButton();
         jButtonRun = new javax.swing.JButton();
         jButtonBack = new javax.swing.JButton();
         jLabelScoreMax = new javax.swing.JLabel();
         jLabelScoreMaxGen = new javax.swing.JLabel();
         jLabelNumGen = new javax.swing.JLabel();
+
+        jFrameName.setTitle("Nouvelle map");
+        jFrameName.setLocation(SystemInfo.getScreenDimension.width/2-100, SystemInfo.getScreenDimension.height/2-60);
+        jFrameName.setResizable(false);
+        jFrameName.setSize(new java.awt.Dimension(236, 144));
+
+        jButtonBack1.setText("Retour");
+        jButtonBack1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBackToRNV(evt);
+            }
+        });
+
+        jLabelName.setFont(new java.awt.Font("DejaVu Sans", 0, 13)); // NOI18N
+        jLabelName.setText("Nom");
+
+        jButtonOk.setText("Ok");
+        jButtonOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOkSizeOk(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jFrameNameLayout = new javax.swing.GroupLayout(jFrameName.getContentPane());
+        jFrameName.getContentPane().setLayout(jFrameNameLayout);
+        jFrameNameLayout.setHorizontalGroup(
+            jFrameNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrameNameLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jFrameNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrameNameLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabelName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
+                    .addGroup(jFrameNameLayout.createSequentialGroup()
+                        .addComponent(jButtonBack1)
+                        .addGap(83, 83, 83)
+                        .addComponent(jButtonOk)))
+                .addGap(25, 25, 25))
+        );
+        jFrameNameLayout.setVerticalGroup(
+            jFrameNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameNameLayout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(jFrameNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelName))
+                .addGap(18, 18, 18)
+                .addGroup(jFrameNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBack1)
+                    .addComponent(jButtonOk))
+                .addGap(18, 18, 18))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(SystemInfo.getScreenDimension.width/2-400,SystemInfo.getScreenDimension.height/2-300);
@@ -118,8 +178,25 @@ public class JFrameRNV extends javax.swing.JFrame {
     }//GEN-LAST:event_Back
 
     private void RunRNV(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RunRNV
-        // TODO add your handling code here:
+        jFrameName.setVisible(true);
     }//GEN-LAST:event_RunRNV
+
+    private void jButtonBackToRNV(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackToRNV
+        jFrameName.setVisible(false);
+        System.out.println("Lancement annulé par l'utilisateur");
+    }//GEN-LAST:event_jButtonBackToRNV
+
+    private void jButtonOkSizeOk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkSizeOk
+        System.out.println("RNV lanncé !\n\n\n\n\n");
+        jLabelNumGen.setText("lolololololololol");
+        Manager manageRNV = new Manager(jTextFieldName.getText(), map);
+        jFrameName.setVisible(false);
+        while (manageRNV.scoreMaxRnv < manageRNV.scoreMax && manageRNV.numeroGen < 150) { //Lance les tests tant que les meilleur score atteint n'est pas le meilleurs score possible
+            jLabelNumGen.setText("Numéro de génération : " + Integer.toString(manageRNV.numeroGen));
+            manageRNV.launch();
+            jLabelScoreMax.setText("Score max génération : " + Integer.toString(manageRNV.scoreMaxRnv));
+        }
+    }//GEN-LAST:event_jButtonOkSizeOk
 
     /**
      * @param args the command line arguments
@@ -158,10 +235,15 @@ public class JFrameRNV extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBack;
+    private javax.swing.JButton jButtonBack1;
+    private javax.swing.JButton jButtonOk;
     private javax.swing.JButton jButtonRun;
+    private javax.swing.JFrame jFrameName;
+    private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelNumGen;
     private javax.swing.JLabel jLabelScoreMax;
     private javax.swing.JLabel jLabelScoreMaxGen;
+    private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables
 
     //Variables utilisées pour créer la Table.

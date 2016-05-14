@@ -29,6 +29,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
      */
     public JFrameChosenMap(Integer[][] map) {
         initComponents();
+        this.map = map;
         initTable(intToTiles(map));
     }
 
@@ -117,7 +118,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSavedNetworkActionPerformed
 
     private void jButtonNewNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewNetworkActionPerformed
-        new JFrameRNV().setVisible(true);
+        new JFrameRNV(intToTiles(map)).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButtonNewNetworkActionPerformed
 
@@ -165,6 +166,8 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     //Variables utilisées pour créer la Table.
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableMap;
+    
+    private Integer[][] map;
     
     /**
      * Méthode appelée par le second constructeur. Utilise un tableau de Integer pour créer et remplir une Table, qui est ensuite affichée.

@@ -15,22 +15,26 @@ public class Network {
     //Constructeurs
     
     public Network() {
-        
+        network = new Neuron[0];
+        nextId = 5; 
     }
     
     public Network(String n) {
         name = n;
+        nextId = 5; 
     }
     
     public Network(String n, Neuron[] net) {
         name = n;
         network = net;
+        nextId = 5; 
     }
     
     public Network(String n, Neuron[] net, int s) {
         name = n;
         network = net;
         score  = s;
+        nextId = 5; 
     }
     
     //Méthodes
@@ -47,6 +51,7 @@ public class Network {
         newNetwork[network.length] = new Neuron(nextId, inputId, type, dest);
         nextId++;
         network = newNetwork;
+        System.out.println("Neurone créé à l'ID " + (nextId - 1));
     }
     
     /**
@@ -101,6 +106,8 @@ public class Network {
         }
         
         network = newNetwork;
+       
+        System.out.println("Neurone supprimé à l'ID " + id);
     }
     
     /**
@@ -151,10 +158,8 @@ public class Network {
      */
     public int[] getIdList() {
         int[] idList = new int[network.length];
-        int i = 0;
-        for(Neuron neuron : network) {
-            idList[i] = neuron.id;
-            i++;
+        for(int i = 0; i < idList.length; i++) {
+            idList[i] = network[i].id;
         }
         return idList;
     }
@@ -197,6 +202,6 @@ public class Network {
     Neuron[] network;
     int score;
     String name;
-    int nextId = 5;     //Utilisé pour définir l'ID assigné au prochain neurone créé
+    int nextId;     //Utilisé pour définir l'ID assigné au prochain neurone créé
     
 }
