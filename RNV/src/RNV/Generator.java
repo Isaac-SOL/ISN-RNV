@@ -88,22 +88,13 @@ public class Generator {
 		
 	//Well. Ce qui suit sert à ne voir comme "à ajouter" seulement les neurones qui n'ont pas déjà été vu.
 	for (int i = 0; i < net1.getNetwork().length; i++) {
-            boolean alreadySeen = false;
             boolean differentFromAll = true;
             for (int j = 0; j < net2.getNetwork().length; j++) {
                 if (net1.getNetwork()[i].getNeuronWithoutId() != net2.getNetwork()[j].getNeuronWithoutId() && i == 0) {
-                    if (alreadySeen) {
-			isAdded2[j] = true;
-                    } else {
-                        alreadySeen = true;
-			isAdded1[i] = true;
-			isAdded2[j] = true;
-                    }
+                    isAdded1[i] = true;
+                    isAdded2[j] = true;
 		} else if(net1.getNetwork()[i].getNeuronWithoutId() == net2.getNetwork()[j].getNeuronWithoutId() && i ==0) {
-                    if (!alreadySeen) {
-			alreadySeen = true;
-			isAdded1[i] = true;
-                    }
+                    isAdded1[i] = true;
                 } else if(net1.getNetwork()[i].getNeuronWithoutId() == net2.getNetwork()[j].getNeuronWithoutId() && i !=0) {
                     differentFromAll = false;
 		}
