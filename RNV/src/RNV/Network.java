@@ -87,23 +87,28 @@ public class Network {
      */
     public void deleteNeuron(int id) {
         Neuron[] newNetwork = new Neuron[network.length - 1];
-        //TODO Sûrement simplifiable avec deux arraycopy()
-        int i;
-        //On supprimme le neurone cherché
-        for (i = 0; i < network.length; i++) {
-            if (network[i].id != id) {
-                newNetwork[i] = network[i];
-            } else { break; }
-        }
-        if (i != network.length) {
-            for (i++; i < network.length; i++) {
-                newNetwork[i-1] = network[i];
-            }
-        }
-        //On supprime les synapses liées
-        for (i = 0; i < newNetwork.length; i++) {
-            newNetwork[i].removeSynapse(id);
-        }
+        
+        int index = getNeuronIndexFromId(id);
+            
+        System.arraycopy(network, 0, newNetwork, 0, index);
+        System.arraycopy(network, index + 2, newNetwork, index + 1, newNetwork.length - (index+1));
+        
+//        int i;
+//        //On supprimme le neurone cherché
+//        for (i = 0; i < network.length; i++) {
+//            if (network[i].id != id) {
+//                newNetwork[i] = network[i];
+//            } else { break; }
+//        }
+//        if (i != network.length) {
+//            for (i++; i < network.length; i++) {
+//                newNetwork[i-1] = network[i];
+//            }
+//        }
+//        //On supprime les synapses liées
+//        for (i = 0; i < newNetwork.length; i++) {
+//            newNetwork[i].removeSynapse(id);
+//        }
         
         network = newNetwork;
        
@@ -170,7 +175,7 @@ public class Network {
      * @param type Type de la tile, en int
      * @return Liste des neurones activés par tileId.
      */
-    public int[] getNeuronsActivatedBy(int tileId, int type) { //TODO Je sais pas si c'est efficace, c'est une fonction appelée très souvent
+    public int[] getNeuronsActivatedBy(int tileId, int type) {
         int[] idList = new int[0];
         
         for (Neuron n : network) {      //On regarde chaque neurone de network

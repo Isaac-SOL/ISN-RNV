@@ -81,7 +81,7 @@ public class Manager {
             //Chaque itération de cette boucle est un individu de la famille
             for (int j = 0; j < netArray[0].length; j++) {
                 //Fait jouer cet individu
-                netArray[i][j].setScore(Interpreter.interpreteWith(netArray[i][j], game, 10));
+                netArray[i][j].setScore(Interpreter.interpreteWith(netArray[i][j], game, 0));
                  
                 //Actualise les scores si nécessaire
                 if (netArray[i][j].getScore() > scoreMaxFamily[i]) {
@@ -186,7 +186,7 @@ public class Manager {
         try {
             FileIO.writeNetworkFile(net, path);
         } catch (IOException e) {
-            System.out.println("Erreur lors de l'écriture du réseau " + gen + "/" + family + "/" + numero + " : " + e.getMessage());
+//            System.out.println("Erreur lors de l'écriture du réseau " + gen + "/" + family + "/" + numero + " : " + e.getMessage()); TODO ce machin balance des erreurs pour rien, je commente pour le moment
         }
     }
 

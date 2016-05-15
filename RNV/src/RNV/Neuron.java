@@ -62,17 +62,30 @@ public class Neuron {
     public void removeSynapse(int rm) {
         if (synOut.length > 0) {
             int[] newSynOut = new int[synOut.length - 1];
-            int i;
-            for (i = 0; i < newSynOut.length; i++) {
-                if (synOut[i] != rm) {
-                    newSynOut[i] = synOut[i];
-                } else { break; }
-            }
-            if (i != synOut.length-1) {
-                for (i++; i < synOut.length; i++) {
-                    newSynOut[i-1] = synOut[i];
+            int rmIndex = 0;
+            
+            for (int i = 0; i < synOut.length; i++) {
+                if (synOut[i] == rm) {
+                    rmIndex = i;
+                    break;
                 }
             }
+            
+            System.arraycopy(synOut, 0, newSynOut, 0, rmIndex);
+            System.arraycopy(synOut, rmIndex + 2, newSynOut, rmIndex + 1, newSynOut.length - (rmIndex+1));
+            
+//            int i;
+//            for (i = 0; i < newSynOut.length; i++) {
+//                if (synOut[i] != rm) {
+//                    newSynOut[i] = synOut[i];
+//                } else { break; }
+//            }
+//            if (i != synOut.length-1) {
+//                for (i++; i < synOut.length; i++) {
+//                    newSynOut[i-1] = synOut[i];
+//                }
+//            }
+            
             synOut = newSynOut;
         }
     }

@@ -49,9 +49,10 @@ public class Generator {
 
         int choice = (int) (Math.random()*3);
         switch  (choice){
-            case 0 : firstNet.deleteNeuron(id); break;
+            case 0 : System.out.println("Delete neuron " + id); firstNet.deleteNeuron(id); break;
             case 2 : // permet d'avoir 2 chance sur 3 "ajoute un neurone" 
             case 1 :
+                System.out.println("New neuron " + firstNet.nextId);
                 int inputId; 
                 do {
                      inputId = (int) (Math.random()*25);
@@ -76,7 +77,7 @@ public class Generator {
 	
         System.out.println("Synthesis lancé");
         
-	//Compte le nombre de neurone nécessaire dans le nouveau réseau pour éviter les doublons, précise lesquels doivent être ajoutés. TODO rajouter la méthode getNeuronWithoutId à la classe Neuron (Je peux le faire - Dironiil) 
+	//Compte le nombre de neurone nécessaire dans le nouveau réseau pour éviter les doublons, précise lesquels doivent être ajoutés.
 	boolean[] isAdded1 = new boolean[net1.getNetwork().length];
 	for (int i = 0; i < isAdded1.length; i++) {
             isAdded1[i] = false;
@@ -119,7 +120,7 @@ public class Generator {
 	//Et rajoute tous les neurones qui ont été vu comme non doublon
 	for (int i = 0; i < net1.getNetwork().length; i++) {
             if (isAdded1[i]) {
-		combinedNetwork.addNeuronFromTileWithNewId(net1.getNetwork()[i]); //TODO Rajouter cette méthode dans la classe network (je peux le faire aussi - Dironiil)
+		combinedNetwork.addNeuronFromTileWithNewId(net1.getNetwork()[i]);
             }
 	}
 	for (int i = 0; i < net2.getNetwork().length; i++) {
