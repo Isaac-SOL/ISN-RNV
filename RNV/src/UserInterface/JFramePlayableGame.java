@@ -8,6 +8,7 @@ package UserInterface;
 
 import Game.*;
 import static Tools.MapTranslator.*;
+import Tools.SystemInfo;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -59,6 +60,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         jLabelScore = new javax.swing.JLabel();
 
         jFrameViewRadius.setAlwaysOnTop(true);
+        jFrameViewRadius.setLocation(SystemInfo.getScreenDimension.width/2+400, SystemInfo.getScreenDimension.height/2-300);
         jFrameViewRadius.setPreferredSize(new java.awt.Dimension(150, 150));
         jFrameViewRadius.setResizable(false);
         jFrameViewRadius.setSize(new java.awt.Dimension(150, 150));
@@ -170,37 +172,37 @@ public class JFramePlayableGame extends javax.swing.JFrame {
 
     private void jButtonLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeftActionPerformed
         game.goLeft();
-        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
+        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
         jLabelScore.setText("Score = " + game.getScore());
     }//GEN-LAST:event_jButtonLeftActionPerformed
 
     private void jButtonRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRightActionPerformed
         game.goRight();
-        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
+        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
         jLabelScore.setText("Score = " + game.getScore());
     }//GEN-LAST:event_jButtonRightActionPerformed
 
     private void jButtonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpActionPerformed
         game.goUp();
-        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
+        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
         jLabelScore.setText("Score = " + game.getScore());
     }//GEN-LAST:event_jButtonUpActionPerformed
 
     private void jButtonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownActionPerformed
         game.goDown();
-        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
+        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
         jLabelScore.setText("Score = " + game.getScore());
     }//GEN-LAST:event_jButtonDownActionPerformed
 
     //Reset le jeu
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
         game.reset();
-        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
+        jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
+        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void WindowBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowBack

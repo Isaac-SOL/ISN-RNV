@@ -10,10 +10,9 @@ import Game.*;
 import RNV.Interpreter;
 import RNV.Network;
 import static Tools.MapTranslator.*;
-import java.util.List;
+import Tools.SystemInfo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -67,6 +66,7 @@ public class JFrameRNVGame extends javax.swing.JFrame {
         jLabelScore = new javax.swing.JLabel();
 
         jFrameViewRadius.setAlwaysOnTop(true);
+        jFrameViewRadius.setLocation(SystemInfo.getScreenDimension.width/2+400, SystemInfo.getScreenDimension.height/2-300);
         jFrameViewRadius.setResizable(false);
         jFrameViewRadius.setSize(new java.awt.Dimension(150, 150));
 
@@ -82,6 +82,7 @@ public class JFrameRNVGame extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(0, 0));
 
         jButtonBack.setText("Retour");
         jButtonBack.addActionListener(new java.awt.event.ActionListener() {
@@ -167,18 +168,21 @@ public class JFrameRNVGame extends javax.swing.JFrame {
         };
         
         Thread tInter = new Thread(inter);
-        tInter.start();
         
-        while (tInter.getState() != Thread.State.TERMINATED){
-            jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-            jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(JFrameRNVGame.class.getName()).log(Level.SEVERE, null, ex);
+        Runnable swing = () -> {
+            while (tInter.getState() != Thread.State.TERMINATED){
+                jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
+                jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(JFrameRNVGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
+        };
         
+        Thread tSwing = new Thread(swing);
+        tInter.start(); tSwing.start();
 //        SwingWorker worker = new SwingWorker<Void, Boolean>() {
 //            
 //            @Override
