@@ -89,26 +89,27 @@ public class Network {
         Neuron[] newNetwork = new Neuron[network.length - 1];
         
         int index = getNeuronIndexFromId(id);
-            
-        System.arraycopy(network, 0, newNetwork, 0, index);
-        System.arraycopy(network, index + 2, newNetwork, index + 1, newNetwork.length - (index+1));
+      
+//Code abandonné
+//        System.arraycopy(network, 0, newNetwork, 0, index);
+//        System.arraycopy(network, index + 2, newNetwork, index + 1, newNetwork.length - (index+1));
         
-//        int i;
-//        //On supprimme le neurone cherché
-//        for (i = 0; i < network.length; i++) {
-//            if (network[i].id != id) {
-//                newNetwork[i] = network[i];
-//            } else { break; }
-//        }
-//        if (i != network.length) {
-//            for (i++; i < network.length; i++) {
-//                newNetwork[i-1] = network[i];
-//            }
-//        }
-//        //On supprime les synapses liées
-//        for (i = 0; i < newNetwork.length; i++) {
-//            newNetwork[i].removeSynapse(id);
-//        }
+        int i;
+        //On supprimme le neurone cherché
+        for (i = 0; i < network.length; i++) {
+            if (network[i].id != id) {
+                newNetwork[i] = network[i];
+            } else { break; }
+        }
+        if (i != network.length) {
+            for (i++; i < network.length; i++) {
+                newNetwork[i-1] = network[i];
+            }
+        }
+        //On supprime les synapses liées
+        for (i = 0; i < newNetwork.length; i++) {
+            newNetwork[i].removeSynapse(id);
+        }
         
         network = newNetwork;
        

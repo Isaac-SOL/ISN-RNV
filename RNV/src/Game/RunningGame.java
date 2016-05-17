@@ -140,7 +140,7 @@ public class RunningGame {
     }
     
     /**
-     * @return @return La coordonnée actuelle Y du token
+     * @return La coordonnée actuelle Y du token
      */
     public int getTokenYPos() {
         int typos = 0;
@@ -179,7 +179,7 @@ public class RunningGame {
     
     //Variables
     
-    Tile[][] currentMap;
-    Integer[][] intStartingMap;
-    int score = 0;
+    public Tile[][] currentMap;
+    public Integer[][] intStartingMap;
+    public int score = 0;
 }

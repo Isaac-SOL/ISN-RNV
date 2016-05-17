@@ -33,7 +33,7 @@ public class JFrameRNVGame extends javax.swing.JFrame {
     /**
      * Second constructeur qui utilise un tableau de Integer pour créer la Table avec
      * @param map Integer[][] qui sert à créer la map
-     * @param network Réseau qui "jouera" sur la map
+     * @param net Réseau qui "jouera" sur la map
      */
     public JFrameRNVGame(Integer[][] map, Network net) {
         
@@ -91,32 +91,12 @@ public class JFrameRNVGame extends javax.swing.JFrame {
         });
 
         jButtonLeft.setText("<");
-        jButtonLeft.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLeftActionPerformed(evt);
-            }
-        });
 
         jButtonRight.setText(">");
-        jButtonRight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRightActionPerformed(evt);
-            }
-        });
 
         jButtonUp.setText("^");
-        jButtonUp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonUpActionPerformed(evt);
-            }
-        });
 
         jButtonDown.setText("v");
-        jButtonDown.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDownActionPerformed(evt);
-            }
-        });
 
         jButtonRun.setText("Lancer Réseau");
         jButtonRun.addActionListener(new java.awt.event.ActionListener() {
@@ -175,57 +155,46 @@ public class JFrameRNVGame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeftActionPerformed
-        game.goLeft();
-        jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-        jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
-        jLabelScore.setText("Score = " + game.getScore());
-    }//GEN-LAST:event_jButtonLeftActionPerformed
-
-    private void jButtonRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRightActionPerformed
-        game.goRight();
-        jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-        jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
-        jLabelScore.setText("Score = " + game.getScore());
-    }//GEN-LAST:event_jButtonRightActionPerformed
-
-    private void jButtonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpActionPerformed
-        game.goUp();
-        jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-        jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
-        jLabelScore.setText("Score = " + game.getScore());
-    }//GEN-LAST:event_jButtonUpActionPerformed
-
-    private void jButtonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownActionPerformed
-        game.goDown();
-        jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-        jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
-        jLabelScore.setText("Score = " + game.getScore());
-    }//GEN-LAST:event_jButtonDownActionPerformed
-
     //Fait jouer le jeu au réseau
     private void Run(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Run
-        game.reset();
-        
-        SwingWorker worker = new SwingWorker<Void, Integer[]>() {
-            
-            @Override
-            protected Void doInBackground() throws InterruptedException {
-
+       
+        Runnable inter = () -> {
+            try {
                 Interpreter.interpreteWith(network, game, 1000);
-                
-                return null;
+            } catch (InterruptedException ex) {
+                Logger.getLogger(JFrameRNVGame.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            @Override
-            protected void process(List<Integer[]> dataChunk) {
-                
-            }
-            
         };
         
-        jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
-        jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
+        Thread tInter = new Thread(inter);
+        tInter.start();
+        
+        while (tInter.getState() != Thread.State.TERMINATED){
+            jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(game.getScaledIconMap(788 / nbColumns), new String [nbColumns]));
+            jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(tilesToScaledIcons(game.getViewRadius(2), 788 / nbColumns), new String [5]));
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(JFrameRNVGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+//        SwingWorker worker = new SwingWorker<Void, Boolean>() {
+//            
+//            @Override
+//            protected Void doInBackground() throws InterruptedException {
+//
+//                Interpreter.interpreteWith(network, game, 1000);
+//                
+//                return null;
+//            }
+//            
+//            @Override
+//            protected void process(List<Boolean> dataChunk) {
+//                
+//            }
+//            
+//        };
     }//GEN-LAST:event_Run
 
     private void WindowBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowBack

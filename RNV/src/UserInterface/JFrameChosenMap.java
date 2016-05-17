@@ -42,9 +42,15 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooserNetwork = new javax.swing.JFileChooser();
         JButtonBack = new javax.swing.JButton();
         jButtonSavedNetwork = new javax.swing.JButton();
         jButtonNewNetwork = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+
+        jFileChooserNetwork.setApproveButtonText("Ouvrir");
+        jFileChooserNetwork.setApproveButtonToolTipText("Jouer sur cette map avec ce réseau");
+        jFileChooserNetwork.setFileFilter(FileIO.NetworkFilter);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(SystemInfo.getScreenDimension.width/2-400, SystemInfo.getScreenDimension.height/2-300);
@@ -71,14 +77,27 @@ public class JFrameChosenMap extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Jouer avec un réseau");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Play(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JButtonBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(JButtonBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)))
                 .addComponent(jButtonSavedNetwork)
                 .addGap(242, 242, 242))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +115,9 @@ public class JFrameChosenMap extends javax.swing.JFrame {
                         .addComponent(JButtonBack)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonSavedNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonSavedNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
                         .addGap(23, 23, 23))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -121,6 +142,11 @@ public class JFrameChosenMap extends javax.swing.JFrame {
         new JFrameRNV(intToTiles(map)).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButtonNewNetworkActionPerformed
+
+    private void Play(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Play
+        new JFrameRNV(intToTiles(map)).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_Play
 
     /**
      * @param args the command line arguments
@@ -159,8 +185,10 @@ public class JFrameChosenMap extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JButtonBack;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonNewNetwork;
     private javax.swing.JButton jButtonSavedNetwork;
+    private javax.swing.JFileChooser jFileChooserNetwork;
     // End of variables declaration//GEN-END:variables
     
     //Variables utilisées pour créer la Table.
