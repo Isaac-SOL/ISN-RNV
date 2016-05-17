@@ -6,8 +6,12 @@
 package UserInterface;
 
 import Game.Tile;
+import RNV.Network;
 import Tools.*;
 import static Tools.MapTranslator.*;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -48,9 +52,11 @@ public class JFrameChosenMap extends javax.swing.JFrame {
         jButtonNewNetwork = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
+        jFileChooserNetwork.setAcceptAllFileFilterUsed(false);
         jFileChooserNetwork.setApproveButtonText("Ouvrir");
         jFileChooserNetwork.setApproveButtonToolTipText("Jouer sur cette map avec ce réseau");
         jFileChooserNetwork.setFileFilter(FileIO.NetworkFilter);
+        jFileChooserNetwork.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(SystemInfo.getScreenDimension.width/2-400, SystemInfo.getScreenDimension.height/2-300);
@@ -144,8 +150,21 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNewNetworkActionPerformed
 
     private void Play(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Play
-        new JFrameRNV(intToTiles(map)).setVisible(true);
-        this.dispose();
+        int returnVal = jFileChooserNetwork.showOpenDialog(null);                            //Ouvre jFileChooserNetwork et regarde sur quel bouton il a appuyé
+        if (returnVal == JFileChooser.APPROVE_OPTION) {                                                             //Vérifie qe l'utilisateur ait appuyé sur ok
+            File chosenNetwork = jFileChooserNetwork.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
+            try {
+                Network net = FileIO.readNetworkFile(chosenNetwork); //Transformation du Fichier en tableau d'Integer[][]
+                new JFrameRNVGame(map,net).setVisible(true);  //Ouverture de la map choisie + 
+                this.dispose();                             //Fermeture de la fenètre de menu
+            } catch (IOException ex) {
+                System.out.println("Problème lors de l'accès au fichier "+chosenNetwork.getAbsolutePath() + "Erreur : " + ex.getMessage());
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Erreur de classe du fichier : " + ex.getMessage());
+            }
+        } else {
+            System.out.println("Accès au fichier annulé.");
+        }
     }//GEN-LAST:event_Play
 
     /**

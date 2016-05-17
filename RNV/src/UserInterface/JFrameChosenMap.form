@@ -4,11 +4,13 @@
   <NonVisualComponents>
     <Component class="javax.swing.JFileChooser" name="jFileChooserNetwork">
       <Properties>
+        <Property name="acceptAllFileFilterUsed" type="boolean" value="false"/>
         <Property name="approveButtonText" type="java.lang.String" value="Ouvrir"/>
         <Property name="approveButtonToolTipText" type="java.lang.String" value="Jouer sur cette map avec ce r&#xe9;seau"/>
         <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="FileIO.NetworkFilter" type="code"/>
         </Property>
+        <Property name="fileSelectionMode" type="int" value="2"/>
       </Properties>
     </Component>
   </NonVisualComponents>
