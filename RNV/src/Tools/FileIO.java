@@ -75,5 +75,6 @@ public class FileIO {
     
     //Filtres pour fichiers texte ou map
     public static FileFilter MapFilter = new FileNameExtensionFilter("Fichier Map","map");
+    public static FileFilter networkFilter = new FileNameExtensionFilter("Fichier Network","ntw");
 
 }
