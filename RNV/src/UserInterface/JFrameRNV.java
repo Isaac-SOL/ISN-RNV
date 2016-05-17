@@ -59,7 +59,7 @@ public class JFrameRNV extends javax.swing.JFrame {
         jLabelNumGen = new javax.swing.JLabel();
         jLabelBestNet = new javax.swing.JLabel();
 
-        jFrameName.setTitle("Nouvelle map");
+        jFrameName.setTitle("Nom du réseau");
         jFrameName.setLocation(SystemInfo.getScreenDimension.width/2-100, SystemInfo.getScreenDimension.height/2-60);
         jFrameName.setResizable(false);
         jFrameName.setSize(new java.awt.Dimension(236, 144));
@@ -77,7 +77,7 @@ public class JFrameRNV extends javax.swing.JFrame {
         jButtonOk.setText("Ok");
         jButtonOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonOkSizeOk(evt);
+                jButtonNameOk(evt);
             }
         });
 
@@ -195,7 +195,7 @@ public class JFrameRNV extends javax.swing.JFrame {
         System.out.println("Lancement annulé par l'utilisateur");
     }//GEN-LAST:event_jButtonBackToRNV
 
-    private void jButtonOkSizeOk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkSizeOk
+    private void jButtonNameOk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNameOk
         jFrameName.setVisible(false);
         
         SwingWorker worker = new SwingWorker<Void, Integer[]>() {
@@ -219,7 +219,7 @@ public class JFrameRNV extends javax.swing.JFrame {
             protected void process(List<Integer[]> dataChunk) {
                 for(Integer[] data : dataChunk) {
                         jLabelNumGen.setText("Numéro de génération : " + Integer.toString(data[0]));
-                        jLabelScoreMaxGen.setText("Score Max génération : " + Integer.toString(data[1]));
+                        jLabelScoreMax.setText("Score Max : " + Integer.toString(data[1]));
                         
                         //Assigne une lettre de l'alphabet à la famille du Network
                         char familyChar = 'a';
@@ -232,7 +232,7 @@ public class JFrameRNV extends javax.swing.JFrame {
             }
         };
         worker.execute();
-    }//GEN-LAST:event_jButtonOkSizeOk
+    }//GEN-LAST:event_jButtonNameOk
 
     /**
      * @param args the command line arguments
