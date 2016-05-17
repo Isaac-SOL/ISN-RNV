@@ -5,12 +5,14 @@
 
 package RNV;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Isaac
  */
 
-public class Neuron {
+public class Neuron implements Serializable{
     
     //Constructeurs
     

@@ -5,12 +5,14 @@
 
 package RNV;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Isaac
  */
 
-public class Network {
+public class Network implements Serializable{
     
     //Constructeurs
     
