@@ -114,17 +114,19 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonBack" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabelScoreMax" min="-2" pref="107" max="-2" attributes="0"/>
-                  <Component id="jLabelBestNet" min="-2" pref="181" max="-2" attributes="0"/>
+                  <Component id="jLabelBestNet" min="-2" pref="149" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabelScoreMaxGen" min="-2" pref="175" max="-2" attributes="0"/>
                   <Component id="jLabelNumGen" min="-2" pref="172" max="-2" attributes="0"/>
-                  <Component id="jLabelScoreMaxGen" min="-2" pref="159" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="55" max="32767" attributes="0"/>
+              <EmptySpace pref="51" max="32767" attributes="0"/>
+              <Component id="jButtonStop" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButtonRun" min="-2" pref="218" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -135,18 +137,22 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="499" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jLabelNumGen" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jButtonBack" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonRun" alignment="3" min="-2" pref="95" max="-2" attributes="0"/>
+                      <Component id="jButtonStop" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButtonBack" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelScoreMax" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelNumGen" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabelBestNet" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelScoreMaxGen" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButtonRun" alignment="3" min="-2" pref="95" max="-2" attributes="0"/>
-                      <Component id="jLabelScoreMax" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -193,6 +199,15 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Meilleur r&#xe9;seau"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonStop">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Stop"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Stop"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

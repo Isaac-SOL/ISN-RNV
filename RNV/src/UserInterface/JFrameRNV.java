@@ -58,6 +58,7 @@ public class JFrameRNV extends javax.swing.JFrame {
         jLabelScoreMaxGen = new javax.swing.JLabel();
         jLabelNumGen = new javax.swing.JLabel();
         jLabelBestNet = new javax.swing.JLabel();
+        jButtonStop = new javax.swing.JButton();
 
         jFrameName.setTitle("Nom du réseau");
         jFrameName.setLocation(SystemInfo.getScreenDimension.width/2-100, SystemInfo.getScreenDimension.height/2-60);
@@ -141,6 +142,14 @@ public class JFrameRNV extends javax.swing.JFrame {
 
         jLabelBestNet.setText("Meilleur réseau");
 
+        jButtonStop.setText("Stop");
+        jButtonStop.setEnabled(false);
+        jButtonStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Stop(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,15 +157,17 @@ public class JFrameRNV extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonBack)
-                .addGap(82, 82, 82)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelScoreMax, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelBestNet, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelBestNet, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelNumGen, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelScoreMaxGen, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                    .addComponent(jLabelScoreMaxGen, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNumGen, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addComponent(jButtonStop)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -165,16 +176,19 @@ public class JFrameRNV extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(499, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelNumGen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonBack)
-                            .addComponent(jLabelBestNet)
-                            .addComponent(jLabelScoreMaxGen)))
+                    .addComponent(jButtonBack)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelScoreMax)))
+                        .addComponent(jButtonStop))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelScoreMax)
+                            .addComponent(jLabelNumGen))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelBestNet)
+                            .addComponent(jLabelScoreMaxGen))
+                        .addGap(16, 16, 16)))
                 .addContainerGap())
         );
 
@@ -197,6 +211,7 @@ public class JFrameRNV extends javax.swing.JFrame {
 
     private void jButtonNameOk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNameOk
         jFrameName.setVisible(false);
+        jButtonStop.setEnabled(true);
         
         SwingWorker worker = new SwingWorker<Void, Integer[]>() {
             
@@ -206,7 +221,7 @@ public class JFrameRNV extends javax.swing.JFrame {
                 System.out.println("RNV lancé !\n\n\n\n\n");
                 Manager manageRNV = new Manager(jTextFieldName.getText(), map);
                 
-                while (manageRNV.scoreMaxRnv < manageRNV.scoreMax && manageRNV.numeroGen < 150) { //Lance les tests tant que les meilleur score atteint n'est pas le meilleurs score possible
+                while (manageRNV.scoreMaxRnv < manageRNV.scoreMax && manageRNV.numeroGen < 150 && stopRNV == false) { //Lance les tests tant que les meilleur score atteint n'est pas le meilleurs score possible
                     Integer[] data = {manageRNV.numeroGen,manageRNV.scoreMaxRnv,manageRNV.bestNetwork[0],manageRNV.bestNetwork[1],manageRNV.bestNetwork[2]};
                     publish(data);
                     manageRNV.launch();
@@ -230,9 +245,19 @@ public class JFrameRNV extends javax.swing.JFrame {
                         jLabelBestNet.setText("Meilleur réseau : " + data[2] + "/" + familyChar + "/" + data[4]);
                 }
             }
+            
+            @Override
+            protected void done() {
+                stopRNV = false;
+            }
         };
         worker.execute();
     }//GEN-LAST:event_jButtonNameOk
+
+    private void Stop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Stop
+        stopRNV = true;
+        jButtonStop.setEnabled(false);
+    }//GEN-LAST:event_Stop
 
     /**
      * @param args the command line arguments
@@ -274,6 +299,7 @@ public class JFrameRNV extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBack1;
     private javax.swing.JButton jButtonOk;
     private javax.swing.JButton jButtonRun;
+    private javax.swing.JButton jButtonStop;
     private javax.swing.JFrame jFrameName;
     private javax.swing.JLabel jLabelBestNet;
     private javax.swing.JLabel jLabelName;
@@ -289,6 +315,7 @@ public class JFrameRNV extends javax.swing.JFrame {
     
     private Tile[][] map;
     
+    private boolean stopRNV = false;
     
 private void initTable(Tile[][] map) {
         

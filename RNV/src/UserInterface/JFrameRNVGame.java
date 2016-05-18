@@ -158,10 +158,11 @@ public class JFrameRNVGame extends javax.swing.JFrame {
 
     //Fait jouer le jeu au réseau
     private void Run(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Run
-       
+        game.reset();
+        
         Runnable inter = () -> {
             try {
-                Interpreter.interpreteWith(network, game, 1000);
+                Interpreter.interpreteWith(network, game, 750);
             } catch (InterruptedException ex) {
                 Logger.getLogger(JFrameRNVGame.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -173,8 +174,9 @@ public class JFrameRNVGame extends javax.swing.JFrame {
             while (tInter.getState() != Thread.State.TERMINATED){
                 jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
                 jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
+                jLabelScore.setText("Score = " + game.getScore());
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(250);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(JFrameRNVGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -183,22 +185,6 @@ public class JFrameRNVGame extends javax.swing.JFrame {
         
         Thread tSwing = new Thread(swing);
         tInter.start(); tSwing.start();
-//        SwingWorker worker = new SwingWorker<Void, Boolean>() {
-//            
-//            @Override
-//            protected Void doInBackground() throws InterruptedException {
-//
-//                Interpreter.interpreteWith(network, game, 1000);
-//                
-//                return null;
-//            }
-//            
-//            @Override
-//            protected void process(List<Boolean> dataChunk) {
-//                
-//            }
-//            
-//        };
     }//GEN-LAST:event_Run
 
     private void WindowBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowBack

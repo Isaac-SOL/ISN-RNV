@@ -42,7 +42,7 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         jFileChooserMap.setAcceptAllFileFilterUsed(false);
         jFileChooserMap.setApproveButtonText("Ouvrir");
         jFileChooserMap.setApproveButtonToolTipText("Utiliser cette map pour les tests");
-        jFileChooserMap.setCurrentDirectory(new java.io.File(System.getProperty("user.home")+"/Documents"));
+        jFileChooserMap.setCurrentDirectory(jFileChooserMap.getFileSystemView().getDefaultDirectory());
         jFileChooserMap.setDialogTitle("Ouvrir une map");
         jFileChooserMap.setFileFilter(FileIO.MapFilter);
         jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);

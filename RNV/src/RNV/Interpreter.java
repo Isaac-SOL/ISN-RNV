@@ -15,6 +15,8 @@ import Game.*;
 public class Interpreter {
     
     public static int interpreteWith(Network net, RunningGame game, int sleep) throws InterruptedException {
+        game.reset();
+        
         //Pour calculer le nombre de cycles pendant lesquels le token n'a pas avancé
         int cyclesStopped = 0;
         while (game.getScore() != game.getMaxScore() && cyclesStopped < 10) {

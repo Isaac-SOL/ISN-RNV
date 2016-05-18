@@ -7,6 +7,9 @@
         <Property name="acceptAllFileFilterUsed" type="boolean" value="false"/>
         <Property name="approveButtonText" type="java.lang.String" value="Ouvrir"/>
         <Property name="approveButtonToolTipText" type="java.lang.String" value="Jouer sur cette map avec ce r&#xe9;seau"/>
+        <Property name="currentDirectory" type="java.io.File" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="jFileChooserNetwork.getFileSystemView().getDefaultDirectory()" type="code"/>
+        </Property>
         <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="FileIO.NetworkFilter" type="code"/>
         </Property>

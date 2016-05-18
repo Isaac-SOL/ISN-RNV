@@ -39,6 +39,8 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         game = new RunningGame(map);
         
         initViewRadius(game.getViewRadius(2),2);
+        
+        jLabelScore.setText("Score = " + game.getScore());
     }
 
     /**
@@ -203,6 +205,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         game.reset();
         jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
         jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
+        jLabelScore.setText("Score = " + game.getScore());
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void WindowBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowBack

@@ -8,7 +8,7 @@
         <Property name="approveButtonText" type="java.lang.String" value="Ouvrir"/>
         <Property name="approveButtonToolTipText" type="java.lang.String" value="Utiliser cette map pour les tests"/>
         <Property name="currentDirectory" type="java.io.File" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new java.io.File(System.getProperty(&quot;user.home&quot;)+&quot;/Documents&quot;)" type="code"/>
+          <Connection code="jFileChooserMap.getFileSystemView().getDefaultDirectory()" type="code"/>
         </Property>
         <Property name="dialogTitle" type="java.lang.String" value="Ouvrir une map"/>
         <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">

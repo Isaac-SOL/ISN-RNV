@@ -55,6 +55,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
         jFileChooserNetwork.setAcceptAllFileFilterUsed(false);
         jFileChooserNetwork.setApproveButtonText("Ouvrir");
         jFileChooserNetwork.setApproveButtonToolTipText("Jouer sur cette map avec ce réseau");
+        jFileChooserNetwork.setCurrentDirectory(jFileChooserNetwork.getFileSystemView().getDefaultDirectory());
         jFileChooserNetwork.setFileFilter(FileIO.NetworkFilter);
         jFileChooserNetwork.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
 
