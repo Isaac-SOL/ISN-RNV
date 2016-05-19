@@ -48,7 +48,7 @@ public class Network implements Serializable{
      * @param dest Liste des ids des neurones activés par le nouveau neurone
      * @param inhib Liste des ids des neurones que ce neurone désactivera de force
      */ 
-    public void newNeuronFromTile(int inputId, int type, int[] dest, int[] inhib) {
+    public void newNeuronFromTile(int inputId, int type, int[] dest, boolean inhib) {
         Neuron[] newNetwork = new Neuron[network.length + 1];
         System.arraycopy(network, 0, newNetwork, 0, network.length);
         newNetwork[network.length] = new Neuron(nextId, inputId, type, dest, inhib);
@@ -63,7 +63,7 @@ public class Network implements Serializable{
      * @param dest Liste des ids des neurones activés par le nouveau neurone
      * @param inhib Liste des ids des neurones que ce neurone désactivera de force
      */
-    public void newNeuronFromNeuron(int sourceId, int[] dest, int[] inhib) {
+    public void newNeuronFromNeuron(int sourceId, int[] dest, boolean inhib) {
         Neuron[] newNetwork = new Neuron[network.length + 1];
         System.arraycopy(network, 0, newNetwork, 0, network.length);
         newNetwork[network.length] = new Neuron(nextId, dest, inhib);
@@ -127,15 +127,6 @@ public class Network implements Serializable{
      */
     public void newSynapse(int sourceId, int destId) {
         network[getNeuronIndexFromId(sourceId)].newSynapse(destId);
-    }
-    
-    /**
-     * Crée un nouvel inhibiteur entre deux neurones.
-     * @param sourceId Identifiant du neurone désactivateur
-     * @param destId Identifiant du neurone désactivé
-     */
-    public void newInhibitor(int sourceId, int destId) {
-        network[getNeuronIndexFromId(sourceId)].newInhibitor(destId);
     }
     
     /**
