@@ -79,7 +79,7 @@ public class Interpreter {
                 case 4 : right = true; break;
                 
                 default :
-                    int[] nextActivatedNeurons = net.getNetwork()[net.getNeuronIndexFromId(id)].activate();
+                    int[] nextActivatedNeurons = net.getNetwork()[net.getNeuronIndexFromId(id)].activatedNeurons();
                     if (nextActivatedNeurons.length != 0) {
                         interpreteNextLevel(net,game,nextActivatedNeurons);
                     }

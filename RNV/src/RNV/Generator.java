@@ -7,7 +7,7 @@ package RNV;
 
 /**
  *
- * @author ubuntu
+ * @author Dironiil
  */
 public class Generator {
     
@@ -27,7 +27,7 @@ public class Generator {
             int type = (int) (Math.random()*2+1);
             int[] dest = {(int) (Math.random()*4)+1};
 
-            network.newNeuronFromTile(inputId, type, dest);                     
+            network.newNeuronFromTile(inputId, type, dest, null);                     
         }
 
         return network;
@@ -60,7 +60,7 @@ public class Generator {
                 int type = (int) (Math.random()*2+1);
                 int[] dest = {(int) (Math.random()*4)};
                 
-                firstNet.newNeuronFromTile(inputId, type, dest); break ; // créer un nouveau neurone avec des caractéristiques tirées au hasard et le rajoute dans firstNet
+                firstNet.newNeuronFromTile(inputId, type, dest, null); break ; // créer un nouveau neurone avec des caractéristiques tirées au hasard et le rajoute dans firstNet
         }   
 
         return firstNet;

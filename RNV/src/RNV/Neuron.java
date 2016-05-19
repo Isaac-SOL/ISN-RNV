@@ -20,15 +20,17 @@ public class Neuron implements Serializable{
         
     }
     
-    public Neuron(int id, int[] dest) {
+    public Neuron(int id, int[] dest, int[] inhib) {
         synOut = dest;
+        synNot = inhib;
         this.id = id;
         isSensor = false;
     }
     
-    public Neuron(int id, int source, int type, int[] dest) {
+    public Neuron(int id, int source, int type, int[] dest, int[] inhib) {
         synIn = source;
         synOut = dest;
+        synNot = inhib;
         this.id = id;
         type = activatedByType;
         isSensor = true;
@@ -46,15 +48,25 @@ public class Neuron implements Serializable{
     }
     
     /**
-     * Crée une nouvelle synapse, pointant vers un nouveau neurone à activer.
+     * Crée une nouvelle synapse, pointant vers un neurone à activer.
      * @param dest Identifiant du neurone à activer
      */
-        
     public void newSynapse(int dest) {
         int[] newSynOut = new int[synOut.length + 1];
         System.arraycopy(synOut, 0, newSynOut, 0, synOut.length);       //Copie le contenu de synOut vers newSynOut
         newSynOut[synOut.length + 1] = dest;
         synOut = newSynOut;
+    }
+    
+    /**
+     * Crée une nouvelle synapse inhibitrice, pointant vers un neurone à désactiver de force.
+     * @param inhib Identifiant du neurone à désactiver
+     */
+    public void newInhibitor(int inhib) {
+        int[] newSynNot = new int[synNot.length + 1];
+        System.arraycopy(synOut, 0, newSynNot, 0, synNot.length);       //Copie le contenu de synNot vers newSynNot
+        newSynNot[synNot.length + 1] = inhib;
+        synNot = newSynNot;
     }
     
     /**
@@ -64,6 +76,7 @@ public class Neuron implements Serializable{
     public void removeSynapse(int rm) {
         if (synOut.length > 0) {
             int[] newSynOut = new int[synOut.length - 1];
+            int[] newSynNot = new int[synNot.length - 1];
             
 //Code abandonné
 //            int rmIndex = 0;
@@ -89,17 +102,37 @@ public class Neuron implements Serializable{
                     newSynOut[i-1] = synOut[i];
                 }
             }
-            
             synOut = newSynOut;
+            
+            for (i = 0; i < newSynNot.length; i++) {
+                if (synNot[i] != rm) {
+                    newSynNot[i] = synNot[i];
+                } else { break; }
+            }
+            if (i != synNot.length-1) {
+                for (i++; i < synNot.length; i++) {
+                    newSynNot[i-1] = synNot[i];
+                }
+            }
+            synNot = newSynNot;
+            
         }
     }
     
     /**
-     * Active de force le neurone.
+     * Liste les neurones activés par ce neurone.
      * @return Liste des identifiants des neurones activés par ce neurone
      */
-    public int[] activate() {
+    public int[] activatedNeurons() {
         return synOut;
+    }
+    
+    /**
+     * Liste les neurones désactivés de force par ce neurone.
+     * @return Liste des identifiants des neurones activés par ce neurone
+     */
+    public int[] inhibitedNeurons() {
+        return synNot;
     }
     
     /**
@@ -126,6 +159,7 @@ public class Neuron implements Serializable{
     //Variables
     
     int[] synOut;
+    int[] synNot;
     int synIn;
     int id;
     boolean isSensor;

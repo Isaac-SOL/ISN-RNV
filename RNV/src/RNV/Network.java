@@ -46,11 +46,12 @@ public class Network implements Serializable{
      * @param inputId Numéro de la case à laquelle le neurone réagit
      * @param type Type, en int, de la case lorsqu'elle active le neurone
      * @param dest Liste des ids des neurones activés par le nouveau neurone
+     * @param inhib Liste des ids des neurones que ce neurone désactivera de force
      */ 
-    public void newNeuronFromTile(int inputId, int type, int[] dest) {
+    public void newNeuronFromTile(int inputId, int type, int[] dest, int[] inhib) {
         Neuron[] newNetwork = new Neuron[network.length + 1];
         System.arraycopy(network, 0, newNetwork, 0, network.length);
-        newNetwork[network.length] = new Neuron(nextId, inputId, type, dest);
+        newNetwork[network.length] = new Neuron(nextId, inputId, type, dest, inhib);
         nextId++;
         network = newNetwork;
         System.out.println("Neurone créé à l'ID " + (nextId - 1));
@@ -60,11 +61,12 @@ public class Network implements Serializable{
      * Crée un nouveau neurone qui est activé par un neurone existant.
      * @param sourceId Identifiant du neurone activant le nouveau neurone
      * @param dest Liste des ids des neurones activés par le nouveau neurone
+     * @param inhib Liste des ids des neurones que ce neurone désactivera de force
      */
-    public void newNeuronFormNeuron(int sourceId, int[] dest) {
+    public void newNeuronFromNeuron(int sourceId, int[] dest, int[] inhib) {
         Neuron[] newNetwork = new Neuron[network.length + 1];
         System.arraycopy(network, 0, newNetwork, 0, network.length);
-        newNetwork[network.length] = new Neuron(nextId, dest);
+        newNetwork[network.length] = new Neuron(nextId, dest, inhib);
         newNetwork[getNeuronIndexFromId(sourceId)].newSynapse(nextId);
         nextId++;
         network = newNetwork;
@@ -90,8 +92,8 @@ public class Network implements Serializable{
     public void deleteNeuron(int id) {
         Neuron[] newNetwork = new Neuron[network.length - 1];
         
-        int index = getNeuronIndexFromId(id);
-      
+//        int index = getNeuronIndexFromId(id);
+//      
 //Code abandonné
 //        System.arraycopy(network, 0, newNetwork, 0, index);
 //        System.arraycopy(network, index + 2, newNetwork, index + 1, newNetwork.length - (index+1));
@@ -125,6 +127,15 @@ public class Network implements Serializable{
      */
     public void newSynapse(int sourceId, int destId) {
         network[getNeuronIndexFromId(sourceId)].newSynapse(destId);
+    }
+    
+    /**
+     * Crée un nouvel inhibiteur entre deux neurones.
+     * @param sourceId Identifiant du neurone désactivateur
+     * @param destId Identifiant du neurone désactivé
+     */
+    public void newInhibitor(int sourceId, int destId) {
+        network[getNeuronIndexFromId(sourceId)].newInhibitor(destId);
     }
     
     /**

@@ -225,6 +225,8 @@ public class JFrameRNV extends javax.swing.JFrame {
                     Integer[] data = {manageRNV.numeroGen,manageRNV.scoreMaxRnv,manageRNV.bestNetwork[0],manageRNV.bestNetwork[1],manageRNV.bestNetwork[2]};
                     publish(data);
                     manageRNV.launch();
+                    data = new Integer[] {manageRNV.numeroGen,manageRNV.scoreMaxRnv,manageRNV.bestNetwork[0],manageRNV.bestNetwork[1],manageRNV.bestNetwork[2]};
+                    publish(data);
                 }
                 
             return null;
