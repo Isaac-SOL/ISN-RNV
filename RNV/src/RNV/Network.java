@@ -183,11 +183,11 @@ public class Network implements Serializable{
     public int[] getNeuronsActivatedBy(int tileId, int type) {
         int[] idList = new int[0];
         
-        for (Neuron n : network) {      //On regarde chaque neurone de network
-            if (n.isSensor && n.synIn == tileId && n.activatedByType == type) {      //On vérifie que le neurone soit activé par cette case
+        for (int i = 0; i < network.length; i++) {      //On regarde chaque neurone de network
+            if (network[i].isSensor && network[i].synIn == tileId && network[i].activatedByType == type) {      //On vérifie que le neurone soit activé par cette case
                 int[] newIdList = new int[idList.length + 1];
                 System.arraycopy(idList, 0, newIdList, 0, idList.length);
-                newIdList[idList.length] = n.id;        //Rajoute le nouvel identifiant
+                newIdList[idList.length] = network[i].id;        //Rajoute le nouvel identifiant
                 idList = newIdList;
             }
         }

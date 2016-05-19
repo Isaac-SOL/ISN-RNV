@@ -103,7 +103,7 @@ public class RunningGame {
     }
     
     public int getMaxScore() {
-        return currentMap[0].length;
+        return currentMap[0].length - 1;
     }
     
     public Tile[][] getRawMap() {

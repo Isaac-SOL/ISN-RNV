@@ -39,15 +39,6 @@ public class Neuron implements Serializable{
     //Méthodes
     
     /**
-     * @return le neurone, mais avec un id égal à -1 (équivalent à un null)
-     */
-    public Neuron getNeuronWithoutId() {
-        Neuron idNull = this;
-        idNull.id = -1; //-1 étant l'équivalent d'une valeur null
-        return idNull;
-    }
-    
-    /**
      * Crée une nouvelle synapse, pointant vers un neurone à activer.
      * @param dest Identifiant du neurone à activer
      */
@@ -124,10 +115,17 @@ public class Neuron implements Serializable{
         return synIn;
     }
     
+    public boolean equalsTo(Neuron neuron) {
+        return (this.synOut == neuron.synOut)
+                && (this.synIn == neuron.synIn)
+                && (this.isSensor == neuron.isSensor)
+                && (this.inhibitor == neuron.inhibitor)
+                && (this.activatedByType == neuron.activatedByType);
+    }
     //Variables
     
     int[] synOut;
-    int synIn;
+    Integer synIn;
     int id;
     boolean isSensor;
     boolean inhibitor;

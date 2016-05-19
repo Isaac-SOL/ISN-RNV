@@ -120,11 +120,11 @@
                   <Component id="jLabelBestNet" min="-2" pref="149" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelScoreMaxGen" min="-2" pref="175" max="-2" attributes="0"/>
-                  <Component id="jLabelNumGen" min="-2" pref="172" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jLabelNumGen" pref="172" max="32767" attributes="0"/>
+                  <Component id="jLabelScoreMaxPossible" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="51" max="32767" attributes="0"/>
+              <EmptySpace pref="54" max="32767" attributes="0"/>
               <Component id="jButtonStop" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButtonRun" min="-2" pref="218" max="-2" attributes="0"/>
@@ -150,7 +150,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabelBestNet" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelScoreMaxGen" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelScoreMaxPossible" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   </Group>
@@ -185,11 +185,6 @@
         <Property name="text" type="java.lang.String" value="Score Max "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabelScoreMaxGen">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Score Max g&#xe9;n&#xe9;ration"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabelNumGen">
       <Properties>
         <Property name="text" type="java.lang.String" value="Num&#xe9;ro de g&#xe9;n&#xe9;ration"/>
@@ -208,6 +203,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Stop"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelScoreMaxPossible">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Score Max Possible"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
