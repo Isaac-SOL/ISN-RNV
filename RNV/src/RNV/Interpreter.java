@@ -6,7 +6,7 @@
 package RNV;
 
 import Game.*;
-import java.util.List;
+import java.util.HashSet;
 
 /**
  *
@@ -32,15 +32,14 @@ public class Interpreter {
                 }
             }
             
+            
             //Liste les neurones activés par toutes les cases
-            List<Integer> activatedNeurons = null;
+            HashSet<Integer> activatedNeurons = new HashSet<>();
             for (int i = 1; i < 25; i++) {
                 int type = view[i].getIntType();
                 int[] addNeurons = net.getNeuronsActivatedBy(i,type);
                 for (int id : addNeurons) {
-                    if (!activatedNeurons.contains(id)) {
-                        activatedNeurons.add(id);
-                    }
+                    activatedNeurons.add(id);
                 }
             }
 //            Integer[] activatedNeurons = (Integer[]) activatedNeuronsList.toArray();
@@ -66,12 +65,11 @@ public class Interpreter {
         return game.getScore();
     }
     
-    private static void interpreteNextLevel(Network net, RunningGame game, List<Integer> activatedNeurons) {
+    private static void interpreteNextLevel(Network net, RunningGame game, HashSet<Integer> activatedNeurons) {
         
         //Liste les touches activées
         for(Integer i = 1; i <= 4; i++) {
-            if (activatedNeurons.contains(i)) {
-                activatedNeurons.remove(i);
+            if (activatedNeurons.remove(i)) {
                 switch (i) {
                 
                     case 1 : up = true; break;
@@ -86,24 +84,22 @@ public class Interpreter {
             }
         }
         
-        List<Integer> nextActivatedNeurons = null;
-        for (Integer i : activatedNeurons) {
+        HashSet<Integer> nextActivatedNeurons = new HashSet<>();
+        for (Integer i : activatedNeurons.toArray(new Integer[activatedNeurons.size()])) {
             if (net.getNetwork()[i].inhibitor == false) {
                 int[] addNeurons = net.getNetwork()[i].getSynapses();
                 for (int id : addNeurons) {
-                    if (!nextActivatedNeurons.contains(id)) {
-                        nextActivatedNeurons.add(id);
-                    }
+                    nextActivatedNeurons.add(id);
                 }
             }
         }
+        
+        
         for (Integer i : activatedNeurons) {
             if (net.getNetwork()[i].inhibitor == true) {
                 int[] rmNeurons = net.getNetwork()[i].getSynapses();
                 for (int id : rmNeurons) {
-                    if (nextActivatedNeurons.contains(id)) {
-                        nextActivatedNeurons.remove(id);
-                    }
+                    nextActivatedNeurons.remove(id);
                 }
             }
         }

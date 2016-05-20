@@ -5,6 +5,8 @@
 
 package RNV;
 
+import java.util.HashSet;
+
 /**
  *
  * @author Dironiil
@@ -102,55 +104,123 @@ public class Generator {
      */
     public static Network synthesis(Network net1, Network net2) {
 	
-        System.out.println("Synthesis lancé");
+        System.out.println("Synthesis lancé");        
+
+        //<editor-fold defaultstate="collapsed" desc="Ancien code. Concervé au cas où. TODO Supprimer si ça marche">
+        /*//Compte le nombre de neurone nécessaire dans le nouveau réseau pour éviter les doublons, précise lesquels doivent être ajoutés.
+        boolean[] isAdded1 = new boolean[net1.getNetwork().length];
+        for (int i = 0; i < isAdded1.length; i++) {
+        isAdded1[i] = false;
+        }
+        boolean[] isAdded2 = new boolean[net2.getNetwork().length];
+        for (int i = 0; i < isAdded2.length; i++) {
+        isAdded2[i] = false;
+        }
         
-	//Compte le nombre de neurone nécessaire dans le nouveau réseau pour éviter les doublons, précise lesquels doivent être ajoutés.
-	boolean[] isAdded1 = new boolean[net1.getNetwork().length];
-	for (int i = 0; i < isAdded1.length; i++) {
-            isAdded1[i] = false;
-	}
-	boolean[] isAdded2 = new boolean[net2.getNetwork().length];
-	for (int i = 0; i < isAdded2.length; i++) {
-            isAdded2[i] = false;
-	}
-		
-	//Well. Ce qui suit sert à ne voir comme "à ajouter" seulement les neurones qui n'ont pas déjà été vu.
-	for (int i = 0; i < net1.getNetwork().length; i++) {
-            boolean differentFromAll = true;
-            for (int j = 0; j < net2.getNetwork().length; j++) {
-                if (!(net1.getNetwork()[i].equalsTo(net2.getNetwork()[j])) && (i == 0)) {
-                    System.out.println("Synthesis : isAdded1[" + i + "] et isAdded2[" + j + "] sont vrais");
-                    isAdded1[i] = true;
-                    isAdded2[j] = true;
-		} else if(net1.getNetwork()[i].equalsTo(net2.getNetwork()[j]) && i ==0) {
-                    System.out.println("Synthesis : isAdded1[" + i + "] est vrai isAdded2[" + j + "] est intouché");
-                    isAdded1[i] = true;
-                } else if(net1.getNetwork()[i].equalsTo(net2.getNetwork()[j]) && i !=0) {
-                    differentFromAll = false;
-		}
-            }
-            if (differentFromAll && i != 0) {
-                System.out.println("Synthesis : isAdded1[" + i + "] est vrai isAdded2[] est intouché");
-		isAdded1[i] = true;
-            }
-	}
-		
-	//Initialise le nouveau network
+        //Well. Ce qui suit sert à ne voir comme "à ajouter" seulement les neurones qui n'ont pas déjà été vu.
+        for (int i = 0; i < net1.getNetwork().length; i++) {
+        boolean differentFromAll = true;
+        for (int j = 0; j < net2.getNetwork().length; j++) {
+        if (!(net1.getNetwork()[i].equalsTo(net2.getNetwork()[j])) && (i == 0)) {
+        System.out.println("Synthesis : isAdded1[" + i + "] et isAdded2[" + j + "] sont vrais");
+        isAdded1[i] = true;
+        isAdded2[j] = true;
+        } else if(net1.getNetwork()[i].equalsTo(net2.getNetwork()[j]) && i ==0) {
+        System.out.println("Synthesis : isAdded1[" + i + "] est vrai isAdded2[" + j + "] est intouché");
+        isAdded1[i] = true;
+        } else if(net1.getNetwork()[i].equalsTo(net2.getNetwork()[j]) && i !=0) {
+        differentFromAll = false;
+        }
+        }
+        if (differentFromAll && i != 0) {
+        System.out.println("Synthesis : isAdded1[" + i + "] est vrai isAdded2[] est intouché");
+        isAdded1[i] = true;
+        }
+        }
+        
+        //Initialise le nouveau network
         Network combinedNetwork = new Network();
-		
-	//Et rajoute tous les neurones qui ont été vu comme non doublon
-	for (int i = 0; i < net1.getNetwork().length; i++) {
-            if (isAdded1[i]) {
-		combinedNetwork.addNeuronFromTileWithNewId(net1.getNetwork()[i]);
-            }
+        
+        int[][] synapses1 = new int[net1.getNetwork().length][];
+        for (int i = 0; i < net1.getNetwork().length; i++) {
+        for (int j = 0; j < net1.getNetwork()[i].getSynapses().length; j++) {
+        synapses1[i] = net1.getNetwork()[i].getSynapses();
+        }
+        }
+        int[][] synapses2;
+        
+        //Et rajoute tous les neurones qui ont été vu comme non doublon
+        for (int i = 0; i < net1.getNetwork().length; i++) {
+        if (isAdded1[i]) {
+        if (net1.getNetwork()[i].isSensor) {
+        combinedNetwork.newNeuronFromTile(net1.getNetwork()[i].synIn, net1.getNetwork()[i].activatedByType, null, net1.getNetwork()[i].inhibitor);
+        }
+        }
+        }
+        for (int i = 0; i < net2.getNetwork().length; i++) {
+        if (isAdded2[i]) {
+        combinedNetwork.addNeuronWithNewId(net2.getNetwork()[i]);
+        }
+        }
+        
+        return combinedNetwork;*/
+//</editor-fold>
+        
+        //Change les ID s'ils existent déjà dans l'autre réseau
+        for (int i = 0; i < net1.getNetwork().length; i++) {		
+            boolean alreadyTakenId;				
+            do {
+		alreadyTakenId = false;
+		for (int j = 0; j < net2.getNetwork().length; j++) {
+                    if (net1.getNetwork()[i] == net2.getNetwork()[j]) {
+                        alreadyTakenId = true;
+                    }
+		}
+		for (int j = 0; j < net1.getNetwork().length; j++) {
+                    if ((net1.getNetwork()[i] == net1.getNetwork()[j]) && (i != j)) {
+			alreadyTakenId = true;
+                    }
+		}
+		if (alreadyTakenId) {
+                    net1.setNewId(i, (int)(Math.random()*2000000000+5));
+		}
+            }while (alreadyTakenId);
 	}
-	for (int i = 0; i < net2.getNetwork().length; i++) {
-            if (isAdded2[i]) {
-		combinedNetwork.addNeuronFromTileWithNewId(net2.getNetwork()[i]);
-            }
-	}
-		
+        
+        
+        //Rajoute les neurones, sauf les doublons de neurones senseurs
+        HashSet<Neuron> combinedNetworksSet = new HashSet<>();
+        HashSet<Neuron> neuronsSensorWithoutId = new HashSet<>();
+        
+        for (Neuron n : net1.getNetwork()) {
+            if (n.isSensor) {
+                int id = n.id;
+                n.id = -1;
+                boolean added = neuronsSensorWithoutId.add(n.getWithoutId());
+                n.id = id;
+                if (added) {
+                    combinedNetworksSet.add(n);
+                }
+            }else combinedNetworksSet.add(n);
+        }
+        for (Neuron n : net2.getNetwork()) {
+            if (n.isSensor) {
+                int id = n.id;
+                n.id = -1;
+                boolean added = neuronsSensorWithoutId.add(n.getWithoutId());
+                n.id = id;
+                if (added) {
+                    combinedNetworksSet.add(n);
+                }
+            }else combinedNetworksSet.add(n);
+        }
+        
+        Neuron[] combinedNetworks = combinedNetworksSet.toArray(new Neuron[combinedNetworksSet.size()]);
+        
+        Network combinedNetwork = new Network(combinedNetworks);
+        
         return combinedNetwork;
+                
     }
 
 }

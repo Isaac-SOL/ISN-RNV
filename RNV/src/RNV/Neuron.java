@@ -22,6 +22,7 @@ public class Neuron implements Serializable{
     
     public Neuron(int id, int[] dest, boolean inhib) {
         synOut = dest;
+        synIn = null;
         this.id = id;
         isSensor = false;
         inhibitor = inhib;
@@ -92,6 +93,12 @@ public class Neuron implements Serializable{
      */
     public int[] getSynapses() {
         return synOut;
+    }
+    
+    public Neuron getWithoutId() {
+        Neuron neuron = this;
+        neuron.id = -1;
+        return neuron;
     }
     
     /**
