@@ -81,8 +81,10 @@ public class Manager {
             //Chaque itération de cette boucle est un individu de la famille
             for (int j = 0; j < netArray[0].length; j++) {
                 //Fait jouer cet individu
+                System.out.println("Avant interpreter");
                 netArray[i][j].setScore(Interpreter.interpreteWith(netArray[i][j], game, 0));
-                 
+                System.out.println("Après interpreter");
+                
                 //Actualise les scores si nécessaire
                 if (netArray[i][j].getScore() > scoreMaxFamily[i]) {
                     scoreMaxFamily[i] = netArray[i][j].getScore();
