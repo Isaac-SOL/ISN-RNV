@@ -42,6 +42,7 @@ public class Interpreter {
                     activatedNeurons.add(id);
                 }
             }
+            
 //            Integer[] activatedNeurons = (Integer[]) activatedNeuronsList.toArray();
             
             interpreteNextLevel(net, game, activatedNeurons);
@@ -59,7 +60,7 @@ public class Interpreter {
                 cyclesStopped = 0;
             }
             
-            Thread.sleep(sleep);
+            //Thread.sleep(sleep); //TODO remettre sleep.
             
         }
         return game.getScore();
@@ -86,8 +87,8 @@ public class Interpreter {
         
         HashSet<Integer> nextActivatedNeurons = new HashSet<>();
         for (Integer i : activatedNeurons.toArray(new Integer[activatedNeurons.size()])) {
-            if (net.getNetwork()[i].inhibitor == false) {
-                int[] addNeurons = net.getNetwork()[i].getSynapses();
+            if (net.getNetwork()[net.getNeuronIndexFromId(i)].inhibitor == false) {
+                int[] addNeurons = net.getNetwork()[net.getNeuronIndexFromId(i)].getSynapses();
                 for (int id : addNeurons) {
                     nextActivatedNeurons.add(id);
                 }
@@ -95,9 +96,9 @@ public class Interpreter {
         }
         
         
-        for (Integer i : activatedNeurons) {
-            if (net.getNetwork()[i].inhibitor == true) {
-                int[] rmNeurons = net.getNetwork()[i].getSynapses();
+        for (Integer i : activatedNeurons.toArray(new Integer[activatedNeurons.size()])) {
+            if (net.getNetwork()[net.getNeuronIndexFromId(net.getNeuronIndexFromId(i))].inhibitor == true) {
+                int[] rmNeurons = net.getNetwork()[net.getNeuronIndexFromId(i)].getSynapses();
                 for (int id : rmNeurons) {
                     nextActivatedNeurons.remove(id);
                 }
