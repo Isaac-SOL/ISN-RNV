@@ -27,7 +27,8 @@ public class Generator {
 
         int type = (int) (Math.random()*2+1);
         int[] dest = {(int) (Math.random()*4)+1};
-
+        System.out.println("Create : " + inputId + ", " + type + ", " + dest[0]);
+        
         network.newNeuronFromTile(inputId, type, dest, false);                     
 
         return network;
@@ -35,65 +36,85 @@ public class Generator {
     
     /**
      * Mute un réseau existant en ajoutant ou supprimant des neurones
-     * @param firstNet Réseau à muter
+     * @param returnedNet Réseau à muter
      * @return Réseau muté
      */
-    public static Network mutate(Network firstNet) {
-        System.out.println("Mutate lancé.");
-        int[] idList = firstNet.getIdList();
-        for (int i = 0; i < idList.length; i++) {
-            System.out.println(idList[i]);
+    public static Network mutate(Network net) {
+        try {
+            Network returnedNet = new Network(net.getNetwork());
+            System.out.println("Mutate lancé.");
+            int[] idList = returnedNet.getIdList();
+            for (int i = 0; i < idList.length; i++) {
+                System.out.println(idList[i]);
+            }
+
+            int choice = (int) (Math.random()*9);
+            switch  (choice) {
+                case 0 :
+                case 1 :
+                case 8 :
+                    int indexId = (int) (Math.random()*idList.length);
+                    int id = idList[indexId];
+                    returnedNet.deleteNeuron(id); break;               
+
+
+                case 2 : // permet d'avoir 3 chance sur 7 "ajoute un neurone senseur" 
+                case 3 :
+                case 4 :
+                    //Créé un input de tile aléatoire (différent de l'emplacement du jeton)
+                    int inputIdTile;
+                    do {
+                         inputIdTile = (int) (Math.random()*25);
+                     } while(inputIdTile == 13);
+                    
+                    //Choisit un type aléatoire entre plein (2) et vide (1)
+                    int type = (int) (Math.random()*2+1);
+                    
+                    //Choisis une destination de synapase aléatoire
+                    int[] destTile;
+                    int randomTile = (int) (Math.random()*(idList.length+4));
+                    if (randomTile < idList.length) {
+                        destTile = new int[] {idList[randomTile]}; //Attribution à un autre neurone
+                    } else destTile = new int[] {randomTile - (idList.length-1)}; //Attribution à un bouton
+
+                    if (choice == 3) { returnedNet.newNeuronFromTile(inputIdTile, type, destTile, true); }// créer un nouveau neurone avec des caractéristiques tirées au hasard et le rajoute dans firstNet
+                    else { returnedNet.newNeuronFromTile(inputIdTile, type, destTile, false); }
+
+                    break;
+
+
+                case 5 :// permet d'avoir 3 chance sur 7 "ajoute un neurone non-senseur" 
+                case 6 :
+                case 7 :
+                    //génére aléatoirement un id d'input et d'output différent
+                    int inputIdNeuron = idList[(int) (Math.random()*returnedNet.getNetwork().length)];
+                    int[] destNeuron;
+                    do {
+                        int randomNeuron = (int) (Math.random()*(idList.length+4));
+                        if (randomNeuron < idList.length) {
+                            destNeuron = new int[] {idList[randomNeuron]};
+                        } else destNeuron = new int[] {randomNeuron - (idList.length-1)}; //Attribution à un bouton
+                    } while(destNeuron[0] == inputIdNeuron);
+                    
+                    //En créé un neurone inhibiteur (1/3) ou activateur (2/3)
+                    if (choice == 6) {
+                        returnedNet.newNeuronFromNeuron(inputIdNeuron, destNeuron, true);
+                    }
+                    else {
+                        returnedNet.newNeuronFromNeuron(inputIdNeuron, destNeuron, false);
+                    }
+
+                    break;
+
+
+                default : System.out.println("Erreur de mutate ! Choix aléatoire introuvable."); break;
+            }   
+        
+            return returnedNet;
+        } catch (Exception e) {
+            System.out.println("EXCEPTION DANS MUTATE : " + e.getMessage());
         }
-
-        int choice = (int) (Math.random()*8);
-        switch  (choice) {
-            case 0 :
-            case 1 : int indexId = (int) (Math.random()*idList.length);
-                int id = idList[indexId];
-                firstNet.deleteNeuron(id); break;
-                
-                
-            case 2 : // permet d'avoir 3 chance sur 7 "ajoute un neurone senseur" 
-            case 3 :
-            case 4 :
-                int inputIdTile; 
-                do {
-                     inputIdTile = (int) (Math.random()*25);
-                 } while(inputIdTile == 13);
-                
-                int type = (int) (Math.random()*2+1);
-                
-                int[] destTile;
-                int randomTile = (int) (Math.random()*firstNet.getNetwork().length+4);
-                if (randomTile < firstNet.getNetwork().length) {
-                    destTile = new int[] {idList[randomTile]}; //Attribution à un autre neurone
-                } else destTile = new int[] {randomTile - firstNet.getNetwork().length}; //Attribution à un bouton
-                
-                if (choice == 3) firstNet.newNeuronFromTile(inputIdTile, type, destTile, true); // créer un nouveau neurone avec des caractéristiques tirées au hasard et le rajoute dans firstNet
-                else firstNet.newNeuronFromTile(inputIdTile, type, destTile, false);
-                
-                break;
-                
-                
-            case 5 :// permet d'avoir 3 chance sur 7 "ajoute un neurone non-senseur" 
-            case 6 :
-            case 7 :
-                int inputIdNeuron = idList[(int) (Math.random()*firstNet.getNetwork().length)];
-                int[] destNeuron;
-                do {
-                    int RandomNeuron = (int) (Math.random()*firstNet.getNetwork().length+4);
-                    if (RandomNeuron < firstNet.getNetwork().length) {
-                        destNeuron = new int[] {idList[RandomNeuron]};
-                    } else destNeuron = new int[] {RandomNeuron - firstNet.getNetwork().length}; //Attribution à un bouton
-                } while(destNeuron[0] == inputIdNeuron);
-                
-                if (choice == 6) firstNet.newNeuronFromNeuron(inputIdNeuron, destNeuron, true);
-                else firstNet.newNeuronFromNeuron(inputIdNeuron, destNeuron, false);
-                
-                break;
-        }   
-
-        return firstNet;
+        return net;
     }
     
     /**
@@ -104,7 +125,8 @@ public class Generator {
      */
     public static Network synthesis(Network net1, Network net2) {
 	
-        System.out.println("Synthesis lancé");        
+        System.out.println("Synthesis lancé");
+
 
         //<editor-fold defaultstate="collapsed" desc="Ancien code. Concervé au cas où. TODO Supprimer si ça marche">
         /*//Compte le nombre de neurone nécessaire dans le nouveau réseau pour éviter les doublons, précise lesquels doivent être ajoutés.
@@ -166,60 +188,70 @@ public class Generator {
         return combinedNetwork;*/
 //</editor-fold>
         
-        //Change les ID s'ils existent déjà dans l'autre réseau
-        for (int i = 0; i < net1.getNetwork().length; i++) {		
-            boolean alreadyTakenId;				
-            do {
-		alreadyTakenId = false;
-		for (int j = 0; j < net2.getNetwork().length; j++) {
-                    if (net1.getNetwork()[i] == net2.getNetwork()[j]) {
-                        alreadyTakenId = true;
+        if (net1.getNetwork() != net2.getNetwork()) {
+            //Change les ID s'ils existent déjà dans l'autre réseau
+            System.out.println("Synthesis 1");
+            for (int i = 0; i < net1.getNetwork().length; i++) {
+                boolean alreadyTakenId;				
+                do {
+                    alreadyTakenId = false;
+                    for (int j = 0; j < net2.getNetwork().length; j++) {
+                        if (net1.getNetwork()[i].id == net2.getNetwork()[j].id) {
+                            alreadyTakenId = true;
+                            System.out.println("net1 = net2 : " + i + " / " + j);
+                        }
                     }
-		}
-		for (int j = 0; j < net1.getNetwork().length; j++) {
-                    if ((net1.getNetwork()[i] == net1.getNetwork()[j]) && (i != j)) {
-			alreadyTakenId = true;
+                    for (int j = 0; j < net1.getNetwork().length; j++) {
+                        if ((net1.getNetwork()[i].id == net1.getNetwork()[j].id) && (i != j)) {
+                            System.out.println("net1 = net1 : " + i + " / " + j);
+                            alreadyTakenId = true;
+                        }
                     }
-		}
-		if (alreadyTakenId) {
-                    net1.setNewId(i, (int)(Math.random()*2000000000+5));
-		}
-            }while (alreadyTakenId);
-	}
-        
-        
-        //Rajoute les neurones, sauf les doublons de neurones senseurs
-        HashSet<Neuron> combinedNetworksSet = new HashSet<>();
-        HashSet<Neuron> neuronsSensorWithoutId = new HashSet<>();
-        
-        for (Neuron n : net1.getNetwork()) {
-            if (n.isSensor) {
-                int id = n.id;
-                n.id = -1;
-                boolean added = neuronsSensorWithoutId.add(n.getWithoutId());
-                n.id = id;
-                if (added) {
-                    combinedNetworksSet.add(n);
-                }
-            }else combinedNetworksSet.add(n);
-        }
-        for (Neuron n : net2.getNetwork()) {
-            if (n.isSensor) {
-                int id = n.id;
-                n.id = -1;
-                boolean added = neuronsSensorWithoutId.add(n.getWithoutId());
-                n.id = id;
-                if (added) {
-                    combinedNetworksSet.add(n);
-                }
-            }else combinedNetworksSet.add(n);
-        }
-        
-        Neuron[] combinedNetworks = combinedNetworksSet.toArray(new Neuron[combinedNetworksSet.size()]);
-        
-        Network combinedNetwork = new Network(combinedNetworks);
-        
-        return combinedNetwork;
+                    System.out.println("AlreadyTakenId : " + alreadyTakenId);
+                    if (alreadyTakenId == true) {
+                        net1.setNewId(i, (int)(Math.random()*2000000000+5));
+                    }
+                }while (alreadyTakenId == true);
+            }
+            System.out.println("Synthesis 2");
+
+
+            //Rajoute les neurones, sauf les doublons de neurones senseurs
+            HashSet<Neuron> combinedNetworksSet = new HashSet<>();
+            HashSet<Neuron> neuronsSensorWithoutId = new HashSet<>();
+            
+            System.out.println("Synthesis 3");
+            for (int i = 0; i < net1.getNetwork().length; i++) {
+                Neuron n = net1.getNetwork()[i];
+                if (n.isSensor) {
+                    int id = n.id;
+                    n.id = -1;
+                    boolean added = neuronsSensorWithoutId.add(n);
+                    n.id = id;
+                    if (added) {
+                        combinedNetworksSet.add(n);
+                    }
+                }else { combinedNetworksSet.add(n); }
+            }
+            for (int i = 0; i < net2.getNetwork().length; i++) {
+                Neuron n = net2.getNetwork()[i];
+                if (n.isSensor) {
+                    int id = n.id;
+                    n.id = -1;
+                    boolean added = neuronsSensorWithoutId.add(n);
+                    n.id = id;
+                    if (added) {
+                        combinedNetworksSet.add(n);
+                    }
+                }else { combinedNetworksSet.add(n); }
+            }
+            System.out.println("Synthesis 4");
+
+            Neuron[] combinedNetworks = combinedNetworksSet.toArray(new Neuron[combinedNetworksSet.size()]);
+            Network combinedNetwork = new Network(combinedNetworks);
+
+            return combinedNetwork;
+        } else { return net1; }
                 
     }
 

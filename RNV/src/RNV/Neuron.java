@@ -46,7 +46,7 @@ public class Neuron implements Serializable{
     public void newSynapse(int dest) {
         int[] newSynOut = new int[synOut.length + 1];
         System.arraycopy(synOut, 0, newSynOut, 0, synOut.length);       //Copie le contenu de synOut vers newSynOut
-        newSynOut[synOut.length + 1] = dest;
+        newSynOut[synOut.length] = dest;
         synOut = newSynOut;
     }
     
@@ -96,9 +96,14 @@ public class Neuron implements Serializable{
     }
     
     public Neuron getWithoutId() {
-        Neuron neuron = this;
+        Neuron neuron = new Neuron();
+        neuron = this;
         neuron.id = -1;
         return neuron;
+    }
+    
+    public boolean isInhibitor() {
+        return inhibitor;
     }
     
     /**

@@ -18,24 +18,24 @@ public class Network implements Serializable{
     
     public Network() {
         network = new Neuron[0];
-        nextId = 5; 
+        randomizeNextId();
     }
     
     public Network(String n) {
         name = n;
-        nextId = 5; 
+        randomizeNextId(); 
     }
     
     public Network(Neuron[] net) {
         network = net;
-        nextId = 5; 
+        randomizeNextId(); 
     }
     
     public Network(String n, Neuron[] net, int s) {
         name = n;
         network = net;
         score  = s;
-        nextId = 5; 
+        randomizeNextId(); 
     }
     
     //Méthodes
@@ -48,15 +48,12 @@ public class Network implements Serializable{
      * @param inhib Liste des ids des neurones que ce neurone désactivera de force
      * @return L'ID du nouveau neurone
      */ 
-    public int newNeuronFromTile(int inputId, int type, int[] dest, boolean inhib) {
+    public void newNeuronFromTile(int inputId, int type, int[] dest, boolean inhib) {
         Neuron[] newNetwork = new Neuron[network.length + 1];
         System.arraycopy(network, 0, newNetwork, 0, network.length);
         newNetwork[network.length] = new Neuron(nextId, inputId, type, dest, inhib);
-        nextId++;
+        randomizeNextId();
         network = newNetwork;
-        System.out.println("Neurone créé à l'ID " + (nextId - 1));
-        
-        return nextId - 1;
     }
     
     /**
@@ -66,17 +63,15 @@ public class Network implements Serializable{
      * @param inhib Liste des ids des neurones que ce neurone désactivera de force
      * @return L'ID du nouveau neurone
      */
-    public int newNeuronFromNeuron(Integer sourceId, int[] dest, boolean inhib) {
+    public void newNeuronFromNeuron(Integer sourceId, int[] dest, boolean inhib) {
         Neuron[] newNetwork = new Neuron[network.length + 1];
         System.arraycopy(network, 0, newNetwork, 0, network.length);
         newNetwork[network.length] = new Neuron(nextId, dest, inhib);
         if (sourceId != null) {
             newNetwork[getNeuronIndexFromId(sourceId)].newSynapse(nextId);
         }
-        nextId++;
+        randomizeNextId();
         network = newNetwork;
-        
-        return nextId - 1;
     }
     
     /**
@@ -88,7 +83,7 @@ public class Network implements Serializable{
         System.arraycopy(network, 0, newNetwork, 0, network.length);
         neuron.id = nextId;
         newNetwork[network.length] = neuron;
-        nextId++;
+        randomizeNextId();
         network = newNetwork;
     }
     
@@ -151,13 +146,29 @@ public class Network implements Serializable{
 	
 	//Va modifier toutes les synapses pointant vers l'ancien ID
 	for (int i = 0; i < network.length; i++) {
-            for (int j = 0; j < network.length; j++) {
+            for (int j = 0; j < network[i].getSynapses().length; j++) {
                 if (network[i].getSynapses()[j] == oldId) {
                     network[i].removeSynapse(oldId);
                     network[i].newSynapse(newId);
 		}
             }
 	}		
+    }
+    
+    private void randomizeNextId() {
+        boolean alreadyTakenId;
+        nextId = 5;
+        do {
+            alreadyTakenId = false;
+            for (Neuron n : network) {
+                if (n.id == nextId) {
+                    alreadyTakenId = true;
+                }
+            }
+            if (alreadyTakenId) {
+                nextId = (int) (Math.random()*2000000000 + 5);
+            }
+        } while(alreadyTakenId);
     }
     
     /**
