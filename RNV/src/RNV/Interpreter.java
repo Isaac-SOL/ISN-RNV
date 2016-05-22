@@ -35,7 +35,7 @@ public class Interpreter {
             
             //Liste les neurones activés par toutes les cases
             HashSet<Integer> activatedNeurons = new HashSet<>();
-            for (int i = 1; i < 25; i++) {
+            for (int i = 0; i < 25; i++) {
                 int type = view[i].getIntType();
                 int[] addNeurons = net.getNeuronsActivatedBy(i,type);
                 for (int id : addNeurons) {

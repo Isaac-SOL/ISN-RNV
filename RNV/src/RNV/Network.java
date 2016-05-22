@@ -243,9 +243,9 @@ public class Network implements Serializable{
     
     //Variables
     
-    Neuron[] network;
-    int score;
-    String name;
-    int nextId;     //Utilisé pour définir l'ID assigné au prochain neurone créé
+    private Neuron[] network;
+    private int score;
+    private String name;
+    private int nextId;     //Utilisé pour définir l'ID assigné au prochain neurone créé
     
 }

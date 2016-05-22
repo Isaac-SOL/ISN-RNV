@@ -160,7 +160,9 @@ public class Manager {
             
             for (int j = 0; j < newNetArray[0].length; j++) {
                 System.out.println("Mutate + Synthesis depuis le manager : Familles combiné " + choosenFamily1 + " et " + choosenFamily2 + ". Individu " + i + "/" + j);
-                newNetArray[i][j] = Generator.mutate(Generator.synthesis(netArray[choosenFamily1][bestNetworkFamily[choosenFamily1]], netArray[choosenFamily2][bestNetworkFamily[choosenFamily2]]));
+                Network newNet = new Network();
+                newNet = Generator.synthesis(netArray[choosenFamily1][bestNetworkFamily[choosenFamily1]], netArray[choosenFamily2][bestNetworkFamily[choosenFamily2]]);
+                newNetArray[i][j] = Generator.mutate(newNet);
             }
         }
         
