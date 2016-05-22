@@ -150,11 +150,16 @@ public class Manager {
         //Créé la nouvelle génération en combinant les meilleures individus de deux familles au hasard (chaque famille est combiné deux fois grace au tableau numberTimeTaken)
         for (int i = 0; i < newNetArray.length; i++) {
             
-            int choosenFamily1, choosenFamily2;
+            int choosenFamily1, choosenFamily2, count = 0;
             do {
+                count++;
                 choosenFamily1 = (int)(Math.random()*10);
                 choosenFamily2 = (int) (Math.random()*10);
-            } while((numberTimeTaken[choosenFamily1] >= 2) || (numberTimeTaken[choosenFamily2] >= 2));
+            } while((numberTimeTaken[choosenFamily1] >= 2) || (numberTimeTaken[choosenFamily2] >= 2) && (choosenFamily1 == choosenFamily2) && (count < 30));
+            
+            while (choosenFamily1 == choosenFamily2) {
+                choosenFamily1 = (int) (Math.random()*10);
+            }
             
             numberTimeTaken[choosenFamily1]++; numberTimeTaken[choosenFamily2]++;
             

@@ -63,7 +63,6 @@ public class JFramePlayableGame extends javax.swing.JFrame {
 
         jFrameViewRadius.setAlwaysOnTop(true);
         jFrameViewRadius.setLocation(SystemInfo.getScreenDimension.width/2+400, SystemInfo.getScreenDimension.height/2-300);
-        jFrameViewRadius.setPreferredSize(new java.awt.Dimension(150, 150));
         jFrameViewRadius.setResizable(false);
         jFrameViewRadius.setSize(new java.awt.Dimension(150, 150));
 
@@ -79,6 +78,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jButtonBack.setText("Retour");
         jButtonBack.addActionListener(new java.awt.event.ActionListener() {
