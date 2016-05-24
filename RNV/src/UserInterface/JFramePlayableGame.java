@@ -53,6 +53,10 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     private void initComponents() {
 
         jFrameViewRadius = new javax.swing.JFrame();
+        jFrameWin = new javax.swing.JFrame();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButtonWinOk = new javax.swing.JButton();
         jButtonBack = new javax.swing.JButton();
         jButtonLeft = new javax.swing.JButton();
         jButtonRight = new javax.swing.JButton();
@@ -75,6 +79,48 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         jFrameViewRadiusLayout.setVerticalGroup(
             jFrameViewRadiusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 139, Short.MAX_VALUE)
+        );
+
+        jFrameWin.setTitle("Victoire !");
+        jFrameWin.setLocation(SystemInfo.getScreenDimension.width/2-100, SystemInfo.getScreenDimension.height/2-100);
+        jFrameWin.setResizable(false);
+        jFrameWin.setSize(new java.awt.Dimension(292, 127));
+
+        jLabel1.setText("Vous avez réussi à atteindre le bout de ");
+
+        jLabel2.setText("la map, vous avez gagné ! Félicitations.");
+
+        jButtonWinOk.setText("Ok");
+        jButtonWinOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonWinOkActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jFrameWinLayout = new javax.swing.GroupLayout(jFrameWin.getContentPane());
+        jFrameWin.getContentPane().setLayout(jFrameWinLayout);
+        jFrameWinLayout.setHorizontalGroup(
+            jFrameWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameWinLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addGroup(jFrameWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addGroup(jFrameWinLayout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(jButtonWinOk)))
+                .addGap(34, 34, 34))
+        );
+        jFrameWinLayout.setVerticalGroup(
+            jFrameWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrameWinLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonWinOk)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -192,6 +238,10 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         }
         jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
         jLabelScore.setText("Score = " + game.getScore());
+        if (game.getScore() == game.getMaxScore()) {
+            jFrameWin.setVisible(true);
+            jFrameViewRadius.setVisible(false);
+        }
     }//GEN-LAST:event_jButtonRightActionPerformed
 
     private void jButtonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpActionPerformed
@@ -233,6 +283,12 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         this.dispose();
         jFrameViewRadius.dispose();
     }//GEN-LAST:event_WindowBack
+
+    private void jButtonWinOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonWinOkActionPerformed
+        new JFrameMainMenu().setVisible(true);
+        jFrameWin.dispose();
+        this.dispose();
+    }//GEN-LAST:event_jButtonWinOkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,7 +332,11 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonRight;
     private javax.swing.JButton jButtonUp;
+    private javax.swing.JButton jButtonWinOk;
     private javax.swing.JFrame jFrameViewRadius;
+    private javax.swing.JFrame jFrameWin;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelScore;
     // End of variables declaration//GEN-END:variables
 
