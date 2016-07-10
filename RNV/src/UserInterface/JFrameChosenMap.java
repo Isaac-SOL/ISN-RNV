@@ -6,8 +6,12 @@
 package UserInterface;
 
 import Game.Tile;
+import RNV.Network;
 import Tools.*;
 import static Tools.MapTranslator.*;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,6 +33,7 @@ public class JFrameChosenMap extends javax.swing.JFrame {
      */
     public JFrameChosenMap(Integer[][] map) {
         initComponents();
+        this.map = map;
         initTable(intToTiles(map));
     }
 
@@ -41,8 +46,18 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooserNetwork = new javax.swing.JFileChooser();
         JButtonBack = new javax.swing.JButton();
+        jButtonSavedNetwork = new javax.swing.JButton();
+        jButtonNewNetwork = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+
+        jFileChooserNetwork.setAcceptAllFileFilterUsed(false);
+        jFileChooserNetwork.setApproveButtonText("Ouvrir");
+        jFileChooserNetwork.setApproveButtonToolTipText("Jouer sur cette map avec ce réseau");
+        jFileChooserNetwork.setCurrentDirectory(jFileChooserNetwork.getFileSystemView().getDefaultDirectory());
+        jFileChooserNetwork.setFileFilter(FileIO.NetworkFilter);
+        jFileChooserNetwork.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(SystemInfo.getScreenDimension.width/2-400, SystemInfo.getScreenDimension.height/2-300);
@@ -55,29 +70,67 @@ public class JFrameChosenMap extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Lancer avec un nouveau réseau");
+        jButtonSavedNetwork.setText("Lancer avec un réseau préexistant");
+        jButtonSavedNetwork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSavedNetworkActionPerformed(evt);
+            }
+        });
+
+        jButtonNewNetwork.setText("Lancer avec un nouveau réseau");
+        jButtonNewNetwork.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNewNetworkActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Jouer avec un réseau");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Play(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JButtonBack)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 509, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(JButtonBack)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)))
+                .addComponent(jButtonSavedNetwork)
+                .addGap(242, 242, 242))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(582, Short.MAX_VALUE)
+                    .addComponent(jButtonNewNetwork)
+                    .addGap(22, 22, 22)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(524, 524, 524)
+                .addContainerGap(514, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(JButtonBack))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(JButtonBack)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonSavedNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
+                        .addGap(23, 23, 23))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(514, Short.MAX_VALUE)
+                    .addComponent(jButtonNewNetwork, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(23, 23, 23)))
         );
 
         pack();
@@ -87,6 +140,33 @@ public class JFrameChosenMap extends javax.swing.JFrame {
         new JFrameMainMenu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_WindowBack
+
+    private void jButtonSavedNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSavedNetworkActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSavedNetworkActionPerformed
+
+    private void jButtonNewNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewNetworkActionPerformed
+        new JFrameRNV(intToTiles(map)).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonNewNetworkActionPerformed
+
+    private void Play(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Play
+        int returnVal = jFileChooserNetwork.showOpenDialog(null);                            //Ouvre jFileChooserNetwork et regarde sur quel bouton il a appuyé
+        if (returnVal == JFileChooser.APPROVE_OPTION) {                                                             //Vérifie qe l'utilisateur ait appuyé sur ok
+            File chosenNetwork = jFileChooserNetwork.getSelectedFile();                                //Récupère le fichier choisi par l'utilisateur
+            try {
+                Network net = FileIO.readNetworkFile(chosenNetwork); //Transformation du Fichier en tableau d'Integer[][]
+                new JFrameRNVGame(map,net).setVisible(true);  //Ouverture de la map choisie + 
+                this.dispose();                             //Fermeture de la fenètre de menu
+            } catch (IOException ex) {
+                System.out.println("Problème lors de l'accès au fichier "+chosenNetwork.getAbsolutePath() + "Erreur : " + ex.getMessage());
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Erreur de classe du fichier : " + ex.getMessage());
+            }
+        } else {
+            System.out.println("Accès au fichier annulé.");
+        }
+    }//GEN-LAST:event_Play
 
     /**
      * @param args the command line arguments
@@ -126,11 +206,16 @@ public class JFrameChosenMap extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JButtonBack;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonNewNetwork;
+    private javax.swing.JButton jButtonSavedNetwork;
+    private javax.swing.JFileChooser jFileChooserNetwork;
     // End of variables declaration//GEN-END:variables
     
     //Variables utilisées pour créer la Table.
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableMap;
+    
+    private Integer[][] map;
     
     /**
      * Méthode appelée par le second constructeur. Utilise un tableau de Integer pour créer et remplir une Table, qui est ensuite affichée.

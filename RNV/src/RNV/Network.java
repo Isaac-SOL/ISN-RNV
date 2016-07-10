@@ -5,32 +5,37 @@
 
 package RNV;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Isaac
  */
 
-public class Network {
+public class Network implements Serializable{
     
     //Constructeurs
     
     public Network() {
-        
+        network = new Neuron[0];
+        randomizeNextId();
     }
     
     public Network(String n) {
         name = n;
+        randomizeNextId(); 
     }
     
-    public Network(String n, Neuron[] net) {
-        name = n;
+    public Network(Neuron[] net) {
         network = net;
+        randomizeNextId(); 
     }
     
     public Network(String n, Neuron[] net, int s) {
         name = n;
         network = net;
         score  = s;
+        randomizeNextId(); 
     }
     
     //Méthodes
@@ -40,12 +45,14 @@ public class Network {
      * @param inputId Numéro de la case à laquelle le neurone réagit
      * @param type Type, en int, de la case lorsqu'elle active le neurone
      * @param dest Liste des ids des neurones activés par le nouveau neurone
+     * @param inhib Liste des ids des neurones que ce neurone désactivera de force
+     * @return L'ID du nouveau neurone
      */ 
-    public void newNeuronFromTile(int inputId, int type, int[] dest) {
+    public void newNeuronFromTile(int inputId, int type, int[] dest, boolean inhib) {
         Neuron[] newNetwork = new Neuron[network.length + 1];
         System.arraycopy(network, 0, newNetwork, 0, network.length);
-        newNetwork[network.length] = new Neuron(nextId, inputId, type, dest);
-        nextId++;
+        newNetwork[network.length] = new Neuron(nextId, inputId, type, dest, inhib);
+        randomizeNextId();
         network = newNetwork;
     }
     
@@ -53,13 +60,17 @@ public class Network {
      * Crée un nouveau neurone qui est activé par un neurone existant.
      * @param sourceId Identifiant du neurone activant le nouveau neurone
      * @param dest Liste des ids des neurones activés par le nouveau neurone
+     * @param inhib Liste des ids des neurones que ce neurone désactivera de force
+     * @return L'ID du nouveau neurone
      */
-    public void newNeuronFormNeuron(int sourceId, int[] dest) {
+    public void newNeuronFromNeuron(Integer sourceId, int[] dest, boolean inhib) {
         Neuron[] newNetwork = new Neuron[network.length + 1];
         System.arraycopy(network, 0, newNetwork, 0, network.length);
-        newNetwork[network.length] = new Neuron(nextId, dest);
-        newNetwork[getNeuronIndexFromId(sourceId)].newSynapse(nextId);
-        nextId++;
+        newNetwork[network.length] = new Neuron(nextId, dest, inhib);
+        if (sourceId != null) {
+            newNetwork[getNeuronIndexFromId(sourceId)].newSynapse(nextId);
+        }
+        randomizeNextId();
         network = newNetwork;
     }
     
@@ -67,12 +78,12 @@ public class Network {
      * Rajoute un neurone préexistant avec un id correspondant au réseau
      * @param neuron Neurone à rajouter
      */
-    public void addNeuronFromTileWithNewId(Neuron neuron) {
+    public void addNeuronWithNewId(Neuron neuron) {
         Neuron[] newNetwork = new Neuron[network.length + 1];
         System.arraycopy(network, 0, newNetwork, 0, network.length);
         neuron.id = nextId;
         newNetwork[network.length] = neuron;
-        nextId++;
+        randomizeNextId();
         network = newNetwork;
     }
     
@@ -82,7 +93,13 @@ public class Network {
      */
     public void deleteNeuron(int id) {
         Neuron[] newNetwork = new Neuron[network.length - 1];
-        //TODO Sûrement simplifiable avec deux arraycopy()
+        
+//        int index = getNeuronIndexFromId(id);
+//      
+//Code abandonné
+//        System.arraycopy(network, 0, newNetwork, 0, index);
+//        System.arraycopy(network, index + 2, newNetwork, index + 1, newNetwork.length - (index+1));
+        
         int i;
         //On supprimme le neurone cherché
         for (i = 0; i < network.length; i++) {
@@ -101,6 +118,8 @@ public class Network {
         }
         
         network = newNetwork;
+       
+        System.out.println("Neurone supprimé à l'ID " + id);
     }
     
     /**
@@ -118,6 +137,38 @@ public class Network {
      */
     public void setScore(int s) {
         score = s;
+    }
+    
+    public void setNewId(int index, int newId) {
+	//Garde l'ancien ID en mémoire, puis le remplace par le nouveau
+	int oldId = network[index].id;
+	network[index].id = newId;
+	
+	//Va modifier toutes les synapses pointant vers l'ancien ID
+	for (int i = 0; i < network.length; i++) {
+            for (int j = 0; j < network[i].getSynapses().length; j++) {
+                if (network[i].getSynapses()[j] == oldId) {
+                    network[i].removeSynapse(oldId);
+                    network[i].newSynapse(newId);
+		}
+            }
+	}		
+    }
+    
+    private void randomizeNextId() {
+        boolean alreadyTakenId;
+        nextId = 5;
+        do {
+            alreadyTakenId = false;
+            for (Neuron n : network) {
+                if (n.id == nextId) {
+                    alreadyTakenId = true;
+                }
+            }
+            if (alreadyTakenId) {
+                nextId = (int) (Math.random()*2000000000 + 5);
+            }
+        } while(alreadyTakenId);
     }
     
     /**
@@ -151,10 +202,8 @@ public class Network {
      */
     public int[] getIdList() {
         int[] idList = new int[network.length];
-        int i = 0;
-        for(Neuron neuron : network) {
-            idList[i] = neuron.id;
-            i++;
+        for(int i = 0; i < idList.length; i++) {
+            idList[i] = network[i].id;
         }
         return idList;
     }
@@ -162,16 +211,17 @@ public class Network {
     /**
      * Renvoie la liste des neurones activés par une certaine Tile
      * @param tileId Identifiant de la Tile activatrice
+     * @param type Type de la tile, en int
      * @return Liste des neurones activés par tileId.
      */
-    public int[] getNeuronsActivatedBy(int tileId) { //TODO Je sais pas si c'est efficace, c'est une fonction appelée très souvent
+    public int[] getNeuronsActivatedBy(int tileId, int type) {
         int[] idList = new int[0];
         
-        for (Neuron n : network) {      //On regarde chaque neurone de network
-            if (n.isSensor && n.synIn == tileId) {      //On vérifie que le neurone soit activé par cette case
+        for (int i = 0; i < network.length; i++) {      //On regarde chaque neurone de network
+            if (network[i].isSensor && network[i].synIn == tileId && network[i].activatedByType == type) {      //On vérifie que le neurone soit activé par cette case
                 int[] newIdList = new int[idList.length + 1];
                 System.arraycopy(idList, 0, newIdList, 0, idList.length);
-                newIdList[idList.length] = n.id;        //Rajoute le nouvel identifiant
+                newIdList[idList.length] = network[i].id;        //Rajoute le nouvel identifiant
                 idList = newIdList;
             }
         }
@@ -193,9 +243,9 @@ public class Network {
     
     //Variables
     
-    Neuron[] network;
-    int score;
-    String name;
-    int nextId = 5;     //Utilisé pour définir l'ID assigné au prochain neurone créé
+    private Neuron[] network;
+    private int score;
+    private String name;
+    private int nextId;     //Utilisé pour définir l'ID assigné au prochain neurone créé
     
 }

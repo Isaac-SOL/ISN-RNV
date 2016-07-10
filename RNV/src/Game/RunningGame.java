@@ -102,6 +102,10 @@ public class RunningGame {
         return score;
     }
     
+    public int getMaxScore() {
+        return currentMap[0].length - 1;
+    }
+    
     public Tile[][] getRawMap() {
         return currentMap;
     }
@@ -136,7 +140,7 @@ public class RunningGame {
     }
     
     /**
-     * @return @return La coordonnée actuelle Y du token
+     * @return La coordonnée actuelle Y du token
      */
     public int getTokenYPos() {
         int typos = 0;
@@ -175,7 +179,7 @@ public class RunningGame {
     
     //Variables
     
-    Tile[][] currentMap;
-    Integer[][] intStartingMap;
-    int score = 0;
+    public Tile[][] currentMap;
+    public Integer[][] intStartingMap;
+    public int score = 0;
 }

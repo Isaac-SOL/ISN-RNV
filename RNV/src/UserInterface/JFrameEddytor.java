@@ -616,7 +616,7 @@ public class JFrameEddytor extends javax.swing.JFrame {
         //Procédure initialisant la table avec le tableau
         printMap();
         
-        //<editor-fold defaultstate="collapsed" desc="Code du Scroller, copié du générateur auto de NetBeans">
+        //<editor-fold defaultstate="collapsed" desc="Code du Scroller">
         jScrollPane2.setViewportView(jTableEditedMap);
         
         int nbColumns = map[0].length;

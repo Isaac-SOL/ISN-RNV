@@ -7,8 +7,12 @@
 package UserInterface;
 
 import Game.*;
+import RNV.Interpreter;
+import RNV.Network;
 import static Tools.MapTranslator.*;
 import Tools.SystemInfo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,20 +20,21 @@ import javax.swing.table.DefaultTableModel;
  * @author Isaac
  */
 
-public class JFramePlayableGame extends javax.swing.JFrame {
+public class JFrameRNVGame extends javax.swing.JFrame {
 
     /**
      * Creates new form JFramePlayableGame
      */
-    public JFramePlayableGame() {
+    public JFrameRNVGame() {
         initComponents();
     }
     
     /**
      * Second constructeur qui utilise un tableau de Integer pour créer la Table avec
      * @param map Integer[][] qui sert à créer la map
+     * @param net Réseau qui "jouera" sur la map
      */
-    public JFramePlayableGame(Integer[][] map) {
+    public JFrameRNVGame(Integer[][] map, Network net) {
         
         nbLines = map.length;
         nbColumns = map[0].length;
@@ -37,10 +42,9 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         initComponents();
         initTable(intToTiles(map));
         game = new RunningGame(map);
+        network = net;
         
         initViewRadius(game.getViewRadius(2),2);
-        
-        jLabelScore.setText("Score = " + game.getScore());
     }
 
     /**
@@ -53,16 +57,12 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     private void initComponents() {
 
         jFrameViewRadius = new javax.swing.JFrame();
-        jFrameWin = new javax.swing.JFrame();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButtonWinOk = new javax.swing.JButton();
         jButtonBack = new javax.swing.JButton();
         jButtonLeft = new javax.swing.JButton();
         jButtonRight = new javax.swing.JButton();
         jButtonUp = new javax.swing.JButton();
         jButtonDown = new javax.swing.JButton();
-        jButtonReset = new javax.swing.JButton();
+        jButtonRun = new javax.swing.JButton();
         jLabelScore = new javax.swing.JLabel();
 
         jFrameViewRadius.setAlwaysOnTop(true);
@@ -81,50 +81,8 @@ public class JFramePlayableGame extends javax.swing.JFrame {
             .addGap(0, 139, Short.MAX_VALUE)
         );
 
-        jFrameWin.setTitle("Victoire !");
-        jFrameWin.setLocation(SystemInfo.getScreenDimension.width/2-100, SystemInfo.getScreenDimension.height/2-100);
-        jFrameWin.setResizable(false);
-        jFrameWin.setSize(new java.awt.Dimension(292, 127));
-
-        jLabel1.setText("Vous avez réussi à atteindre le bout de ");
-
-        jLabel2.setText("la map, vous avez gagné ! Félicitations.");
-
-        jButtonWinOk.setText("Ok");
-        jButtonWinOk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonWinOkActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jFrameWinLayout = new javax.swing.GroupLayout(jFrameWin.getContentPane());
-        jFrameWin.getContentPane().setLayout(jFrameWinLayout);
-        jFrameWinLayout.setHorizontalGroup(
-            jFrameWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrameWinLayout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
-                .addGroup(jFrameWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addGroup(jFrameWinLayout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jButtonWinOk)))
-                .addGap(34, 34, 34))
-        );
-        jFrameWinLayout.setVerticalGroup(
-            jFrameWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jFrameWinLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonWinOk)
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setLocation(new java.awt.Point(0, 0));
 
         jButtonBack.setText("Retour");
         jButtonBack.addActionListener(new java.awt.event.ActionListener() {
@@ -134,37 +92,17 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         });
 
         jButtonLeft.setText("<");
-        jButtonLeft.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLeftActionPerformed(evt);
-            }
-        });
 
         jButtonRight.setText(">");
-        jButtonRight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRightActionPerformed(evt);
-            }
-        });
 
         jButtonUp.setText("^");
-        jButtonUp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonUpActionPerformed(evt);
-            }
-        });
 
         jButtonDown.setText("v");
-        jButtonDown.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDownActionPerformed(evt);
-            }
-        });
 
-        jButtonReset.setText("Réinitialiser");
-        jButtonReset.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRun.setText("Lancer Réseau");
+        jButtonRun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonResetActionPerformed(evt);
+                Run(evt);
             }
         });
 
@@ -184,8 +122,8 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                         .addComponent(jButtonBack)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
                         .addComponent(jLabelScore, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(jButtonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
+                        .addComponent(jButtonRun)
                         .addGap(28, 28, 28)
                         .addComponent(jButtonLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -209,7 +147,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                                 .addComponent(jButtonRight, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButtonDown, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabelScore)))
                 .addContainerGap())
         );
@@ -218,77 +156,42 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeftActionPerformed
-        game.goLeft();
-        if (nbLines < 30) {
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
-        } else {
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToScaledIcons(game.getRawMap(), 788/nbLines), new String [nbColumns]));
-        }
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
-        jLabelScore.setText("Score = " + game.getScore());
-    }//GEN-LAST:event_jButtonLeftActionPerformed
-
-    private void jButtonRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRightActionPerformed
-        game.goRight();
-        if (nbLines < 30) {
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
-        } else {
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToScaledIcons(game.getRawMap(), 788/nbLines), new String [nbColumns]));
-        }
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
-        jLabelScore.setText("Score = " + game.getScore());
-        if (game.getScore() == game.getMaxScore()) {
-            jFrameWin.setVisible(true);
-            jFrameViewRadius.setVisible(false);
-        }
-    }//GEN-LAST:event_jButtonRightActionPerformed
-
-    private void jButtonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpActionPerformed
-        game.goUp();
-        if (nbLines < 30) {
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
-        } else {
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToScaledIcons(game.getRawMap(), 788/nbLines), new String [nbColumns]));
-        }
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
-        jLabelScore.setText("Score = " + game.getScore());
-    }//GEN-LAST:event_jButtonUpActionPerformed
-
-    private void jButtonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownActionPerformed
-        game.goDown();
-        if (nbLines < 30) {
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
-        } else {
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToScaledIcons(game.getRawMap(), 788/nbLines), new String [nbColumns]));
-        }
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
-        jLabelScore.setText("Score = " + game.getScore());
-    }//GEN-LAST:event_jButtonDownActionPerformed
-
-    //Reset le jeu
-    private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
+    //Fait jouer le jeu au réseau
+    private void Run(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Run
         game.reset();
-        if (nbLines < 30) {
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
-        } else {
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToScaledIcons(game.getRawMap(), 788/nbLines), new String [nbColumns]));
-        }
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
-        jLabelScore.setText("Score = " + game.getScore());
-    }//GEN-LAST:event_jButtonResetActionPerformed
+        
+        Runnable inter = () -> {
+            try {
+                Interpreter.interpreteWith(network, game, 750);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(JFrameRNVGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        };
+        
+        Thread tInter = new Thread(inter);
+        
+        Runnable swing = () -> {
+            while (tInter.getState() != Thread.State.TERMINATED){
+                jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(game.getIconMap(), new String [nbColumns]));
+                jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(tilesToIcons(game.getViewRadius(2)), new String [5]));
+                jLabelScore.setText("Score = " + game.getScore());
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(JFrameRNVGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        
+        Thread tSwing = new Thread(swing);
+        tInter.start(); tSwing.start();
+    }//GEN-LAST:event_Run
 
     private void WindowBack(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WindowBack
         new JFrameMainMenu().setVisible(true);
         this.dispose();
         jFrameViewRadius.dispose();
     }//GEN-LAST:event_WindowBack
-
-    private void jButtonWinOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonWinOkActionPerformed
-        new JFrameMainMenu().setVisible(true);
-        jFrameWin.dispose();
-        this.dispose();
-    }//GEN-LAST:event_jButtonWinOkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -307,20 +210,21 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFramePlayableGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameRNVGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFramePlayableGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameRNVGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFramePlayableGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameRNVGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFramePlayableGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameRNVGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFramePlayableGame().setVisible(true);
+                new JFrameRNVGame().setVisible(true);
             }
         });
     }
@@ -329,14 +233,10 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBack;
     private javax.swing.JButton jButtonDown;
     private javax.swing.JButton jButtonLeft;
-    private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonRight;
+    private javax.swing.JButton jButtonRun;
     private javax.swing.JButton jButtonUp;
-    private javax.swing.JButton jButtonWinOk;
     private javax.swing.JFrame jFrameViewRadius;
-    private javax.swing.JFrame jFrameWin;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelScore;
     // End of variables declaration//GEN-END:variables
 
@@ -348,6 +248,9 @@ public class JFramePlayableGame extends javax.swing.JFrame {
     
     //Jeu en cours en fond.
     RunningGame game;
+    
+    //Réseau qui jouera au jeu.
+    Network network;
     
     //Variables utilisées pour créer le ViewRadius.
     private javax.swing.JScrollPane jScrollPane2;
@@ -371,7 +274,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         
         if (nbLines < 30) {
             //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(
+            jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(
                 tilesToIcons(map),
                 new String [nbColumns]
             ){
@@ -386,8 +289,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
-            layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -400,7 +302,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jButtonBack)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButtonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(28, 28, 28)
                                     .addComponent(jButtonLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -409,8 +311,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                             .addComponent(jButtonRight, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addContainerGap())
             );
-            layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane1, nbLines*16, nbLines*16, nbLines*16+6)
@@ -418,7 +319,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                     .addComponent(jButtonUp, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonRun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonBack, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -431,7 +332,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
             
         } else {
             //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
-            jTableMap.setModel(new JFramePlayableGame.DefaultTableModelImpl(
+            jTableMap.setModel(new JFrameRNVGame.DefaultTableModelImpl(
                 tilesToScaledIcons(map, 788 / nbColumns),
                 new String [nbColumns]
             ){
@@ -446,8 +347,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
-            layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,7 +360,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jButtonBack)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButtonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(28, 28, 28)
                                     .addComponent(jButtonLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -469,8 +369,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                             .addComponent(jButtonRight, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addContainerGap())
             );
-            layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -478,7 +377,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                     .addComponent(jButtonUp, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonRun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonBack, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -507,7 +406,7 @@ public class JFramePlayableGame extends javax.swing.JFrame {
         jTableViewRadius.setTableHeader(null);
 
         //Initialise la Table avec la map pour la remplir, ainsi qu'un String[] qui fait le titre des colonnes.
-        jTableViewRadius.setModel(new JFramePlayableGame.DefaultTableModelImpl(
+        jTableViewRadius.setModel(new JFrameRNVGame.DefaultTableModelImpl(
             tilesToIcons(view),
             new String [2*radius + 1]
         ){
@@ -537,8 +436,6 @@ public class JFramePlayableGame extends javax.swing.JFrame {
                                 .addContainerGap())
         );
         //</editor-fold>
-        
-
         
         jFrameViewRadius.setVisible(true);
     }

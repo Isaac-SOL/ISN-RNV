@@ -36,14 +36,13 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         jFileChooserMap = new javax.swing.JFileChooser();
         jButtonOpenMap = new javax.swing.JButton();
         jButtonEditMap = new javax.swing.JButton();
-        jButtonGenerateMap = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
         jButtonPlayMapTemp = new javax.swing.JButton();
 
         jFileChooserMap.setAcceptAllFileFilterUsed(false);
         jFileChooserMap.setApproveButtonText("Ouvrir");
         jFileChooserMap.setApproveButtonToolTipText("Utiliser cette map pour les tests");
-        jFileChooserMap.setCurrentDirectory(new java.io.File(System.getProperty("user.home")+"/Documents"));
+        jFileChooserMap.setCurrentDirectory(jFileChooserMap.getFileSystemView().getDefaultDirectory());
         jFileChooserMap.setDialogTitle("Ouvrir une map");
         jFileChooserMap.setFileFilter(FileIO.MapFilter);
         jFileChooserMap.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
@@ -73,14 +72,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
             }
         });
 
-        jButtonGenerateMap.setText("Générer une map aléatoirement");
-        jButtonGenerateMap.setToolTipText("Crée une map générée alétoirement et l'enregistre.");
-        jButtonGenerateMap.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OpenMapGenerator(evt);
-            }
-        });
-
         jButtonClose.setText("Fermer");
         jButtonClose.setToolTipText("Quitter le testeur.");
         jButtonClose.addActionListener(new java.awt.event.ActionListener() {
@@ -102,9 +93,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jButtonGenerateMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButtonClose)
@@ -122,15 +110,13 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(67, 67, 67)
+                .addContainerGap(83, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonOpenMap, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonPlayMapTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonOpenMap, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPlayMapTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonEditMap, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonGenerateMap, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jButtonEditMap, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
                 .addComponent(jButtonClose)
                 .addContainerGap())
         );
@@ -164,10 +150,6 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         new JFrameEddytor().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_OpenMapCreator
-
-    private void OpenMapGenerator(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenMapGenerator
-        // TODO Ouvrir le générateur de maps (éventuellement?)
-    }//GEN-LAST:event_OpenMapGenerator
     
     /**
      * Méthode quand on appuie sur le bouton Ferme. Quitte le programme définitivement.
@@ -230,12 +212,10 @@ public class JFrameMainMenu extends javax.swing.JFrame {
         });
     }
     
-    //TODO Il est possible de positionner la fenêtre automatiquement au centre à l'aide de NetBeans. Il faudra le refaire pour certaines fenêtres.
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClose;
     private javax.swing.JButton jButtonEditMap;
-    private javax.swing.JButton jButtonGenerateMap;
     private javax.swing.JButton jButtonOpenMap;
     private javax.swing.JButton jButtonPlayMapTemp;
     private javax.swing.JFileChooser jFileChooserMap;

@@ -5,12 +5,14 @@
 
 package RNV;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Isaac
  */
 
-public class Neuron {
+public class Neuron implements Serializable{
     
     //Constructeurs
     
@@ -18,40 +20,33 @@ public class Neuron {
         
     }
     
-    public Neuron(int id, int[] dest) {
+    public Neuron(int id, int[] dest, boolean inhib) {
         synOut = dest;
+        synIn = null;
         this.id = id;
         isSensor = false;
+        inhibitor = inhib;
     }
     
-    public Neuron(int id, int source, int type, int[] dest) {
+    public Neuron(int id, int source, int type, int[] dest, boolean inhib) {
         synIn = source;
         synOut = dest;
         this.id = id;
         type = activatedByType;
         isSensor = true;
+        inhibitor = inhib;
     }
     
     //Méthodes
     
     /**
-     * @return le neurone, mais avec un id égal à -1 (équivalent à un null)
-     */
-    public Neuron getNeuronWithoutId() {
-        Neuron idNull = this;
-        idNull.id = -1; //-1 étant l'équivalent d'une valeur null
-        return idNull;
-    }
-    
-    /**
-     * Crée une nouvelle synapse, pointant vers un nouveau neurone à activer.
+     * Crée une nouvelle synapse, pointant vers un neurone à activer.
      * @param dest Identifiant du neurone à activer
      */
-        
     public void newSynapse(int dest) {
         int[] newSynOut = new int[synOut.length + 1];
         System.arraycopy(synOut, 0, newSynOut, 0, synOut.length);       //Copie le contenu de synOut vers newSynOut
-        newSynOut[synOut.length + 1] = dest;
+        newSynOut[synOut.length] = dest;
         synOut = newSynOut;
     }
     
@@ -60,27 +55,55 @@ public class Neuron {
      * @param rm Identifiant du neurone qui ne sera plus activé
      */
     public void removeSynapse(int rm) {
-        int[] newSynOut = new int[synOut.length - 1];
-        int i;
-        for (i = 0; i < synOut.length; i++) {
-            if (synOut[i] != rm) {
-                newSynOut[i] = synOut[i];
-            } else { break; }
-        }
-        if (i != synOut.length) {
-            for (i++; i < synOut.length; i++) {
-                newSynOut[i-1] = synOut[i];
+        if (synOut.length > 0) {
+            int[] newSynOut = new int[synOut.length - 1];
+            
+//Code abandonné
+//            int rmIndex = 0;
+//            
+//            for (int i = 0; i < synOut.length; i++) {
+//                if (synOut[i] == rm) {
+//                    rmIndex = i;
+//                    break;
+//                }
+//            }
+//            
+//            System.arraycopy(synOut, 0, newSynOut, 0, rmIndex);
+//            System.arraycopy(synOut, rmIndex + 2, newSynOut, rmIndex + 1, newSynOut.length - (rmIndex+1));
+            
+            int i;
+            for (i = 0; i < newSynOut.length; i++) {
+                if (synOut[i] != rm) {
+                    newSynOut[i] = synOut[i];
+                } else { break; }
             }
+            if (i != synOut.length-1) {
+                for (i++; i < synOut.length; i++) {
+                    newSynOut[i-1] = synOut[i];
+                }
+            }
+            synOut = newSynOut;
+            
         }
-        synOut = newSynOut;
     }
     
     /**
-     * Active de force le neurone.
+     * Liste les neurones activés par ce neurone.
      * @return Liste des identifiants des neurones activés par ce neurone
      */
-    public int[] activate() {
+    public int[] getSynapses() {
         return synOut;
+    }
+    
+    public Neuron getWithoutId() {
+        Neuron neuron = new Neuron();
+        neuron = this;
+        neuron.id = -1;
+        return neuron;
+    }
+    
+    public boolean isInhibitor() {
+        return inhibitor;
     }
     
     /**
@@ -96,7 +119,7 @@ public class Neuron {
         return output;
     }
 
-    public int getSonNumber() {
+    public int getSynNumber() {
         return synOut.length;
     }
     
@@ -104,12 +127,20 @@ public class Neuron {
         return synIn;
     }
     
+    public boolean equalsTo(Neuron neuron) {
+        return (this.synOut == neuron.synOut)
+                && (this.synIn == neuron.synIn)
+                && (this.isSensor == neuron.isSensor)
+                && (this.inhibitor == neuron.inhibitor)
+                && (this.activatedByType == neuron.activatedByType);
+    }
     //Variables
     
     int[] synOut;
-    int synIn;
+    Integer synIn;
     int id;
     boolean isSensor;
+    boolean inhibitor;
     int activatedByType;
     
 }

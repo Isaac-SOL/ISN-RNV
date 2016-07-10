@@ -8,7 +8,7 @@
         <Property name="approveButtonText" type="java.lang.String" value="Ouvrir"/>
         <Property name="approveButtonToolTipText" type="java.lang.String" value="Utiliser cette map pour les tests"/>
         <Property name="currentDirectory" type="java.io.File" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new java.io.File(System.getProperty(&quot;user.home&quot;)+&quot;/Documents&quot;)" type="code"/>
+          <Connection code="jFileChooserMap.getFileSystemView().getDefaultDirectory()" type="code"/>
         </Property>
         <Property name="dialogTitle" type="java.lang.String" value="Ouvrir une map"/>
         <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -57,10 +57,6 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                      <Component id="jButtonGenerateMap" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButtonClose" min="-2" max="-2" attributes="0"/>
@@ -85,16 +81,14 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+              <EmptySpace pref="83" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButtonOpenMap" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
-                  <Component id="jButtonPlayMapTemp" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                  <Component id="jButtonOpenMap" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+                  <Component id="jButtonPlayMapTemp" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jButtonEditMap" min="-2" pref="47" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jButtonGenerateMap" min="-2" pref="65" max="-2" attributes="0"/>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <Component id="jButtonEditMap" min="-2" pref="66" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
               <Component id="jButtonClose" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -118,15 +112,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenMapCreator"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButtonGenerateMap">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="G&#xe9;n&#xe9;rer une map al&#xe9;atoirement"/>
-        <Property name="toolTipText" type="java.lang.String" value="Cr&#xe9;e une map g&#xe9;n&#xe9;r&#xe9;e al&#xe9;toirement et l&apos;enregistre."/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OpenMapGenerator"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonClose">
